@@ -13,10 +13,13 @@ Open GIS Data Sources in Thailand
 
 |Field |Type |Key|
 |----------------|-------------------------------|-----------------------------|
-|id|Integer|PK|
-|code|Varchar(150)||
-|name_th|Varchar(150)||
-|name_en|Varchar(150)||
+|gid|Integer|PK|
+|tam_code|String(6)||
+|tam_th|String(254)||
+|tam_en|String(254)||
+|amp_code|String(4)||
+|amp_th|String(254)||
+|amp_en|String(254)||
 |geography_id|Integer||
 
 
