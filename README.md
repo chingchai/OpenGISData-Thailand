@@ -20,7 +20,13 @@ Open GIS Data Sources in Thailand
 |amp_code|String(4)||
 |amp_th|String(254)||
 |amp_en|String(254)||
-|geography_id|Integer||
+|pro_code|String(2)||
+|pro_th|String(254)||
+|pro_en|String(254)||
+|reg_nesdb|String(254)||
+|reg_royin|String(254)||
+|perimeter|Real(18,11)||
+|area_sqkm|Real(18,11)||
 
 
 ----------
