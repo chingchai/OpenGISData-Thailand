@@ -13,20 +13,20 @@ Open GIS Data Sources in Thailand
 
 |Field |Type |Key|Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
-|gid|Integer(10)|PK|ttt|
-|tam_code|String(6)||ttt|
-|tam_th|String(254)||ttt|
-|tam_en|String(254)||ttt|
-|amp_code|String(4)||ttt|
-|amp_th|String(254)||ttt|
-|amp_en|String(254)||ttt|
-|pro_code|String(2)||ttt|
-|pro_th|String(254)||ttt|
-|pro_en|String(254)||ttt|
-|reg_nesdb|String(254)||ttt|
-|reg_royin|String(254)||ttt|
-|perimeter|Real(18,11)||ttt|
-|area_sqkm|Real(18,11)||ttt|
+|gid|Integer(10)|PK|gid|
+|tam_code|String(6)||รหัสตำบล|
+|tam_th|String(254)||ชื่อตำบลภาษาไทย|
+|tam_en|String(254)||ชื่อตำบลภาษาอังกฤษ|
+|amp_code|String(4)||รหัสอำเภอ|
+|amp_th|String(254)||ชื่ออำเภอภาษาไทย|
+|amp_en|String(254)||ชื่ออำเภอภาษาอังกฤษ|
+|pro_code|String(2)||รหัสจังหวัด|
+|pro_th|String(254)||ชื่อจังหวัดภาษาไทย|
+|pro_en|String(254)||ชื่อจังหวัดภาษาอังกฤษ|
+|reg_nesdb|String(254)||เขตภูมิภาค|
+|reg_royin|String(254)||เขตภูมิภาค|
+|perimeter|Real(18,11)||เส้นรอบรูป กิโลเมตร|
+|area_sqkm|Real(18,11)||เนื้อที่ ตารางกิโลเมตร|
 
 
 ----------
@@ -34,25 +34,32 @@ Open GIS Data Sources in Thailand
 
 **districts**
 
-|Field |Type |Key|
-|----------------|-------------------------------|-----------------------------|
-|id|Integer|PK|
-|code|Varchar(4)||
-|name_th|Varchar(150)||
-|name_en|Varchar(150)||
-|province_id|Integer||
+|Field |Type |Key|Description |
+|----------------|-------------------------------|-----------------------------|-----------------------------|
+|amp_code|String(4)||รหัสอำเภอ|
+|amp_th|String(254)||ชื่ออำเภอภาษาไทย|
+|amp_en|String(254)||ชื่ออำเภอภาษาอังกฤษ|
+|pro_code|String(2)||รหัสจังหวัด|
+|pro_th|String(254)||ชื่อจังหวัดภาษาไทย|
+|pro_en|String(254)||ชื่อจังหวัดภาษาอังกฤษ|
+|reg_nesdb|String(254)||เขตภูมิภาค|
+|reg_royin|String(254)||เขตภูมิภาค|
+|perimeter|Real(18,11)||เส้นรอบรูป กิโลเมตร|
+|area_sqkm|Real(18,11)||เนื้อที่ ตารางกิโลเมตร|
 
 ----------
 
 **subdistricts**
 
-|Field |Type |Key|
-|----------------|-------------------------------|-----------------------------|
-|id|Integer|PK|
-|zip_code|Integer||
-|name_th|Varchar(150)||
-|name_en|Varchar(150)||
-|amphure_id|Integer||
+|Field |Type |Key|Description |
+|----------------|-------------------------------|-----------------------------|-----------------------------|
+|pro_code|String(2)||รหัสจังหวัด|
+|pro_th|String(254)||ชื่อจังหวัดภาษาไทย|
+|pro_en|String(254)||ชื่อจังหวัดภาษาอังกฤษ|
+|reg_nesdb|String(254)||เขตภูมิภาค|
+|reg_royin|String(254)||เขตภูมิภาค|
+|perimeter|Real(18,11)||เส้นรอบรูป กิโลเมตร|
+|area_sqkm|Real(18,11)||เนื้อที่ ตารางกิโลเมตร|
 
 
 
