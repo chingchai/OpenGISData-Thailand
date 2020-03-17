@@ -2,12 +2,14 @@
 Open GIS Data Sources in Thailand
 
 ## เป็นไฟล์รูปแบบ geojson มีทั้งหมด 3 ไฟล์คือ
-- ชั้นข้อมูลขอบเขตจังหวัด (province.geojson)
+- ชั้นข้อมูลขอบเขตจังหวัด (provinces.geojson)
 - ชั้นข้อมูลขอบเขตอำเภอ (districts.geojson)
 - ชั้นข้อมูลขอบเขตตำบล (subdistricts.geojson)
+- ชั้นข้อมูลขอบเขตภูมิภาค (region_royin.geojson)
+- ชั้นข้อมูลขอบเขตภูมิภาค (region_nesdb.geojson)
 
 ## Data dictionary
-**province**
+**provinces**
 
 |Field |Type |Key|
 |----------------|-------------------------------|-----------------------------|
