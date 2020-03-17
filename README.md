@@ -11,22 +11,22 @@ Open GIS Data Sources in Thailand
 ## Data dictionary
 **provinces**
 
-|Field |Type |Key|
-|----------------|-------------------------------|-----------------------------|
-|gid|Integer|PK|
-|tam_code|String(6)||
-|tam_th|String(254)||
-|tam_en|String(254)||
-|amp_code|String(4)||
-|amp_th|String(254)||
-|amp_en|String(254)||
-|pro_code|String(2)||
-|pro_th|String(254)||
-|pro_en|String(254)||
-|reg_nesdb|String(254)||
-|reg_royin|String(254)||
-|perimeter|Real(18,11)||
-|area_sqkm|Real(18,11)||
+|Field |Type |Key|Description |
+|----------------|-------------------------------|-----------------------------|-----------------------------|
+|gid|Integer(10)|PK|ttt|
+|tam_code|String(6)||ttt|
+|tam_th|String(254)||ttt|
+|tam_en|String(254)||ttt|
+|amp_code|String(4)||ttt|
+|amp_th|String(254)||ttt|
+|amp_en|String(254)||ttt|
+|pro_code|String(2)||ttt|
+|pro_th|String(254)||ttt|
+|pro_en|String(254)||ttt|
+|reg_nesdb|String(254)||ttt|
+|reg_royin|String(254)||ttt|
+|perimeter|Real(18,11)||ttt|
+|area_sqkm|Real(18,11)||ttt|
 
 
 ----------
