@@ -61,6 +61,7 @@ Open GIS Data Sources in Thailand
 |perimeter|Real(18,11)||เส้นรอบรูป กิโลเมตร|
 |area_sqkm|Real(18,11)||เนื้อที่ ตารางกิโลเมตร|
 
+----------
 
 **region_royin**
 
@@ -70,6 +71,7 @@ Open GIS Data Sources in Thailand
 |perimeter|Real(18,11)||เส้นรอบรูป กิโลเมตร|
 |area_sqkm|Real(18,11)||เนื้อที่ ตารางกิโลเมตร|
 
+----------
 
 **region_nesdb**
 
@@ -78,5 +80,7 @@ Open GIS Data Sources in Thailand
 |reg_nesdb|String(254)||เขตภูมิภาค|
 |perimeter|Real(18,11)||เส้นรอบรูป กิโลเมตร|
 |area_sqkm|Real(18,11)||เนื้อที่ ตารางกิโลเมตร|
+
+----------
 
 ## อ้างอิงจาก
