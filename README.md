@@ -36,7 +36,7 @@ Open GIS Data Sources in Thailand
 
 |Field |Type |Key|Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
-|amp_code|String(4)||รหัสอำเภอ|
+|amp_code|String(4)|PK|รหัสอำเภอ|
 |amp_th|String(254)||ชื่ออำเภอภาษาไทย|
 |amp_en|String(254)||ชื่ออำเภอภาษาอังกฤษ|
 |pro_code|String(2)||รหัสจังหวัด|
@@ -53,7 +53,7 @@ Open GIS Data Sources in Thailand
 
 |Field |Type |Key|Description |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
-|pro_code|String(2)||รหัสจังหวัด|
+|pro_code|String(2)|PK|รหัสจังหวัด|
 |pro_th|String(254)||ชื่อจังหวัดภาษาไทย|
 |pro_en|String(254)||ชื่อจังหวัดภาษาอังกฤษ|
 |reg_nesdb|String(254)||เขตภูมิภาค|
