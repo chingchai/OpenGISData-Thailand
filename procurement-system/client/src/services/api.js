@@ -1,0 +1,81 @@
+import axios from 'axios';
+
+const API_URL = '/api';
+
+// Create axios instance
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Request interceptor to add auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Unauthorized - clear token and redirect to login
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Auth API
+export const authAPI = {
+  login: (username, password, role) =>
+    api.post('/auth/login', { username, password, role }),
+
+  logout: () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    return Promise.resolve();
+  },
+
+  getCurrentUser: () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  },
+
+  isAuthenticated: () => {
+    return !!localStorage.getItem('token');
+  }
+};
+
+// Projects API
+export const projectsAPI = {
+  getAll: (params) => api.get('/projects', { params }),
+  getById: (id) => api.get(`/projects/${id}`),
+  create: (data) => api.post('/projects', data),
+  update: (id, data) => api.put(`/projects/${id}`, data),
+  delete: (id) => api.delete(`/projects/${id}`),
+  getStats: () => api.get('/projects/stats'),
+};
+
+// Steps API
+export const stepsAPI = {
+  getByProject: (projectId) => api.get(`/projects/${projectId}/steps`),
+  getProgress: (projectId) => api.get(`/projects/${projectId}/steps/progress`),
+  getOverdue: (params) => api.get('/steps/overdue', { params }),
+  updateStatus: (id, status) => api.patch(`/steps/${id}/status`, { status }),
+  update: (id, data) => api.put(`/steps/${id}`, data),
+};
+
+export default api;
