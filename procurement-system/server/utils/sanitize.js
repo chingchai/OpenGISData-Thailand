@@ -1,16 +1,17 @@
 /**
  * Input Sanitization Utilities
  * ฟังก์ชันสำหรับทำความสะอาดข้อมูล input เพื่อป้องกัน XSS และ Injection
+ * ES6 Modules
  */
 
-const validator = require('validator');
+import validator from 'validator';
 
 /**
  * Sanitize string input (remove HTML tags and dangerous characters)
  * @param {string} input - Input string
  * @returns {string} Sanitized string
  */
-function sanitizeString(input) {
+export function sanitizeString(input) {
   if (typeof input !== 'string') {
     return input;
   }
@@ -32,7 +33,7 @@ function sanitizeString(input) {
  * @param {*} data - Data to sanitize
  * @returns {*} Sanitized data
  */
-function sanitizeInput(data) {
+export function sanitizeInput(data) {
   // Handle null or undefined
   if (data === null || data === undefined) {
     return data;
@@ -78,7 +79,7 @@ function sanitizeInput(data) {
  * @param {string} email - Email address
  * @returns {string|null} Sanitized email or null if invalid
  */
-function sanitizeEmail(email) {
+export function sanitizeEmail(email) {
   if (!email || typeof email !== 'string') {
     return null;
   }
@@ -97,7 +98,7 @@ function sanitizeEmail(email) {
  * @param {string} phone - Phone number
  * @returns {string|null} Sanitized phone or null if invalid
  */
-function sanitizePhone(phone) {
+export function sanitizePhone(phone) {
   if (!phone || typeof phone !== 'string') {
     return null;
   }
@@ -118,7 +119,7 @@ function sanitizePhone(phone) {
  * @param {string} url - URL string
  * @returns {string|null} Sanitized URL or null if invalid
  */
-function sanitizeURL(url) {
+export function sanitizeURL(url) {
   if (!url || typeof url !== 'string') {
     return null;
   }
@@ -138,7 +139,7 @@ function sanitizeURL(url) {
  * @param {Object} options - { min, max, default }
  * @returns {number|null} Sanitized integer
  */
-function sanitizeInt(input, options = {}) {
+export function sanitizeInt(input, options = {}) {
   const { min, max, default: defaultValue = null } = options;
 
   // Convert to number
@@ -167,7 +168,7 @@ function sanitizeInt(input, options = {}) {
  * @param {Object} options - { min, max, precision, default }
  * @returns {number|null} Sanitized float
  */
-function sanitizeFloat(input, options = {}) {
+export function sanitizeFloat(input, options = {}) {
   const { min, max, precision, default: defaultValue = null } = options;
 
   // Convert to number
@@ -200,7 +201,7 @@ function sanitizeFloat(input, options = {}) {
  * @param {*} input - Input date
  * @returns {Date|null} Sanitized date or null if invalid
  */
-function sanitizeDate(input) {
+export function sanitizeDate(input) {
   if (!input) {
     return null;
   }
@@ -229,7 +230,7 @@ function sanitizeDate(input) {
  * @param {*} defaultValue - Default value if invalid
  * @returns {*} Sanitized enum value
  */
-function sanitizeEnum(input, allowedValues, defaultValue = null) {
+export function sanitizeEnum(input, allowedValues, defaultValue = null) {
   if (!Array.isArray(allowedValues) || allowedValues.length === 0) {
     return defaultValue;
   }
@@ -243,7 +244,7 @@ function sanitizeEnum(input, allowedValues, defaultValue = null) {
  * @param {*} defaultValue - Default value
  * @returns {boolean} Sanitized boolean
  */
-function sanitizeBoolean(input, defaultValue = false) {
+export function sanitizeBoolean(input, defaultValue = false) {
   if (typeof input === 'boolean') {
     return input;
   }
@@ -271,7 +272,7 @@ function sanitizeBoolean(input, defaultValue = false) {
  * @param {string} input - Input string
  * @returns {string} Escaped string
  */
-function escapeSQLString(input) {
+export function escapeSQLString(input) {
   if (typeof input !== 'string') {
     return input;
   }
@@ -290,7 +291,7 @@ function escapeSQLString(input) {
  * @param {string} filename - Original filename
  * @returns {string} Sanitized filename
  */
-function sanitizeFilename(filename) {
+export function sanitizeFilename(filename) {
   if (!filename || typeof filename !== 'string') {
     return 'unnamed';
   }
@@ -319,7 +320,7 @@ function sanitizeFilename(filename) {
  * @param {Object} obj - Object to sanitize
  * @returns {Object} Sanitized object
  */
-function sanitizeObjectKeys(obj) {
+export function sanitizeObjectKeys(obj) {
   if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
     return obj;
   }
@@ -349,7 +350,7 @@ function sanitizeObjectKeys(obj) {
  * @param {Object} body - Request body
  * @returns {Object} Sanitized body
  */
-function sanitizeRequestBody(body) {
+export function sanitizeRequestBody(body) {
   if (!body || typeof body !== 'object') {
     return body;
   }
@@ -361,7 +362,7 @@ function sanitizeRequestBody(body) {
   return sanitizeInput(safe);
 }
 
-module.exports = {
+export default {
   sanitizeInput,
   sanitizeString,
   sanitizeEmail,
