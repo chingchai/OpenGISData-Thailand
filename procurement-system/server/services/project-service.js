@@ -165,7 +165,7 @@ export function getProjectById(projectId) {
     const commentResult = queryOne(`
       SELECT COUNT(*) as comment_count
       FROM comments
-      WHERE project_id = ? AND deleted_at IS NULL
+      WHERE project_id = ?
     `, [projectId]);
     const comment_count = commentResult ? commentResult.comment_count : 0;
 
@@ -247,7 +247,7 @@ export function createProject(projectData, userId) {
         INSERT INTO projects (
           project_code, name, description, department_id,
           procurement_method, budget_amount, budget_year,
-          status, planned_start_date, created_by, created_at
+          status, planned_start, created_by, created_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
         projectCode,
@@ -269,7 +269,7 @@ export function createProject(projectData, userId) {
       const stepInsert = db.prepare(`
         INSERT INTO project_steps (
           project_id, step_number, step_name, step_description,
-          planned_start_date, planned_end_date, sla_days,
+          planned_start, planned_end, sla_days,
           status, is_critical, allow_weekends, created_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `);
@@ -352,7 +352,7 @@ export function updateProject(projectId, updateData, userId) {
     // Build dynamic update query
     const allowedFields = [
       'name', 'description', 'budget_amount', 'status',
-      'actual_start_date', 'actual_end_date', 'winner_vendor',
+      'actual_start', 'actual_end', 'winner_vendor',
       'contract_number', 'contract_date', 'remarks'
     ];
 
@@ -362,8 +362,8 @@ export function updateProject(projectId, updateData, userId) {
       description: 'description',
       budgetAmount: 'budget_amount',
       status: 'status',
-      actualStartDate: 'actual_start_date',
-      actualEndDate: 'actual_end_date',
+      actualStartDate: 'actual_start',
+      actualEndDate: 'actual_end',
       winnerVendor: 'winner_vendor',
       contractNumber: 'contract_number',
       contractDate: 'contract_date',

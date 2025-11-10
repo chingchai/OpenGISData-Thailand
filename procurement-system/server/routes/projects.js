@@ -5,6 +5,7 @@
 
 import express from 'express';
 import * as projectController from '../controllers/project-controller.js';
+import * as stepController from '../controllers/step-controller.js';
 import { authenticate } from '../middleware/auth.js';
 import { body, param, query, validationResult } from 'express-validator';
 
@@ -227,6 +228,45 @@ router.delete(
   validateProjectId,
   validate,
   projectController.deleteProject
+);
+
+// ==========================================
+// Nested Step Routes
+// ==========================================
+
+/**
+ * Validation rules for project ID in nested routes
+ */
+const validateProjectIdParam = [
+  param('projectId')
+    .isInt({ min: 1 })
+    .withMessage('Project ID must be a positive integer')
+];
+
+/**
+ * GET /api/projects/:projectId/steps
+ * Get all steps for a specific project
+ * Accessible by: all authenticated users (filtered by role/department)
+ */
+router.get(
+  '/:projectId/steps',
+  authenticate,
+  validateProjectIdParam,
+  validate,
+  stepController.getStepsByProject
+);
+
+/**
+ * GET /api/projects/:projectId/steps/progress
+ * Get step progress summary for a project
+ * Accessible by: all authenticated users (filtered by role/department)
+ */
+router.get(
+  '/:projectId/steps/progress',
+  authenticate,
+  validateProjectIdParam,
+  validate,
+  stepController.getStepProgress
 );
 
 export default router;

@@ -19,19 +19,19 @@ export function getStepsByProject(projectId) {
       SELECT
         ps.*,
         CASE
-          WHEN ps.status = 'completed' AND ps.actual_end_date > ps.planned_end_date THEN 'delayed'
-          WHEN ps.status != 'completed' AND DATE('now') > ps.planned_end_date THEN 'overdue'
+          WHEN ps.status = 'completed' AND ps.actual_end > ps.planned_end THEN 'delayed'
+          WHEN ps.status != 'completed' AND DATE('now') > ps.planned_end THEN 'overdue'
           ELSE ps.status
         END as computed_status,
         CASE
-          WHEN ps.actual_end_date IS NOT NULL THEN
-            CAST((julianday(ps.actual_end_date) - julianday(ps.planned_end_date)) AS INTEGER)
-          WHEN DATE('now') > ps.planned_end_date THEN
-            CAST((julianday('now') - julianday(ps.planned_end_date)) AS INTEGER)
+          WHEN ps.actual_end IS NOT NULL THEN
+            CAST((julianday(ps.actual_end) - julianday(ps.planned_end)) AS INTEGER)
+          WHEN DATE('now') > ps.planned_end THEN
+            CAST((julianday('now') - julianday(ps.planned_end)) AS INTEGER)
           ELSE 0
         END as delay_days_computed
       FROM project_steps ps
-      WHERE ps.project_id = ? AND ps.deleted_at IS NULL
+      WHERE ps.project_id = ?
       ORDER BY ps.step_number ASC
     `, [projectId]);
 
@@ -70,7 +70,7 @@ export function getStepById(stepId) {
       FROM project_steps ps
       LEFT JOIN projects p ON ps.project_id = p.id
       LEFT JOIN departments d ON p.department_id = d.id
-      WHERE ps.id = ? AND ps.deleted_at IS NULL
+      WHERE ps.id = ?
     `, [stepId]);
 
     if (!step) {
@@ -126,9 +126,9 @@ export function updateStepStatus(stepId, status, userId) {
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const updates = { status };
 
-    // Auto-set actual_start_date when status changes to in_progress
-    if (status === 'in_progress' && !currentStep.actual_start_date) {
-      updates.actual_start_date = now;
+    // Auto-set actual_start when status changes to in_progress
+    if (status === 'in_progress' && !currentStep.actual_start) {
+      updates.actual_start = now;
       logger.info('Step started', {
         stepId,
         stepNumber: currentStep.step_number,
@@ -136,12 +136,12 @@ export function updateStepStatus(stepId, status, userId) {
       });
     }
 
-    // Auto-set actual_end_date and calculate delay when status changes to completed
-    if (status === 'completed' && !currentStep.actual_end_date) {
-      updates.actual_end_date = now;
+    // Auto-set actual_end and calculate delay when status changes to completed
+    if (status === 'completed' && !currentStep.actual_end) {
+      updates.actual_end = now;
 
       // Calculate delay days
-      const plannedEnd = new Date(currentStep.planned_end_date);
+      const plannedEnd = new Date(currentStep.planned_end);
       const actualEnd = new Date(now);
       const delayDays = Math.floor((actualEnd - plannedEnd) / (1000 * 60 * 60 * 24));
       updates.delay_days = Math.max(0, delayDays);
@@ -231,8 +231,8 @@ export function updateStep(stepId, updateData, userId) {
 
     // Allowed fields for update
     const allowedFields = [
-      'step_name', 'step_description', 'planned_start_date', 'planned_end_date',
-      'actual_start_date', 'actual_end_date', 'sla_days', 'is_critical',
+      'step_name', 'step_description', 'planned_start', 'planned_end',
+      'actual_start', 'actual_end', 'sla_days', 'is_critical',
       'allow_weekends', 'notes'
     ];
 
@@ -240,10 +240,10 @@ export function updateStep(stepId, updateData, userId) {
     const fieldMapping = {
       stepName: 'step_name',
       stepDescription: 'step_description',
-      plannedStartDate: 'planned_start_date',
-      plannedEndDate: 'planned_end_date',
-      actualStartDate: 'actual_start_date',
-      actualEndDate: 'actual_end_date',
+      plannedStartDate: 'planned_start',
+      plannedEndDate: 'planned_end',
+      actualStartDate: 'actual_start',
+      actualEndDate: 'actual_end',
       slaDays: 'sla_days',
       isCritical: 'is_critical',
       allowWeekends: 'allow_weekends',
@@ -338,14 +338,14 @@ export function calculateStepDelay(stepId) {
     }
 
     const now = new Date();
-    const plannedEnd = new Date(step.planned_end_date);
+    const plannedEnd = new Date(step.planned_end);
     let delayDays = 0;
     let isOverdue = false;
     let warningLevel = 'normal'; // normal, warning, critical
 
-    if (step.status === 'completed' && step.actual_end_date) {
+    if (step.status === 'completed' && step.actual_end) {
       // Calculate actual delay for completed steps
-      const actualEnd = new Date(step.actual_end_date);
+      const actualEnd = new Date(step.actual_end);
       delayDays = Math.floor((actualEnd - plannedEnd) / (1000 * 60 * 60 * 24));
       isOverdue = delayDays > 0;
     } else if (step.status !== 'completed') {
@@ -366,8 +366,8 @@ export function calculateStepDelay(stepId) {
       stepNumber: step.step_number,
       stepName: step.step_name,
       status: step.status,
-      plannedEndDate: step.planned_end_date,
-      actualEndDate: step.actual_end_date,
+      plannedEndDate: step.planned_end,
+      actualEndDate: step.actual_end,
       delayDays: Math.max(0, delayDays),
       isOverdue,
       warningLevel,
@@ -412,13 +412,13 @@ export function getStepProgress(projectId) {
         SUM(CASE WHEN status = 'in_progress' THEN 1 ELSE 0 END) as in_progress_steps,
         SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_steps,
         SUM(CASE WHEN status = 'on_hold' THEN 1 ELSE 0 END) as on_hold_steps,
-        SUM(CASE WHEN DATE('now') > planned_end_date AND status != 'completed' THEN 1 ELSE 0 END) as overdue_steps,
+        SUM(CASE WHEN DATE('now') > planned_end AND status != 'completed' THEN 1 ELSE 0 END) as overdue_steps,
         SUM(CASE WHEN delay_days > 0 THEN delay_days ELSE 0 END) as total_delay_days,
         AVG(CASE WHEN delay_days > 0 THEN delay_days ELSE 0 END) as average_delay_days,
-        MIN(planned_start_date) as project_start_date,
-        MAX(planned_end_date) as project_end_date
+        MIN(planned_start) as project_start_date,
+        MAX(planned_end) as project_end_date
       FROM project_steps
-      WHERE project_id = ? AND deleted_at IS NULL
+      WHERE project_id = ?
     `, [projectId]);
 
     if (!summary) {
@@ -435,7 +435,6 @@ export function getStepProgress(projectId) {
     const currentStep = queryOne(`
       SELECT * FROM project_steps
       WHERE project_id = ? AND status IN ('in_progress', 'pending')
-      AND deleted_at IS NULL
       ORDER BY step_number ASC
       LIMIT 1
     `, [projectId]);
@@ -457,7 +456,7 @@ export function getStepProgress(projectId) {
         stepNumber: currentStep.step_number,
         stepName: currentStep.step_name,
         status: currentStep.status,
-        plannedEndDate: currentStep.planned_end_date
+        plannedEndDate: currentStep.planned_end
       } : null,
       status: progressPercentage === 100 ? 'completed' :
               progressPercentage > 0 ? 'in_progress' : 'pending'
@@ -497,7 +496,7 @@ export function autoStartNextStep(projectId, currentStepNumber) {
     // Get next step
     const nextStep = queryOne(`
       SELECT * FROM project_steps
-      WHERE project_id = ? AND step_number = ? AND deleted_at IS NULL
+      WHERE project_id = ? AND step_number = ?
     `, [projectId, currentStepNumber + 1]);
 
     if (!nextStep) {
@@ -514,7 +513,7 @@ export function autoStartNextStep(projectId, currentStepNumber) {
 
       execute(`
         UPDATE project_steps
-        SET status = 'in_progress', actual_start_date = ?, updated_at = datetime('now')
+        SET status = 'in_progress', actual_start = ?, updated_at = datetime('now')
         WHERE id = ?
       `, [now, nextStep.id]);
 
@@ -556,14 +555,13 @@ export function getOverdueSteps(departmentId = null) {
         d.name as department_name,
         u.full_name as created_by_name,
         u.email as created_by_email,
-        CAST((julianday('now') - julianday(ps.planned_end_date)) AS INTEGER) as days_overdue
+        CAST((julianday('now') - julianday(ps.planned_end)) AS INTEGER) as days_overdue
       FROM project_steps ps
       LEFT JOIN projects p ON ps.project_id = p.id
       LEFT JOIN departments d ON p.department_id = d.id
       LEFT JOIN users u ON p.created_by = u.id
       WHERE ps.status != 'completed'
-        AND DATE('now') > ps.planned_end_date
-        AND ps.deleted_at IS NULL
+        AND DATE('now') > ps.planned_end
         AND p.deleted_at IS NULL
     `;
 
@@ -574,7 +572,7 @@ export function getOverdueSteps(departmentId = null) {
       params.push(departmentId);
     }
 
-    sql += ' ORDER BY ps.planned_end_date ASC';
+    sql += ' ORDER BY ps.planned_end ASC';
 
     const overdueSteps = query(sql, params);
 
