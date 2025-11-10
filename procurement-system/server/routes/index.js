@@ -14,7 +14,10 @@ router.get('/', (req, res) => {
     endpoints: {
       auth: '/api/auth',
       projects: '/api/projects',
-      steps: '/api/projects/:id/steps'
+      projectSteps: '/api/projects/:projectId/steps',
+      steps: '/api/steps',
+      stepsByProject: '/api/projects/:projectId/steps',
+      overdueSteps: '/api/steps/overdue'
     }
   });
 });
@@ -22,5 +25,6 @@ router.get('/', (req, res) => {
 // Mount routes
 router.use('/auth', authRoutes);
 router.use('/projects', projectRoutes);
+router.use('/steps', stepRoutes);
 
 export default router;
