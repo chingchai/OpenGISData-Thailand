@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { projectsAPI } from '../services/api';
 import Layout from '../components/Layout';
+import CreateProjectModal from '../components/CreateProjectModal';
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filters, setFilters] = useState({
     status: '',
     departmentId: '',
@@ -31,6 +33,11 @@ const ProjectsPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCreateSuccess = () => {
+    // Refresh projects list
+    fetchProjects();
   };
 
   const getStatusColor = (status) => {
@@ -73,6 +80,15 @@ const ProjectsPage = () => {
             <h2 className="text-2xl font-bold text-gray-800">โครงการทั้งหมด</h2>
             <p className="text-gray-600">จัดการและติดตามโครงการจัดซื้อจัดจ้าง</p>
           </div>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            <span className="font-medium">เพิ่มโครงการ</span>
+          </button>
         </div>
 
         {/* Filters */}
@@ -206,6 +222,13 @@ const ProjectsPage = () => {
           </div>
         )}
       </div>
+
+      {/* Create Project Modal */}
+      <CreateProjectModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={handleCreateSuccess}
+      />
     </Layout>
   );
 };
