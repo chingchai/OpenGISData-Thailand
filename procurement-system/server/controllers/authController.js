@@ -12,7 +12,7 @@ import {
  */
 export const login = async (req, res) => {
   try {
-    const { username, password, role, departmentId } = req.body;
+    const { username, password, role } = req.body;
 
     // Find user by username and role
     const user = queryOne(
@@ -47,25 +47,6 @@ export const login = async (req, res) => {
         error: 'Invalid credentials',
         code: 'INVALID_CREDENTIALS'
       });
-    }
-
-    // For staff, verify department matches
-    if (role === 'staff') {
-      if (!departmentId) {
-        return res.status(400).json({
-          success: false,
-          error: 'Department is required for staff users',
-          code: 'DEPARTMENT_REQUIRED'
-        });
-      }
-
-      if (user.department_id !== parseInt(departmentId)) {
-        return res.status(401).json({
-          success: false,
-          error: 'Invalid department',
-          code: 'INVALID_DEPARTMENT'
-        });
-      }
     }
 
     // Update last login
