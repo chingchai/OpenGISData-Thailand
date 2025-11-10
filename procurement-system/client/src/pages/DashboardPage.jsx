@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { projectsAPI, stepsAPI } from '../services/api';
 import Layout from '../components/Layout';
+import GanttChart from '../components/GanttChart';
 
 const DashboardPage = () => {
   const [stats, setStats] = useState(null);
   const [recentProjects, setRecentProjects] = useState([]);
+  const [allProjects, setAllProjects] = useState([]); // For Gantt chart
   const [overdueSteps, setOverdueSteps] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,14 +17,16 @@ const DashboardPage = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const [statsRes, projectsRes, overdueRes] = await Promise.all([
+      const [statsRes, projectsRes, allProjectsRes, overdueRes] = await Promise.all([
         projectsAPI.getStats(),
         projectsAPI.getAll({ limit: 5 }),
+        projectsAPI.getAll(), // Get all projects for Gantt chart
         stepsAPI.getOverdue({ limit: 5 })
       ]);
 
       setStats(statsRes.data.data);
       setRecentProjects(projectsRes.data.data);
+      setAllProjects(allProjectsRes.data.data);
       setOverdueSteps(overdueRes.data.data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
@@ -122,6 +126,11 @@ const DashboardPage = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Gantt Chart Timeline */}
+        {allProjects.length > 0 && (
+          <GanttChart projects={allProjects} />
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
