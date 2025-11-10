@@ -1,23 +1,46 @@
 import { useMemo } from 'react';
 
 const GanttChart = ({ projects }) => {
+  // Debug: log projects data
+  console.log('GanttChart received projects:', projects);
+
   // คำนวณช่วงเวลาทั้งหมด (min/max dates)
   const dateRange = useMemo(() => {
-    if (!projects || projects.length === 0) return null;
+    if (!projects || projects.length === 0) {
+      console.log('GanttChart: No projects to display');
+      return null;
+    }
 
-    const dates = projects.flatMap(p => [
-      new Date(p.start_date),
-      new Date(p.expected_end_date || p.actual_end_date || p.start_date)
-    ]);
+    try {
+      const dates = projects.flatMap(p => {
+        const startDate = new Date(p.start_date);
+        const endDate = new Date(p.expected_end_date || p.actual_end_date || p.start_date);
 
-    const minDate = new Date(Math.min(...dates));
-    const maxDate = new Date(Math.max(...dates));
+        console.log(`Project ${p.name}:`, {
+          start_date: p.start_date,
+          expected_end_date: p.expected_end_date,
+          actual_end_date: p.actual_end_date,
+          parsedStart: startDate,
+          parsedEnd: endDate
+        });
 
-    // เพิ่ม buffer 7 วันข้างหน้าและข้างหลัง
-    minDate.setDate(minDate.getDate() - 7);
-    maxDate.setDate(maxDate.getDate() + 7);
+        return [startDate, endDate];
+      });
 
-    return { minDate, maxDate };
+      const minDate = new Date(Math.min(...dates));
+      const maxDate = new Date(Math.max(...dates));
+
+      // เพิ่ม buffer 7 วันข้างหน้าและข้างหลัง
+      minDate.setDate(minDate.getDate() - 7);
+      maxDate.setDate(maxDate.getDate() + 7);
+
+      console.log('GanttChart dateRange:', { minDate, maxDate });
+
+      return { minDate, maxDate };
+    } catch (error) {
+      console.error('Error calculating date range:', error);
+      return null;
+    }
   }, [projects]);
 
   // คำนวณ position และ width ของแต่ละโครงการ
@@ -87,8 +110,28 @@ const GanttChart = ({ projects }) => {
 
   if (!projects || projects.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
-        ไม่มีข้อมูลโครงการ
+      <div className="bg-white rounded-lg shadow p-8">
+        <div className="text-center py-8">
+          <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <p className="mt-4 text-gray-500 text-lg">ไม่มีข้อมูลโครงการสำหรับแสดง Gantt Chart</p>
+          <p className="mt-2 text-sm text-gray-400">กรุณาเพิ่มโครงการเพื่อดู timeline</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!dateRange) {
+    return (
+      <div className="bg-white rounded-lg shadow p-8">
+        <div className="text-center py-8">
+          <svg className="mx-auto h-12 w-12 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="mt-4 text-red-500 text-lg">ไม่สามารถคำนวณช่วงเวลาได้</p>
+          <p className="mt-2 text-sm text-gray-400">โครงการอาจขาดข้อมูลวันที่</p>
+        </div>
       </div>
     );
   }
