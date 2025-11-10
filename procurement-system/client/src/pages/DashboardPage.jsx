@@ -3,17 +3,28 @@ import { Link } from 'react-router-dom';
 import { projectsAPI, stepsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import GanttChart from '../components/GanttChart';
+import ProjectSummary from '../components/ProjectSummary';
 
 const DashboardPage = () => {
   const [stats, setStats] = useState(null);
   const [recentProjects, setRecentProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]); // For Gantt chart
+  const [filteredProjects, setFilteredProjects] = useState([]); // For filtered display
   const [overdueSteps, setOverdueSteps] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeFilters, setActiveFilters] = useState({
+    status: null,
+    procurementMethod: null
+  });
 
   useEffect(() => {
     fetchDashboardData();
   }, []);
+
+  // Apply filters when allProjects or activeFilters change
+  useEffect(() => {
+    applyFilters();
+  }, [allProjects, activeFilters]);
 
   const fetchDashboardData = async () => {
     try {
@@ -32,6 +43,31 @@ const DashboardPage = () => {
       console.error('Error fetching dashboard data:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const applyFilters = () => {
+    let filtered = [...allProjects];
+
+    if (activeFilters.status) {
+      filtered = filtered.filter(p => p.status === activeFilters.status);
+    }
+
+    if (activeFilters.procurementMethod) {
+      filtered = filtered.filter(p => p.procurement_method === activeFilters.procurementMethod);
+    }
+
+    setFilteredProjects(filtered);
+  };
+
+  const handleFilterChange = (filterType, value) => {
+    if (filterType === 'reset') {
+      setActiveFilters({ status: null, procurementMethod: null });
+    } else {
+      setActiveFilters(prev => ({
+        ...prev,
+        [filterType]: prev[filterType] === value ? null : value
+      }));
     }
   };
 
@@ -128,9 +164,37 @@ const DashboardPage = () => {
           </div>
         )}
 
-        {/* Gantt Chart Timeline */}
-        {allProjects.length > 0 && (
-          <GanttChart projects={allProjects} />
+        {/* Project Summary with Filters */}
+        <ProjectSummary
+          projects={allProjects}
+          onFilterChange={handleFilterChange}
+        />
+
+        {/* Active Filters Display */}
+        {(activeFilters.status || activeFilters.procurementMethod) && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                <span className="text-sm font-medium text-blue-800">
+                  แสดงผลตามตัวกรอง: {filteredProjects.length} โครงการ
+                </span>
+              </div>
+              <button
+                onClick={() => handleFilterChange('reset', null)}
+                className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+              >
+                ล้างตัวกรอง
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Gantt Chart Timeline - แสดงตาม filter */}
+        {(filteredProjects.length > 0 || allProjects.length > 0) && (
+          <GanttChart projects={filteredProjects.length > 0 ? filteredProjects : allProjects} />
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

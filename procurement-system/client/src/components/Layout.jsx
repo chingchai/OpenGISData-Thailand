@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import NotificationDropdown from './NotificationDropdown';
 
 const Layout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -57,9 +58,13 @@ const Layout = ({ children }) => {
               ))}
             </div>
 
-            {/* User Menu */}
-            <div className="flex items-center">
-              <div className="text-right mr-4">
+            {/* Notification & User Menu */}
+            <div className="flex items-center gap-2">
+              {/* Notification Bell */}
+              <NotificationDropdown />
+
+              {/* User Info */}
+              <div className="text-right mr-4 ml-2">
                 <p className="text-sm font-medium text-gray-800">{user?.fullName}</p>
                 <p className="text-xs text-gray-500">
                   {user?.role === 'admin' && 'ผู้ดูแลระบบ'}
@@ -68,6 +73,8 @@ const Layout = ({ children }) => {
                   {user?.department && ` - ${user.department}`}
                 </p>
               </div>
+
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
