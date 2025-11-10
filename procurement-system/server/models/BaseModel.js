@@ -3,9 +3,9 @@
  * Class พื้นฐานสำหรับ database operations ทั่วไป
  */
 
-const { getDatabase, query, queryOne, execute, transaction } = require('../config/database');
-const { DatabaseError } = require('../utils/errors');
-const logger = require('../utils/logger');
+import { getDatabase, query, queryOne, execute, transaction } from '../config/database.js';
+import { DatabaseError } from '../utils/errors.js';
+import logger from '../utils/logger.js';
 
 class BaseModel {
   /**
@@ -474,4 +474,4 @@ class BaseModel {
   }
 }
 
-module.exports = BaseModel;
+export default BaseModel;

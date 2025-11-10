@@ -4,11 +4,15 @@
  * REFACTORED: ใช้ Core Infrastructure
  */
 
-const { query, queryOne, execute, transaction, getDatabase } = require('../config/database');
-const { ValidationError, NotFoundError, DatabaseError } = require('../utils/errors');
-const logger = require('../utils/logger');
-const fs = require('fs');
-const path = require('path');
+import { query, queryOne, execute, transaction, getDatabase } from '../config/database.js';
+import { ValidationError, NotFoundError, DatabaseError } from '../utils/errors.js';
+import logger from '../utils/logger.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load procurement methods configuration
 const procurementMethodsPath = path.join(__dirname, '../data/procurement-methods.json');
@@ -38,7 +42,7 @@ try {
  * @param {number} filters.limit - Items per page (default: 20)
  * @returns {Object} - { data, pagination }
  */
-exports.getAllProjects = (filters = {}) => {
+export function getAllProjects(filters = {}) {
   try {
     const {
       departmentId,
@@ -131,7 +135,7 @@ exports.getAllProjects = (filters = {}) => {
  * @param {number} projectId - Project ID
  * @returns {Object} - { data: project with steps }
  */
-exports.getProjectById = (projectId) => {
+export function getProjectById(projectId) {
   try {
     const project = queryOne(`
       SELECT
@@ -206,7 +210,7 @@ exports.getProjectById = (projectId) => {
  * @param {number} userId - User ID creating the project
  * @returns {Object} - { data: created project }
  */
-exports.createProject = (projectData, userId) => {
+export function createProject(projectData, userId) {
   try {
     const {
       name,
@@ -336,7 +340,7 @@ exports.createProject = (projectData, userId) => {
  * @param {number} userId - User ID making the update
  * @returns {Object} - { data: updated project }
  */
-exports.updateProject = (projectId, updateData, userId) => {
+export function updateProject(projectId, updateData, userId) {
   try {
     // Get current project for audit
     const currentProject = queryOne('SELECT * FROM projects WHERE id = ? AND deleted_at IS NULL', [projectId]);
@@ -450,7 +454,7 @@ exports.updateProject = (projectId, updateData, userId) => {
  * @param {number} userId - User ID performing deletion
  * @returns {Object} - { data: null }
  */
-exports.deleteProject = (projectId, userId) => {
+export function deleteProject(projectId, userId) {
   try {
     const project = queryOne('SELECT * FROM projects WHERE id = ? AND deleted_at IS NULL', [projectId]);
     if (!project) {
@@ -616,7 +620,7 @@ const generateProjectSteps = (projectId, method, startDate) => {
  * @param {number} departmentId - Optional department filter
  * @returns {Object} - { data: statistics object }
  */
-exports.getProjectStatistics = (departmentId = null) => {
+export function getProjectStatistics(departmentId = null) {
   try {
     let whereClause = 'WHERE p.deleted_at IS NULL';
     const params = [];
@@ -667,11 +671,11 @@ exports.getProjectStatistics = (departmentId = null) => {
   }
 };
 
-module.exports = {
-  getAllProjects: exports.getAllProjects,
-  getProjectById: exports.getProjectById,
-  createProject: exports.createProject,
-  updateProject: exports.updateProject,
-  deleteProject: exports.deleteProject,
-  getProjectStatistics: exports.getProjectStatistics
+export default {
+  getAllProjects,
+  getProjectById,
+  createProject,
+  updateProject,
+  deleteProject,
+  getProjectStatistics
 };

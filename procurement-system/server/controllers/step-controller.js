@@ -4,23 +4,23 @@
  * ใช้ Core Infrastructure
  */
 
-const stepService = require('../services/step-service');
-const projectService = require('../services/project-service');
-const { asyncHandler } = require('../utils/errors');
-const {
+import stepService from '../services/step-service.js';
+import projectService from '../services/project-service.js';
+import { asyncHandler } from '../utils/errors.js';
+import {
   sendSuccess,
   sendValidationError,
   sendForbidden
-} = require('../utils/responses');
-const { ValidationError, NotFoundError, ForbiddenError } = require('../utils/errors');
-const { sanitizeInt, sanitizeEnum } = require('../utils/sanitize');
-const logger = require('../utils/logger');
+} from '../utils/responses.js';
+import { ValidationError, NotFoundError, ForbiddenError } from '../utils/errors.js';
+import { sanitizeInt, sanitizeEnum } from '../utils/sanitize.js';
+import logger from '../utils/logger.js';
 
 /**
  * Get all steps for a project
  * GET /api/projects/:projectId/steps
  */
-exports.getStepsByProject = asyncHandler(async (req, res) => {
+export const getStepsByProject = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
   const user = req.user;
 
@@ -55,7 +55,7 @@ exports.getStepsByProject = asyncHandler(async (req, res) => {
  * Get step by ID
  * GET /api/steps/:id
  */
-exports.getStepById = asyncHandler(async (req, res) => {
+export const getStepById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
 
@@ -91,7 +91,7 @@ exports.getStepById = asyncHandler(async (req, res) => {
  * PATCH /api/steps/:id/status
  * Body: { status: 'pending'|'in_progress'|'completed'|'on_hold' }
  */
-exports.updateStepStatus = asyncHandler(async (req, res) => {
+export const updateStepStatus = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
   const user = req.user;
@@ -150,7 +150,7 @@ exports.updateStepStatus = asyncHandler(async (req, res) => {
  * PUT /api/steps/:id
  * Body: { stepName, stepDescription, plannedStartDate, plannedEndDate, slaDays, notes, ... }
  */
-exports.updateStep = asyncHandler(async (req, res) => {
+export const updateStep = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
   const updateData = req.body;
@@ -215,7 +215,7 @@ exports.updateStep = asyncHandler(async (req, res) => {
  * Get step progress for a project
  * GET /api/projects/:projectId/steps/progress
  */
-exports.getStepProgress = asyncHandler(async (req, res) => {
+export const getStepProgress = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
   const user = req.user;
 
@@ -250,7 +250,7 @@ exports.getStepProgress = asyncHandler(async (req, res) => {
  * Calculate step delay
  * GET /api/steps/:id/delay
  */
-exports.calculateStepDelay = asyncHandler(async (req, res) => {
+export const calculateStepDelay = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
 
@@ -287,7 +287,7 @@ exports.calculateStepDelay = asyncHandler(async (req, res) => {
  * GET /api/steps/overdue
  * Query params: departmentId (optional for admin/executive)
  */
-exports.getOverdueSteps = asyncHandler(async (req, res) => {
+export const getOverdueSteps = asyncHandler(async (req, res) => {
   const { departmentId } = req.query;
   const user = req.user;
 
@@ -308,12 +308,12 @@ exports.getOverdueSteps = asyncHandler(async (req, res) => {
   sendSuccess(res, result.data, 'ดึงข้อมูลขั้นตอนที่ล่าช้าสำเร็จ');
 });
 
-module.exports = {
-  getStepsByProject: exports.getStepsByProject,
-  getStepById: exports.getStepById,
-  updateStepStatus: exports.updateStepStatus,
-  updateStep: exports.updateStep,
-  getStepProgress: exports.getStepProgress,
-  calculateStepDelay: exports.calculateStepDelay,
-  getOverdueSteps: exports.getOverdueSteps
+export default {
+  getStepsByProject,
+  getStepById,
+  updateStepStatus,
+  updateStep,
+  getStepProgress,
+  calculateStepDelay,
+  getOverdueSteps
 };

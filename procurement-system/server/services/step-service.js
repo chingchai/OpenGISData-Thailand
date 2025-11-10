@@ -4,16 +4,16 @@
  * ใช้ Core Infrastructure
  */
 
-const { query, queryOne, execute, transaction, getDatabase } = require('../config/database');
-const { ValidationError, NotFoundError, DatabaseError } = require('../utils/errors');
-const logger = require('../utils/logger');
+import { query, queryOne, execute, transaction, getDatabase } from '../config/database.js';
+import { ValidationError, NotFoundError, DatabaseError } from '../utils/errors.js';
+import logger from '../utils/logger.js';
 
 /**
  * Get all steps for a specific project
  * @param {number} projectId - Project ID
  * @returns {Object} - { data: array of steps }
  */
-exports.getStepsByProject = (projectId) => {
+export function getStepsByProject(projectId) {
   try {
     const steps = query(`
       SELECT
@@ -58,7 +58,7 @@ exports.getStepsByProject = (projectId) => {
  * @param {number} stepId - Step ID
  * @returns {Object} - { data: step details }
  */
-exports.getStepById = (stepId) => {
+export function getStepById(stepId) {
   try {
     const step = queryOne(`
       SELECT
@@ -107,7 +107,7 @@ exports.getStepById = (stepId) => {
  * @param {number} userId - User ID making the update
  * @returns {Object} - { data: updated step }
  */
-exports.updateStepStatus = (stepId, status, userId) => {
+export function updateStepStatus(stepId, status, userId) {
   try {
     // Validate status
     const validStatuses = ['pending', 'in_progress', 'completed', 'on_hold', 'overdue'];
@@ -221,7 +221,7 @@ exports.updateStepStatus = (stepId, status, userId) => {
  * @param {number} userId - User ID making the update
  * @returns {Object} - { data: updated step }
  */
-exports.updateStep = (stepId, updateData, userId) => {
+export function updateStep(stepId, updateData, userId) {
   try {
     // Get current step
     const currentStep = queryOne('SELECT * FROM project_steps WHERE id = ?', [stepId]);
@@ -330,7 +330,7 @@ exports.updateStep = (stepId, updateData, userId) => {
  * @param {number} stepId - Step ID
  * @returns {Object} - { data: delay information }
  */
-exports.calculateStepDelay = (stepId) => {
+export function calculateStepDelay(stepId) {
   try {
     const step = queryOne('SELECT * FROM project_steps WHERE id = ?', [stepId]);
     if (!step) {
@@ -403,7 +403,7 @@ exports.calculateStepDelay = (stepId) => {
  * @param {number} projectId - Project ID
  * @returns {Object} - { data: progress summary }
  */
-exports.getStepProgress = (projectId) => {
+export function getStepProgress(projectId) {
   try {
     const summary = queryOne(`
       SELECT
@@ -492,7 +492,7 @@ exports.getStepProgress = (projectId) => {
  * @param {number} currentStepNumber - Current step number
  * @returns {Object|null} - Next step if auto-started, null otherwise
  */
-exports.autoStartNextStep = (projectId, currentStepNumber) => {
+export function autoStartNextStep(projectId, currentStepNumber) {
   try {
     // Get next step
     const nextStep = queryOne(`
@@ -545,7 +545,7 @@ exports.autoStartNextStep = (projectId, currentStepNumber) => {
  * @param {number} departmentId - Optional department filter
  * @returns {Object} - { data: array of overdue steps }
  */
-exports.getOverdueSteps = (departmentId = null) => {
+export function getOverdueSteps(departmentId = null) {
   try {
     let sql = `
       SELECT
@@ -596,13 +596,13 @@ exports.getOverdueSteps = (departmentId = null) => {
   }
 };
 
-module.exports = {
-  getStepsByProject: exports.getStepsByProject,
-  getStepById: exports.getStepById,
-  updateStepStatus: exports.updateStepStatus,
-  updateStep: exports.updateStep,
-  calculateStepDelay: exports.calculateStepDelay,
-  getStepProgress: exports.getStepProgress,
-  autoStartNextStep: exports.autoStartNextStep,
-  getOverdueSteps: exports.getOverdueSteps
+export default {
+  getStepsByProject,
+  getStepById,
+  updateStepStatus,
+  updateStep,
+  calculateStepDelay,
+  getStepProgress,
+  autoStartNextStep,
+  getOverdueSteps
 };

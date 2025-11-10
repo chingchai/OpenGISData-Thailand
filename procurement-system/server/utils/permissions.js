@@ -3,9 +3,9 @@
  * ฟังก์ชันสำหรับตรวจสอบสิทธิ์การเข้าถึง (ใช้กับ Core Infrastructure)
  */
 
-const { UnauthorizedError, ForbiddenError, NotFoundError } = require('./errors');
-const { sendUnauthorized, sendForbidden, sendNotFound } = require('./responses');
-const logger = require('./logger');
+import { UnauthorizedError, ForbiddenError, NotFoundError } from './errors.js';
+import { sendUnauthorized, sendForbidden, sendNotFound } from './responses.js';
+import logger from './logger.js';
 
 /**
  * ตรวจสอบสิทธิ์ตาม role
@@ -15,7 +15,7 @@ const logger = require('./logger');
  * @example
  * router.post('/admin-only', requireRole(['admin']), handler);
  */
-function requireRole(allowedRoles) {
+export function requireRole(allowedRoles) {
   return (req, res, next) => {
     if (!req.user) {
       logger.securityEvent('unauthorized_access_attempt', {
@@ -54,7 +54,7 @@ function requireRole(allowedRoles) {
  * @example
  * router.get('/projects/:departmentId', requireDepartmentAccess(), handler);
  */
-function requireDepartmentAccess(targetDepartmentId = null) {
+export function requireDepartmentAccess(targetDepartmentId = null) {
   return (req, res, next) => {
     const user = req.user;
 
@@ -105,7 +105,7 @@ function requireDepartmentAccess(targetDepartmentId = null) {
  *   'project'
  * ), handler);
  */
-function requireOwnership(getResourceFn, resourceType = 'resource') {
+export function requireOwnership(getResourceFn, resourceType = 'resource') {
   return async (req, res, next) => {
     const user = req.user;
     const resourceId = req.params.id;
@@ -217,7 +217,7 @@ function requireOwnership(getResourceFn, resourceType = 'resource') {
  * กรองข้อมูลตามกอง (สำหรับ Staff)
  * @returns {Function} Express middleware
  */
-function applyDepartmentFilter() {
+export function applyDepartmentFilter() {
   return (req, res, next) => {
     const user = req.user;
 
@@ -258,7 +258,7 @@ function applyDepartmentFilter() {
  * ตรวจสอบสิทธิ์การเพิ่ม comment
  * @returns {Function} Express middleware
  */
-function canComment() {
+export function canComment() {
   return (req, res, next) => {
     if (!req.user) {
       return sendUnauthorized(res);
@@ -277,7 +277,7 @@ function canComment() {
  * ตรวจสอบสิทธิ์การจัดการ SLA
  * @returns {Function} Express middleware
  */
-function canManageSLA() {
+export function canManageSLA() {
   return requireRole(['admin']);
 }
 
@@ -285,7 +285,7 @@ function canManageSLA() {
  * ตรวจสอบสิทธิ์การ export ข้อมูล
  * @returns {Function} Express middleware
  */
-function canExport() {
+export function canExport() {
   return requireRole(['admin', 'executive']);
 }
 
@@ -293,7 +293,7 @@ function canExport() {
  * ตรวจสอบสิทธิ์การจัดการผู้ใช้
  * @returns {Function} Express middleware
  */
-function canManageUsers() {
+export function canManageUsers() {
   return requireRole(['admin']);
 }
 
@@ -301,7 +301,7 @@ function canManageUsers() {
  * ตรวจสอบสิทธิ์การอนุมัติโครงการ
  * @returns {Function} Express middleware
  */
-function canApproveProjects() {
+export function canApproveProjects() {
   return requireRole(['admin', 'executive']);
 }
 
@@ -311,7 +311,7 @@ function canApproveProjects() {
  * @param {string} errorMessage - Error message if check fails
  * @returns {Function} Express middleware
  */
-function requireCustomPermission(checkFn, errorMessage = 'ไม่มีสิทธิ์ในการดำเนินการนี้') {
+export function requireCustomPermission(checkFn, errorMessage = 'ไม่มีสิทธิ์ในการดำเนินการนี้') {
   return async (req, res, next) => {
     if (!req.user) {
       return sendUnauthorized(res);
@@ -346,7 +346,7 @@ function requireCustomPermission(checkFn, errorMessage = 'ไม่มีสิ�
   };
 }
 
-module.exports = {
+export default {
   requireRole,
   requireDepartmentAccess,
   requireOwnership,

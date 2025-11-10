@@ -4,25 +4,25 @@
  * REFACTORED: ใช้ Core Infrastructure
  */
 
-const projectService = require('../services/project-service');
-const { asyncHandler } = require('../utils/errors');
-const {
+import projectService from '../services/project-service.js';
+import { asyncHandler } from '../utils/errors.js';
+import {
   sendSuccess,
   sendPaginated,
   sendCreated,
   sendValidationError,
   sendForbidden
-} = require('../utils/responses');
-const { ValidationError, NotFoundError, ForbiddenError } = require('../utils/errors');
-const { sanitizeInt, sanitizeEnum } = require('../utils/sanitize');
-const logger = require('../utils/logger');
+} from '../utils/responses.js';
+import { ValidationError, NotFoundError, ForbiddenError } from '../utils/errors.js';
+import { sanitizeInt, sanitizeEnum } from '../utils/sanitize.js';
+import logger from '../utils/logger.js';
 
 /**
  * Get all projects
  * GET /api/projects
  * Query params: departmentId, status, budgetYear, procurementMethod, page, limit
  */
-exports.getAllProjects = asyncHandler(async (req, res) => {
+export const getAllProjects = asyncHandler(async (req, res) => {
   const { departmentId, status, budgetYear, procurementMethod, page, limit } = req.query;
   const user = req.user;
 
@@ -71,7 +71,7 @@ exports.getAllProjects = asyncHandler(async (req, res) => {
  * Get project by ID
  * GET /api/projects/:id
  */
-exports.getProjectById = asyncHandler(async (req, res) => {
+export const getProjectById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
 
@@ -104,7 +104,7 @@ exports.getProjectById = asyncHandler(async (req, res) => {
  * POST /api/projects
  * Body: { name, description, departmentId, procurementMethod, budgetAmount, budgetYear, startDate }
  */
-exports.createProject = asyncHandler(async (req, res) => {
+export const createProject = asyncHandler(async (req, res) => {
   const user = req.user;
   const projectData = req.body;
 
@@ -173,7 +173,7 @@ exports.createProject = asyncHandler(async (req, res) => {
  * PUT /api/projects/:id
  * Body: Fields to update
  */
-exports.updateProject = asyncHandler(async (req, res) => {
+export const updateProject = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
   const updateData = req.body;
@@ -251,7 +251,7 @@ exports.updateProject = asyncHandler(async (req, res) => {
  * Delete project (soft delete)
  * DELETE /api/projects/:id
  */
-exports.deleteProject = asyncHandler(async (req, res) => {
+export const deleteProject = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = req.user;
 
@@ -300,7 +300,7 @@ exports.deleteProject = asyncHandler(async (req, res) => {
  * Get project statistics
  * GET /api/projects/stats
  */
-exports.getProjectStatistics = asyncHandler(async (req, res) => {
+export const getProjectStatistics = asyncHandler(async (req, res) => {
   const user = req.user;
 
   // Staff users can only see their department's statistics
@@ -313,11 +313,11 @@ exports.getProjectStatistics = asyncHandler(async (req, res) => {
   sendSuccess(res, result.data, 'ดึงสถิติโครงการสำเร็จ');
 });
 
-module.exports = {
-  getAllProjects: exports.getAllProjects,
-  getProjectById: exports.getProjectById,
-  createProject: exports.createProject,
-  updateProject: exports.updateProject,
-  deleteProject: exports.deleteProject,
-  getProjectStatistics: exports.getProjectStatistics
+export default {
+  getAllProjects,
+  getProjectById,
+  createProject,
+  updateProject,
+  deleteProject,
+  getProjectStatistics
 };
