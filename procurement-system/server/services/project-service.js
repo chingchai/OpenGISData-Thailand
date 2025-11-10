@@ -1,19 +1,31 @@
 /**
  * Project Service - Business Logic Layer
  * Handles project CRUD operations, step generation, and validation
+ * REFACTORED: ใช้ Core Infrastructure
  */
 
-import { query, queryOne, execute, transaction, getDatabase } from '../config/database.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { query, queryOne, execute, transaction, getDatabase } = require('../config/database');
+const { ValidationError, NotFoundError, DatabaseError } = require('../utils/errors');
+const logger = require('../utils/logger');
+const fs = require('fs');
+const path = require('path');
 
 // Load procurement methods configuration
 const procurementMethodsPath = path.join(__dirname, '../data/procurement-methods.json');
-const PROCUREMENT_METHODS = JSON.parse(fs.readFileSync(procurementMethodsPath, 'utf8'));
+let PROCUREMENT_METHODS;
+
+try {
+  PROCUREMENT_METHODS = JSON.parse(fs.readFileSync(procurementMethodsPath, 'utf8'));
+  logger.info('Loaded procurement methods configuration', {
+    methodCount: PROCUREMENT_METHODS.length
+  });
+} catch (error) {
+  logger.error('Failed to load procurement methods configuration:', {
+    error: error.message,
+    path: procurementMethodsPath
+  });
+  throw new Error('Failed to initialize project service: procurement methods configuration not found');
+}
 
 /**
  * Get all projects with optional filtering
@@ -21,11 +33,12 @@ const PROCUREMENT_METHODS = JSON.parse(fs.readFileSync(procurementMethodsPath, '
  * @param {number} filters.departmentId - Filter by department (required for staff role)
  * @param {string} filters.status - Filter by status
  * @param {number} filters.budgetYear - Filter by budget year
+ * @param {string} filters.procurementMethod - Filter by procurement method
  * @param {number} filters.page - Page number (default: 1)
  * @param {number} filters.limit - Items per page (default: 20)
- * @returns {Object} - { projects, pagination }
+ * @returns {Object} - { data, pagination }
  */
-export const getAllProjects = (filters = {}) => {
+exports.getAllProjects = (filters = {}) => {
   try {
     const {
       departmentId,
@@ -76,7 +89,8 @@ export const getAllProjects = (filters = {}) => {
 
     // Get total count for pagination
     const countSql = sql.replace(/SELECT.*FROM/, 'SELECT COUNT(DISTINCT p.id) as total FROM');
-    const { total } = queryOne(countSql, params);
+    const countResult = queryOne(countSql, params);
+    const total = countResult ? countResult.total : 0;
 
     // Add sorting and pagination
     sql += ' ORDER BY p.created_at DESC LIMIT ? OFFSET ?';
@@ -84,28 +98,40 @@ export const getAllProjects = (filters = {}) => {
 
     const projects = query(sql, params);
 
+    logger.dbOperation('getAllProjects', 'projects', {
+      filters: { departmentId, status, budgetYear, procurementMethod },
+      resultCount: projects.length,
+      page,
+      limit
+    });
+
     return {
-      success: true,
       data: projects,
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
         total,
-        totalPages: Math.ceil(total / limit)
+        totalPages: Math.ceil(total / limit),
+        hasNext: page < Math.ceil(total / limit),
+        hasPrev: page > 1
       }
     };
   } catch (error) {
-    console.error('Error in getAllProjects:', error);
-    throw new Error('Failed to fetch projects');
+    logger.error('Error in getAllProjects service:', {
+      error: error.message,
+      stack: error.stack,
+      filters
+    });
+    throw new DatabaseError('เกิดข้อผิดพลาดในการดึงข้อมูลโครงการ', error);
   }
 };
 
 /**
  * Get project by ID
  * @param {number} projectId - Project ID
- * @returns {Object} - Project with steps
+ * @returns {Object} - { data: project with steps }
  */
-export const getProjectById = (projectId) => {
+exports.getProjectById = (projectId) => {
   try {
     const project = queryOne(`
       SELECT
@@ -120,7 +146,8 @@ export const getProjectById = (projectId) => {
     `, [projectId]);
 
     if (!project) {
-      throw new Error('Project not found');
+      logger.warn('Project not found', { projectId });
+      throw new NotFoundError('ไม่พบโครงการที่ต้องการ');
     }
 
     // Get project steps
@@ -131,14 +158,21 @@ export const getProjectById = (projectId) => {
     `, [projectId]);
 
     // Get comments count
-    const { comment_count } = queryOne(`
+    const commentResult = queryOne(`
       SELECT COUNT(*) as comment_count
       FROM comments
       WHERE project_id = ? AND deleted_at IS NULL
-    `, [projectId]) || { comment_count: 0 };
+    `, [projectId]);
+    const comment_count = commentResult ? commentResult.comment_count : 0;
+
+    logger.dbOperation('getProjectById', 'projects', {
+      projectId,
+      found: true,
+      stepsCount: steps.length,
+      commentsCount: comment_count
+    });
 
     return {
-      success: true,
       data: {
         ...project,
         steps,
@@ -146,18 +180,33 @@ export const getProjectById = (projectId) => {
       }
     };
   } catch (error) {
-    console.error('Error in getProjectById:', error);
-    throw error;
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
+
+    logger.error('Error in getProjectById service:', {
+      error: error.message,
+      stack: error.stack,
+      projectId
+    });
+    throw new DatabaseError('เกิดข้อผิดพลาดในการดึงข้อมูลโครงการ', error);
   }
 };
 
 /**
  * Create new project with auto-generated steps
  * @param {Object} projectData - Project data
+ * @param {string} projectData.name - Project name
+ * @param {string} projectData.description - Project description
+ * @param {number} projectData.departmentId - Department ID
+ * @param {string} projectData.procurementMethod - Procurement method code
+ * @param {number} projectData.budgetAmount - Budget amount
+ * @param {number} projectData.budgetYear - Budget year
+ * @param {string} projectData.startDate - Start date (optional)
  * @param {number} userId - User ID creating the project
- * @returns {Object} - Created project
+ * @returns {Object} - { data: created project }
  */
-export const createProject = (projectData, userId) => {
+exports.createProject = (projectData, userId) => {
   try {
     const {
       name,
@@ -172,14 +221,21 @@ export const createProject = (projectData, userId) => {
     // Validate procurement method
     const method = PROCUREMENT_METHODS.find(m => m.code === procurementMethod);
     if (!method) {
-      throw new Error('Invalid procurement method');
+      logger.warn('Invalid procurement method attempted', {
+        procurementMethod,
+        userId
+      });
+      throw new ValidationError(
+        `วิธีจัดซื้อจัดจ้างไม่ถูกต้อง: ${procurementMethod}`,
+        { validMethods: PROCUREMENT_METHODS.map(m => m.code) }
+      );
     }
 
     // Generate project code
     const projectCode = generateProjectCode(departmentId, budgetYear);
 
     // Use transaction for atomicity
-    const result = transaction(() => {
+    const projectId = transaction(() => {
       const db = getDatabase();
 
       // Insert project
@@ -202,10 +258,10 @@ export const createProject = (projectData, userId) => {
         userId
       );
 
-      const projectId = projectResult.lastInsertRowid;
+      const newProjectId = projectResult.lastInsertRowid;
 
       // Generate and insert project steps
-      const steps = generateProjectSteps(projectId, method, startDate);
+      const steps = generateProjectSteps(newProjectId, method, startDate);
       const stepInsert = db.prepare(`
         INSERT INTO project_steps (
           project_id, step_number, step_name, step_description,
@@ -239,19 +295,37 @@ export const createProject = (projectData, userId) => {
         userId,
         'CREATE',
         'projects',
-        projectId,
-        JSON.stringify({ projectCode, name, procurementMethod }),
+        newProjectId,
+        JSON.stringify({ projectCode, name, procurementMethod, budgetAmount }),
         '127.0.0.1' // Will be updated with actual IP from request
       );
 
-      return projectId;
+      logger.info('Project created successfully', {
+        projectId: newProjectId,
+        projectCode,
+        userId,
+        departmentId,
+        procurementMethod,
+        stepsGenerated: steps.length
+      });
+
+      return newProjectId;
     });
 
     // Fetch and return the created project
-    return getProjectById(result);
+    return exports.getProjectById(projectId);
   } catch (error) {
-    console.error('Error in createProject:', error);
-    throw error;
+    if (error instanceof ValidationError || error instanceof NotFoundError) {
+      throw error;
+    }
+
+    logger.error('Error in createProject service:', {
+      error: error.message,
+      stack: error.stack,
+      projectData,
+      userId
+    });
+    throw new DatabaseError('เกิดข้อผิดพลาดในการสร้างโครงการ', error);
   }
 };
 
@@ -260,14 +334,15 @@ export const createProject = (projectData, userId) => {
  * @param {number} projectId - Project ID
  * @param {Object} updateData - Data to update
  * @param {number} userId - User ID making the update
- * @returns {Object} - Updated project
+ * @returns {Object} - { data: updated project }
  */
-export const updateProject = (projectId, updateData, userId) => {
+exports.updateProject = (projectId, updateData, userId) => {
   try {
     // Get current project for audit
-    const currentProject = queryOne('SELECT * FROM projects WHERE id = ?', [projectId]);
+    const currentProject = queryOne('SELECT * FROM projects WHERE id = ? AND deleted_at IS NULL', [projectId]);
     if (!currentProject) {
-      throw new Error('Project not found');
+      logger.warn('Project not found for update', { projectId, userId });
+      throw new NotFoundError('ไม่พบโครงการที่ต้องการแก้ไข');
     }
 
     // Build dynamic update query
@@ -277,18 +352,39 @@ export const updateProject = (projectId, updateData, userId) => {
       'contract_number', 'contract_date', 'remarks'
     ];
 
+    // Map camelCase to snake_case
+    const fieldMapping = {
+      name: 'name',
+      description: 'description',
+      budgetAmount: 'budget_amount',
+      status: 'status',
+      actualStartDate: 'actual_start_date',
+      actualEndDate: 'actual_end_date',
+      winnerVendor: 'winner_vendor',
+      contractNumber: 'contract_number',
+      contractDate: 'contract_date',
+      remarks: 'remarks'
+    };
+
     const updates = [];
     const params = [];
+    const changeLog = {};
 
     Object.keys(updateData).forEach(key => {
-      if (allowedFields.includes(key) && updateData[key] !== undefined) {
-        updates.push(`${key} = ?`);
+      const dbField = fieldMapping[key];
+      if (dbField && updateData[key] !== undefined) {
+        updates.push(`${dbField} = ?`);
         params.push(updateData[key]);
+        changeLog[dbField] = {
+          from: currentProject[dbField],
+          to: updateData[key]
+        };
       }
     });
 
     if (updates.length === 0) {
-      throw new Error('No valid fields to update');
+      logger.warn('No valid fields to update', { projectId, updateData });
+      throw new ValidationError('ไม่มีข้อมูลที่ต้องการแก้ไข');
     }
 
     // Add updated timestamp and user
@@ -302,7 +398,11 @@ export const updateProject = (projectId, updateData, userId) => {
     transaction(() => {
       const db = getDatabase();
 
-      db.prepare(sql).run(...params);
+      const result = db.prepare(sql).run(...params);
+
+      if (result.changes === 0) {
+        throw new NotFoundError('ไม่พบโครงการที่ต้องการแก้ไข');
+      }
 
       // Log audit trail
       db.prepare(`
@@ -315,15 +415,32 @@ export const updateProject = (projectId, updateData, userId) => {
         'UPDATE',
         'projects',
         projectId,
-        JSON.stringify({ before: currentProject, after: updateData }),
+        JSON.stringify(changeLog),
         '127.0.0.1'
       );
+
+      logger.info('Project updated successfully', {
+        projectId,
+        userId,
+        updatedFields: Object.keys(changeLog),
+        changes: result.changes
+      });
     });
 
-    return getProjectById(projectId);
+    return exports.getProjectById(projectId);
   } catch (error) {
-    console.error('Error in updateProject:', error);
-    throw error;
+    if (error instanceof NotFoundError || error instanceof ValidationError) {
+      throw error;
+    }
+
+    logger.error('Error in updateProject service:', {
+      error: error.message,
+      stack: error.stack,
+      projectId,
+      updateData,
+      userId
+    });
+    throw new DatabaseError('เกิดข้อผิดพลาดในการแก้ไขโครงการ', error);
   }
 };
 
@@ -331,13 +448,14 @@ export const updateProject = (projectId, updateData, userId) => {
  * Delete project (soft delete)
  * @param {number} projectId - Project ID
  * @param {number} userId - User ID performing deletion
- * @returns {Object} - Success status
+ * @returns {Object} - { data: null }
  */
-export const deleteProject = (projectId, userId) => {
+exports.deleteProject = (projectId, userId) => {
   try {
-    const project = queryOne('SELECT * FROM projects WHERE id = ?', [projectId]);
+    const project = queryOne('SELECT * FROM projects WHERE id = ? AND deleted_at IS NULL', [projectId]);
     if (!project) {
-      throw new Error('Project not found');
+      logger.warn('Project not found for deletion', { projectId, userId });
+      throw new NotFoundError('ไม่พบโครงการที่ต้องการลบ');
     }
 
     transaction(() => {
@@ -368,18 +486,36 @@ export const deleteProject = (projectId, userId) => {
         'DELETE',
         'projects',
         projectId,
-        JSON.stringify({ project_code: project.project_code, name: project.name }),
+        JSON.stringify({
+          project_code: project.project_code,
+          name: project.name,
+          status: project.status
+        }),
         '127.0.0.1'
       );
+
+      logger.info('Project deleted successfully', {
+        projectId,
+        projectCode: project.project_code,
+        userId
+      });
     });
 
     return {
-      success: true,
-      message: 'Project deleted successfully'
+      data: null
     };
   } catch (error) {
-    console.error('Error in deleteProject:', error);
-    throw error;
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
+
+    logger.error('Error in deleteProject service:', {
+      error: error.message,
+      stack: error.stack,
+      projectId,
+      userId
+    });
+    throw new DatabaseError('เกิดข้อผิดพลาดในการลบโครงการ', error);
   }
 };
 
@@ -395,21 +531,40 @@ const generateProjectCode = (departmentId, budgetYear) => {
     // Get department code
     const dept = queryOne('SELECT code FROM departments WHERE id = ?', [departmentId]);
     if (!dept) {
-      throw new Error('Department not found');
+      logger.warn('Department not found for project code generation', { departmentId });
+      throw new NotFoundError('ไม่พบข้อมูลกอง/สำนัก');
     }
 
     // Get count of projects for this department and year
-    const { count } = queryOne(`
+    const countResult = queryOne(`
       SELECT COUNT(*) as count
       FROM projects
       WHERE department_id = ? AND budget_year = ?
-    `, [departmentId, budgetYear]) || { count: 0 };
+    `, [departmentId, budgetYear]);
+    const count = countResult ? countResult.count : 0;
 
     const sequence = String(count + 1).padStart(4, '0');
-    return `${dept.code.substring(0, 3).toUpperCase()}-${budgetYear}-${sequence}`;
+    const projectCode = `${dept.code.substring(0, 3).toUpperCase()}-${budgetYear}-${sequence}`;
+
+    logger.dbOperation('generateProjectCode', 'projects', {
+      departmentId,
+      budgetYear,
+      sequence: count + 1,
+      projectCode
+    });
+
+    return projectCode;
   } catch (error) {
-    console.error('Error generating project code:', error);
-    throw error;
+    if (error instanceof NotFoundError) {
+      throw error;
+    }
+
+    logger.error('Error generating project code:', {
+      error: error.message,
+      departmentId,
+      budgetYear
+    });
+    throw new DatabaseError('เกิดข้อผิดพลาดในการสร้างรหัสโครงการ', error);
   }
 };
 
@@ -447,15 +602,21 @@ const generateProjectSteps = (projectId, method, startDate) => {
     currentDate.setDate(currentDate.getDate() + 1);
   });
 
+  logger.dbOperation('generateProjectSteps', 'project_steps', {
+    projectId,
+    methodCode: method.code,
+    stepCount: steps.length
+  });
+
   return steps;
 };
 
 /**
  * Get project statistics for dashboard
  * @param {number} departmentId - Optional department filter
- * @returns {Object} - Statistics object
+ * @returns {Object} - { data: statistics object }
  */
-export const getProjectStatistics = (departmentId = null) => {
+exports.getProjectStatistics = (departmentId = null) => {
   try {
     let whereClause = 'WHERE p.deleted_at IS NULL';
     const params = [];
@@ -472,27 +633,45 @@ export const getProjectStatistics = (departmentId = null) => {
         SUM(CASE WHEN p.status = 'in_progress' THEN 1 ELSE 0 END) as in_progress_count,
         SUM(CASE WHEN p.status = 'completed' THEN 1 ELSE 0 END) as completed_count,
         SUM(CASE WHEN p.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_count,
+        SUM(CASE WHEN p.status = 'on_hold' THEN 1 ELSE 0 END) as on_hold_count,
         SUM(p.budget_amount) as total_budget,
         AVG(p.budget_amount) as average_budget
       FROM projects p
       ${whereClause}
     `, params);
 
+    logger.dbOperation('getProjectStatistics', 'projects', {
+      departmentId,
+      totalProjects: stats ? stats.total_projects : 0
+    });
+
     return {
-      success: true,
-      data: stats
+      data: stats || {
+        total_projects: 0,
+        draft_count: 0,
+        in_progress_count: 0,
+        completed_count: 0,
+        cancelled_count: 0,
+        on_hold_count: 0,
+        total_budget: 0,
+        average_budget: 0
+      }
     };
   } catch (error) {
-    console.error('Error in getProjectStatistics:', error);
-    throw error;
+    logger.error('Error in getProjectStatistics service:', {
+      error: error.message,
+      stack: error.stack,
+      departmentId
+    });
+    throw new DatabaseError('เกิดข้อผิดพลาดในการดึงสถิติโครงการ', error);
   }
 };
 
-export default {
-  getAllProjects,
-  getProjectById,
-  createProject,
-  updateProject,
-  deleteProject,
-  getProjectStatistics
+module.exports = {
+  getAllProjects: exports.getAllProjects,
+  getProjectById: exports.getProjectById,
+  createProject: exports.createProject,
+  updateProject: exports.updateProject,
+  deleteProject: exports.deleteProject,
+  getProjectStatistics: exports.getProjectStatistics
 };
