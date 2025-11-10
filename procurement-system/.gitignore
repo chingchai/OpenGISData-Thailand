@@ -24,6 +24,8 @@ logs/
 
 # Database
 *.db
+*.db-shm
+*.db-wal
 *.sqlite
 *.sqlite3
 /server/data/database/*.db
