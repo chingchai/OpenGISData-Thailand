@@ -1,0 +1,39 @@
+{
+  "name": "procurement-system-server",
+  "version": "1.0.0",
+  "description": "Backend API - ระบบจัดการโครงการจัดซื้อจัดจ้าง",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "build": "echo 'No build step needed for Node.js'",
+    "test": "echo 'Tests not implemented yet'",
+    "db:init": "node scripts/initDatabase.js",
+    "db:seed": "node scripts/seedDatabase.js",
+    "db:reset": "node scripts/resetDatabase.js"
+  },
+  "keywords": [
+    "express",
+    "api",
+    "procurement"
+  ],
+  "author": "เทศบาลตำบลหัวทะเล",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "better-sqlite3": "^9.2.2",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "express-rate-limit": "^7.1.5",
+    "compression": "^1.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
