@@ -1,6 +1,6 @@
 /**
  * Standardized API Response Helpers
- * Helper functions สำหรับส่ง response แบบมาตรฐาน
+ * ES6 Modules
  */
 
 /**
@@ -10,7 +10,7 @@
  * @param {string} message - Success message
  * @param {number} statusCode - HTTP status code (default: 200)
  */
-function sendSuccess(res, data = null, message = 'สำเร็จ', statusCode = 200) {
+export function sendSuccess(res, data = null, message = 'สำเร็จ', statusCode = 200) {
   return res.status(statusCode).json({
     success: true,
     message,
@@ -27,7 +27,7 @@ function sendSuccess(res, data = null, message = 'สำเร็จ', statusCod
  * @param {string} code - Error code (optional)
  * @param {*} details - Additional error details (optional)
  */
-function sendError(res, message = 'เกิดข้อผิดพลาด', statusCode = 500, code = null, details = null) {
+export function sendError(res, message = 'เกิดข้อผิดพลาด', statusCode = 500, code = null, details = null) {
   return res.status(statusCode).json({
     success: false,
     message,
@@ -43,7 +43,7 @@ function sendError(res, message = 'เกิดข้อผิดพลาด', 
  * @param {Object} result - Result object { data, pagination }
  * @param {string} message - Success message (default: 'สำเร็จ')
  */
-function sendPaginated(res, result, message = 'สำเร็จ') {
+export function sendPaginated(res, result, message = 'สำเร็จ') {
   const { data, pagination } = result;
 
   return res.status(200).json({
@@ -68,7 +68,7 @@ function sendPaginated(res, result, message = 'สำเร็จ') {
  * @param {Array|Object} errors - Validation errors
  * @param {string} message - Error message (default: 'ข้อมูลไม่ถูกต้อง')
  */
-function sendValidationError(res, errors, message = 'ข้อมูลไม่ถูกต้อง') {
+export function sendValidationError(res, errors, message = 'ข้อมูลไม่ถูกต้อง') {
   // Convert to array format if needed
   const errorDetails = Array.isArray(errors) ? errors : [errors];
 
@@ -87,7 +87,7 @@ function sendValidationError(res, errors, message = 'ข้อมูลไม่
  * @param {*} data - Created resource data
  * @param {string} message - Success message (default: 'สร้างสำเร็จ')
  */
-function sendCreated(res, data, message = 'สร้างสำเร็จ') {
+export function sendCreated(res, data, message = 'สร้างสำเร็จ') {
   return res.status(201).json({
     success: true,
     message,
@@ -100,7 +100,7 @@ function sendCreated(res, data, message = 'สร้างสำเร็จ') {
  * Send no content response (204)
  * @param {Response} res - Express response object
  */
-function sendNoContent(res) {
+export function sendNoContent(res) {
   return res.status(204).send();
 }
 
@@ -109,7 +109,7 @@ function sendNoContent(res) {
  * @param {Response} res - Express response object
  * @param {string} message - Error message
  */
-function sendUnauthorized(res, message = 'ไม่มีสิทธิ์เข้าถึง กรุณาเข้าสู่ระบบ') {
+export function sendUnauthorized(res, message = 'ไม่มีสิทธิ์เข้าถึง กรุณาเข้าสู่ระบบ') {
   return res.status(401).json({
     success: false,
     message,
@@ -123,7 +123,7 @@ function sendUnauthorized(res, message = 'ไม่มีสิทธิ์เ�
  * @param {Response} res - Express response object
  * @param {string} message - Error message
  */
-function sendForbidden(res, message = 'การเข้าถึงถูกปฏิเสธ') {
+export function sendForbidden(res, message = 'การเข้าถึงถูกปฏิเสธ') {
   return res.status(403).json({
     success: false,
     message,
@@ -137,7 +137,7 @@ function sendForbidden(res, message = 'การเข้าถึงถูก�
  * @param {Response} res - Express response object
  * @param {string} message - Error message
  */
-function sendNotFound(res, message = 'ไม่พบข้อมูลที่ต้องการ') {
+export function sendNotFound(res, message = 'ไม่พบข้อมูลที่ต้องการ') {
   return res.status(404).json({
     success: false,
     message,
@@ -151,7 +151,7 @@ function sendNotFound(res, message = 'ไม่พบข้อมูลที่
  * @param {Response} res - Express response object
  * @param {string} message - Error message
  */
-function sendConflict(res, message = 'ข้อมูลซ้ำหรือขัดแย้ง') {
+export function sendConflict(res, message = 'ข้อมูลซ้ำหรือขัดแย้ง') {
   return res.status(409).json({
     success: false,
     message,
@@ -168,7 +168,7 @@ function sendConflict(res, message = 'ข้อมูลซ้ำหรือข
  * @param {string} message - Response message
  * @param {*} data - Response data (optional)
  */
-function sendCustom(res, statusCode, success, message, data = null) {
+export function sendCustom(res, statusCode, success, message, data = null) {
   return res.status(statusCode).json({
     success,
     message,
@@ -177,7 +177,7 @@ function sendCustom(res, statusCode, success, message, data = null) {
   });
 }
 
-module.exports = {
+export default {
   sendSuccess,
   sendError,
   sendPaginated,
