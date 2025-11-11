@@ -2,6 +2,7 @@ import express from 'express';
 import authRoutes from './auth.js';
 import projectRoutes from './projects.js';
 import stepRoutes from './steps.js';
+import uploadRoutes from './upload.js';
 
 const router = express.Router();
 
@@ -17,7 +18,8 @@ router.get('/', (req, res) => {
       projectSteps: '/api/projects/:projectId/steps',
       steps: '/api/steps',
       stepsByProject: '/api/projects/:projectId/steps',
-      overdueSteps: '/api/steps/overdue'
+      overdueSteps: '/api/steps/overdue',
+      upload: '/api/upload'
     }
   });
 });
@@ -26,5 +28,6 @@ router.get('/', (req, res) => {
 router.use('/auth', authRoutes);
 router.use('/projects', projectRoutes);
 router.use('/steps', stepRoutes);
+router.use('/upload', uploadRoutes);
 
 export default router;

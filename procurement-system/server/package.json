@@ -34,7 +34,9 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "winston": "^3.18.3"
+    "multer": "^2.0.2",
+    "winston": "^3.18.3",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",

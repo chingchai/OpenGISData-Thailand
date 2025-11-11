@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { projectsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import ProjectFormModal from '../components/ProjectFormModal';
+import ExcelUploadModal from '../components/ExcelUploadModal';
 
 const AdminProjectsPage = () => {
   const { user } = useAuth();
@@ -12,6 +13,7 @@ const AdminProjectsPage = () => {
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExcelModalOpen, setIsExcelModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [filter, setFilter] = useState({
     status: '',
@@ -95,6 +97,11 @@ const AdminProjectsPage = () => {
     fetchData(); // Refresh list
   };
 
+  const handleExcelSuccess = (summary) => {
+    alert(`นำเข้าสำเร็จ!\n\nนำเข้า: ${summary.imported} โครงการ\nอัปเดต: ${summary.updated} โครงการ\nข้าม: ${summary.skipped} โครงการ`);
+    fetchData(); // Refresh list
+  };
+
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('th-TH', {
       style: 'currency',
@@ -152,15 +159,26 @@ const AdminProjectsPage = () => {
             <h1 className="text-3xl font-bold text-gray-800">จัดการโครงการ</h1>
             <p className="text-gray-600 mt-1">สำหรับผู้ดูแลระบบ - จัดการโครงการทั้งหมด</p>
           </div>
-          <button
-            onClick={handleCreate}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors shadow-md"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            สร้างโครงการใหม่
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setIsExcelModalOpen(true)}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors shadow-md"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              นำเข้าจาก Excel
+            </button>
+            <button
+              onClick={handleCreate}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors shadow-md"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              สร้างโครงการใหม่
+            </button>
+          </div>
         </div>
 
         {/* Filters */}
@@ -359,6 +377,13 @@ const AdminProjectsPage = () => {
           onSuccess={handleModalSuccess}
           project={selectedProject}
           departments={departments}
+        />
+
+        {/* Excel Upload Modal */}
+        <ExcelUploadModal
+          isOpen={isExcelModalOpen}
+          onClose={() => setIsExcelModalOpen(false)}
+          onSuccess={handleExcelSuccess}
         />
       </div>
     </Layout>
