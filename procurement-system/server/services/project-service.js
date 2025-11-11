@@ -311,7 +311,7 @@ export function createProject(projectData, userId) {
     });
 
     // Fetch and return the created project
-    return exports.getProjectById(projectId);
+    return getProjectById(projectId);
   } catch (error) {
     if (error instanceof ValidationError || error instanceof NotFoundError) {
       throw error;
@@ -423,7 +423,7 @@ export function updateProject(projectId, updateData, userId) {
       });
     });
 
-    return exports.getProjectById(projectId);
+    return getProjectById(projectId);
   } catch (error) {
     if (error instanceof NotFoundError || error instanceof ValidationError) {
       throw error;
