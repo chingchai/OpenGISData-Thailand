@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import NotificationDropdown from './NotificationDropdown';
@@ -14,11 +14,18 @@ const Layout = ({ children }) => {
   };
 
   const navigation = [
-    { name: 'Dashboard', path: '/dashboard', icon: '📊', roles: ['admin', 'staff', 'executive'] },
-    { name: 'โครงการทั้งหมด', path: '/projects', icon: '📁', roles: ['admin', 'staff', 'executive'] },
-    { name: 'ขั้นตอนล่าช้า', path: '/overdue', icon: '⚠️', roles: ['admin', 'staff', 'executive'] },
-    { name: 'จัดการโครงการ', path: '/admin/projects', icon: '⚙️', roles: ['admin'] },
+    { name: 'Dashboard', path: '/dashboard', icon: 'layout-dashboard', roles: ['admin', 'staff', 'executive'] },
+    { name: 'โครงการทั้งหมด', path: '/projects', icon: 'folder', roles: ['admin', 'staff', 'executive'] },
+    { name: 'ขั้นตอนล่าช้า', path: '/overdue', icon: 'alert-circle', roles: ['admin', 'staff', 'executive'] },
+    { name: 'จัดการโครงการ', path: '/admin/projects', icon: 'settings', roles: ['admin'] },
   ];
+
+  // Initialize Lucide icons
+  useEffect(() => {
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  }, [location.pathname]);
 
   const visibleNavigation = navigation.filter(item =>
     !item.roles || item.roles.includes(user?.role)
@@ -35,8 +42,8 @@ const Layout = ({ children }) => {
             {/* Logo & Title */}
             <div className="flex items-center">
               <Link to="/dashboard" className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-lg flex items-center justify-center text-2xl shadow-ios">
-                  🏛️
+                <div className="w-12 h-12 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-lg flex items-center justify-center shadow-ios">
+                  <i data-lucide="building-2" className="w-7 h-7 text-white"></i>
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-gray-900">
@@ -53,13 +60,13 @@ const Layout = ({ children }) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
                     isActive(item.path)
                       ? 'bg-ios-blue text-white shadow-ios'
                       : 'text-gray-700 hover:bg-ios-gray-light'
                   }`}
                 >
-                  <span className="mr-2">{item.icon}</span>
+                  <i data-lucide={item.icon} className="w-4 h-4"></i>
                   {item.name}
                 </Link>
               ))}
@@ -83,9 +90,10 @@ const Layout = ({ children }) => {
               {/* Logout Button - iOS Pill Style */}
               <button
                 onClick={handleLogout}
-                className="bg-ios-red hover:bg-red-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-ios-card active:scale-95"
+                className="flex items-center gap-2 bg-ios-red hover:bg-red-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-ios active:scale-95 border-2 border-ios-red"
               >
-                ออกจากระบบ
+                <i data-lucide="log-out" className="w-4 h-4"></i>
+                <span className="hidden sm:inline">ออกจากระบบ</span>
               </button>
             </div>
           </div>
@@ -98,11 +106,11 @@ const Layout = ({ children }) => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-col items-center px-4 py-2 text-xs font-medium transition-colors ${
+                className={`flex flex-col items-center px-4 py-2.5 text-xs font-medium transition-colors ${
                   isActive(item.path) ? 'text-ios-blue' : 'text-ios-gray'
                 }`}
               >
-                <span className="text-2xl mb-1">{item.icon}</span>
+                <i data-lucide={item.icon} className="w-6 h-6 mb-1"></i>
                 <span className="font-semibold">{item.name}</span>
               </Link>
             ))}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -43,13 +43,20 @@ const LoginPage = () => {
     setFormData({ username, password, role });
   };
 
+  // Initialize Lucide icons
+  useEffect(() => {
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  }, [error]);
+
   return (
     <div className="min-h-screen bg-ios-gray-lighter font-ios flex items-center justify-center p-6">
       <div className="max-w-md w-full">
         {/* iOS Style Header */}
         <div className="text-center mb-10">
-          <div className="w-20 h-20 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-2xl mx-auto mb-4 flex items-center justify-center text-4xl shadow-ios">
-            🏛️
+          <div className="w-20 h-20 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-2xl mx-auto mb-4 flex items-center justify-center shadow-ios-lg">
+            <i data-lucide="building-2" className="w-10 h-10 text-white"></i>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             ระบบจัดซื้อจัดจ้าง
@@ -122,9 +129,19 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-ios-blue hover:bg-ios-blue-dark text-white font-semibold py-4 px-6 rounded-full transition-all shadow-ios disabled:opacity-50 disabled:cursor-not-allowed active:scale-98 mt-6"
+              className="w-full flex items-center justify-center gap-2 bg-ios-blue hover:bg-ios-blue-dark text-white font-semibold py-4 px-6 rounded-full transition-all shadow-ios disabled:opacity-50 disabled:cursor-not-allowed active:scale-98 mt-6 border-2 border-ios-blue"
             >
-              {loading ? '⏳ กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
+              {loading ? (
+                <>
+                  <i data-lucide="loader-2" className="w-5 h-5 animate-spin"></i>
+                  กำลังเข้าสู่ระบบ...
+                </>
+              ) : (
+                <>
+                  <i data-lucide="log-in" className="w-5 h-5"></i>
+                  เข้าสู่ระบบ
+                </>
+              )}
             </button>
           </form>
 
@@ -134,21 +151,24 @@ const LoginPage = () => {
             <div className="space-y-3">
               <button
                 onClick={() => quickLogin('admin', 'password123', 'admin')}
-                className="w-full text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
+                className="w-full flex items-center gap-3 text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
               >
-                👨‍💼 Admin (ผู้ดูแลระบบ)
+                <i data-lucide="shield" className="w-5 h-5 text-ios-blue"></i>
+                Admin (ผู้ดูแลระบบ)
               </button>
               <button
                 onClick={() => quickLogin('staff_engineering', 'password123', 'staff')}
-                className="w-full text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
+                className="w-full flex items-center gap-3 text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
               >
-                👷 Staff (กองช่าง)
+                <i data-lucide="hard-hat" className="w-5 h-5 text-ios-orange"></i>
+                Staff (กองช่าง)
               </button>
               <button
                 onClick={() => quickLogin('executive_mayor', 'password123', 'executive')}
-                className="w-full text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
+                className="w-full flex items-center gap-3 text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
               >
-                🎯 Executive (ผู้บริหาร)
+                <i data-lucide="crown" className="w-5 h-5 text-ios-yellow"></i>
+                Executive (ผู้บริหาร)
               </button>
             </div>
           </div>

@@ -6,6 +6,13 @@ import GanttChart from '../components/GanttChart';
 import ProjectSummary from '../components/ProjectSummary';
 import ReportExportModal from '../components/ReportExportModal';
 
+// Initialize Lucide icons after component renders
+const initIcons = () => {
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+};
+
 const DashboardPage = () => {
   const [stats, setStats] = useState(null);
   const [recentProjects, setRecentProjects] = useState([]);
@@ -27,6 +34,11 @@ const DashboardPage = () => {
   useEffect(() => {
     applyFilters();
   }, [allProjects, activeFilters]);
+
+  // Initialize Lucide icons when stats update
+  useEffect(() => {
+    initIcons();
+  }, [stats, recentProjects, overdueSteps]);
 
   const fetchDashboardData = async () => {
     try {
@@ -119,11 +131,9 @@ const DashboardPage = () => {
           </div>
           <button
             onClick={() => setShowExportModal(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-ios-green text-white rounded-full hover:bg-green-600 transition-all duration-200 shadow-ios active:scale-95 font-semibold"
+            className="flex items-center gap-2 px-6 py-3 bg-ios-green text-white rounded-full hover:bg-green-600 transition-all duration-200 shadow-ios active:scale-95 font-semibold border-2 border-ios-green"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
+            <i data-lucide="download" className="w-5 h-5"></i>
             Export รายงาน
           </button>
         </div>
@@ -138,8 +148,8 @@ const DashboardPage = () => {
                   <p className="text-sm text-ios-gray font-medium">โครงการทั้งหมด</p>
                   <p className="text-4xl font-bold text-gray-900 mt-2">{stats.totalProjects || 0}</p>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-gray-500 to-gray-700 rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
-                  📁
+                <div className="w-14 h-14 bg-gradient-to-br from-gray-500 to-gray-700 rounded-ios-lg flex items-center justify-center shadow-ios">
+                  <i data-lucide="folder" className="w-8 h-8 text-white"></i>
                 </div>
               </div>
             </div>
@@ -151,8 +161,8 @@ const DashboardPage = () => {
                   <p className="text-sm text-ios-gray font-medium">กำลังดำเนินการ</p>
                   <p className="text-4xl font-bold text-ios-blue mt-2">{stats.inProgressProjects || 0}</p>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
-                  🔄
+                <div className="w-14 h-14 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-lg flex items-center justify-center shadow-ios">
+                  <i data-lucide="loader" className="w-8 h-8 text-white"></i>
                 </div>
               </div>
             </div>
@@ -164,8 +174,8 @@ const DashboardPage = () => {
                   <p className="text-sm text-ios-gray font-medium">เสร็จสิ้น</p>
                   <p className="text-4xl font-bold text-ios-green mt-2">{stats.completedProjects || 0}</p>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-ios-green to-green-600 rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
-                  ✅
+                <div className="w-14 h-14 bg-gradient-to-br from-ios-green to-green-600 rounded-ios-lg flex items-center justify-center shadow-ios">
+                  <i data-lucide="check-circle" className="w-8 h-8 text-white"></i>
                 </div>
               </div>
             </div>
@@ -177,8 +187,8 @@ const DashboardPage = () => {
                   <p className="text-sm text-ios-gray font-medium">ล่าช้า</p>
                   <p className="text-4xl font-bold text-ios-red mt-2">{stats.delayedProjects || 0}</p>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-ios-red to-red-600 rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
-                  ⚠️
+                <div className="w-14 h-14 bg-gradient-to-br from-ios-red to-red-600 rounded-ios-lg flex items-center justify-center shadow-ios">
+                  <i data-lucide="alert-triangle" className="w-8 h-8 text-white"></i>
                 </div>
               </div>
             </div>
