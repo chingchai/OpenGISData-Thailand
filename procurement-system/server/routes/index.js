@@ -3,6 +3,7 @@ import authRoutes from './auth.js';
 import projectRoutes from './projects.js';
 import stepRoutes from './steps.js';
 import uploadRoutes from './upload.js';
+import reportRoutes from './reports.js';
 
 const router = express.Router();
 
@@ -19,7 +20,8 @@ router.get('/', (req, res) => {
       steps: '/api/steps',
       stepsByProject: '/api/projects/:projectId/steps',
       overdueSteps: '/api/steps/overdue',
-      upload: '/api/upload'
+      upload: '/api/upload',
+      reports: '/api/reports'
     }
   });
 });
@@ -29,5 +31,6 @@ router.use('/auth', authRoutes);
 router.use('/projects', projectRoutes);
 router.use('/steps', stepRoutes);
 router.use('/upload', uploadRoutes);
+router.use('/reports', reportRoutes);
 
 export default router;

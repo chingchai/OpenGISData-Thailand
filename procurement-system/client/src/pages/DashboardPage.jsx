@@ -4,6 +4,7 @@ import { projectsAPI, stepsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import GanttChart from '../components/GanttChart';
 import ProjectSummary from '../components/ProjectSummary';
+import ReportExportModal from '../components/ReportExportModal';
 
 const DashboardPage = () => {
   const [stats, setStats] = useState(null);
@@ -16,6 +17,7 @@ const DashboardPage = () => {
     status: null,
     procurementMethod: null
   });
+  const [showExportModal, setShowExportModal] = useState(false);
 
   useEffect(() => {
     fetchDashboardData();
@@ -109,10 +111,21 @@ const DashboardPage = () => {
   return (
     <Layout>
       <div className="space-y-6">
-        {/* Page Header */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
-          <p className="text-gray-600">ภาพรวมระบบจัดซื้อจัดจ้าง</p>
+        {/* Page Header with Export Button */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
+            <p className="text-gray-600">ภาพรวมระบบจัดซื้อจัดจ้าง</p>
+          </div>
+          <button
+            onClick={() => setShowExportModal(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Export รายงาน
+          </button>
         </div>
 
         {/* Statistics Cards */}
@@ -285,6 +298,12 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Report Export Modal */}
+      <ReportExportModal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+      />
     </Layout>
   );
 };
