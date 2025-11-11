@@ -75,13 +75,13 @@ const DashboardPage = () => {
 
   const getStatusColor = (status) => {
     const colors = {
-      draft: 'bg-gray-100 text-gray-800',
-      in_progress: 'bg-blue-100 text-blue-800',
-      completed: 'bg-green-100 text-green-800',
-      delayed: 'bg-red-100 text-red-800',
-      cancelled: 'bg-gray-100 text-gray-800'
+      draft: 'bg-ios-gray-light text-ios-gray',
+      in_progress: 'bg-ios-blue/10 text-ios-blue',
+      completed: 'bg-ios-green/10 text-ios-green',
+      delayed: 'bg-ios-red/10 text-ios-red',
+      cancelled: 'bg-ios-gray-light text-ios-gray'
     };
-    return colors[status] || 'bg-gray-100 text-gray-800';
+    return colors[status] || 'bg-ios-gray-light text-ios-gray';
   };
 
   const getStatusText = (status) => {
@@ -100,8 +100,8 @@ const DashboardPage = () => {
       <Layout>
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">กำลังโหลดข้อมูล...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-ios-gray-light border-t-ios-blue mx-auto"></div>
+            <p className="mt-6 text-ios-gray font-medium">กำลังโหลดข้อมูล...</p>
           </div>
         </div>
       </Layout>
@@ -111,15 +111,15 @@ const DashboardPage = () => {
   return (
     <Layout>
       <div className="space-y-6">
-        {/* Page Header with Export Button */}
-        <div className="flex items-center justify-between">
+        {/* iOS Large Title Header with Export Button */}
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
-            <p className="text-gray-600">ภาพรวมระบบจัดซื้อจัดจ้าง</p>
+            <h2 className="text-4xl font-bold text-gray-900 tracking-tight">Dashboard</h2>
+            <p className="text-ios-gray font-medium mt-1">ภาพรวมระบบจัดซื้อจัดจ้าง</p>
           </div>
           <button
             onClick={() => setShowExportModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-ios-green text-white rounded-full hover:bg-green-600 transition-all duration-200 shadow-ios active:scale-95 font-semibold"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -128,50 +128,58 @@ const DashboardPage = () => {
           </button>
         </div>
 
-        {/* Statistics Cards */}
+        {/* iOS Style Statistics Cards */}
         {stats && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Total Projects */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white rounded-ios-xl shadow-ios p-6 hover:shadow-ios-lg transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">โครงการทั้งหมด</p>
-                  <p className="text-3xl font-bold text-gray-800">{stats.totalProjects || 0}</p>
+                  <p className="text-sm text-ios-gray font-medium">โครงการทั้งหมด</p>
+                  <p className="text-4xl font-bold text-gray-900 mt-2">{stats.totalProjects || 0}</p>
                 </div>
-                <div className="text-4xl">📁</div>
+                <div className="w-14 h-14 bg-gradient-to-br from-gray-500 to-gray-700 rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
+                  📁
+                </div>
               </div>
             </div>
 
             {/* In Progress */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white rounded-ios-xl shadow-ios p-6 hover:shadow-ios-lg transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">กำลังดำเนินการ</p>
-                  <p className="text-3xl font-bold text-blue-600">{stats.inProgressProjects || 0}</p>
+                  <p className="text-sm text-ios-gray font-medium">กำลังดำเนินการ</p>
+                  <p className="text-4xl font-bold text-ios-blue mt-2">{stats.inProgressProjects || 0}</p>
                 </div>
-                <div className="text-4xl">🔄</div>
+                <div className="w-14 h-14 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
+                  🔄
+                </div>
               </div>
             </div>
 
             {/* Completed */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white rounded-ios-xl shadow-ios p-6 hover:shadow-ios-lg transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">เสร็จสิ้น</p>
-                  <p className="text-3xl font-bold text-green-600">{stats.completedProjects || 0}</p>
+                  <p className="text-sm text-ios-gray font-medium">เสร็จสิ้น</p>
+                  <p className="text-4xl font-bold text-ios-green mt-2">{stats.completedProjects || 0}</p>
                 </div>
-                <div className="text-4xl">✅</div>
+                <div className="w-14 h-14 bg-gradient-to-br from-ios-green to-green-600 rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
+                  ✅
+                </div>
               </div>
             </div>
 
             {/* Delayed */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white rounded-ios-xl shadow-ios p-6 hover:shadow-ios-lg transition-shadow">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">ล่าช้า</p>
-                  <p className="text-3xl font-bold text-red-600">{stats.delayedProjects || 0}</p>
+                  <p className="text-sm text-ios-gray font-medium">ล่าช้า</p>
+                  <p className="text-4xl font-bold text-ios-red mt-2">{stats.delayedProjects || 0}</p>
                 </div>
-                <div className="text-4xl">⚠️</div>
+                <div className="w-14 h-14 bg-gradient-to-br from-ios-red to-red-600 rounded-ios-lg flex items-center justify-center text-3xl shadow-ios">
+                  ⚠️
+                </div>
               </div>
             </div>
           </div>
@@ -183,21 +191,23 @@ const DashboardPage = () => {
           onFilterChange={handleFilterChange}
         />
 
-        {/* Active Filters Display */}
+        {/* iOS Style Active Filters Display */}
         {(activeFilters.status || activeFilters.procurementMethod) && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="bg-ios-blue/5 border border-ios-blue/20 rounded-ios-lg p-5">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                </svg>
-                <span className="text-sm font-medium text-blue-800">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-ios-blue/10 rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5 text-ios-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                  </svg>
+                </div>
+                <span className="text-sm font-semibold text-gray-900">
                   แสดงผลตามตัวกรอง: {filteredProjects.length} โครงการ
                 </span>
               </div>
               <button
                 onClick={() => handleFilterChange('reset', null)}
-                className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                className="px-4 py-2 bg-ios-blue text-white rounded-full text-sm font-semibold hover:bg-ios-blue-dark transition-all active:scale-95"
               >
                 ล้างตัวกรอง
               </button>
@@ -211,35 +221,35 @@ const DashboardPage = () => {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Recent Projects */}
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-800">โครงการล่าสุด</h3>
+          {/* iOS Style Recent Projects */}
+          <div className="bg-white rounded-ios-xl shadow-ios overflow-hidden">
+            <div className="px-6 py-5 border-b border-ios-gray-light">
+              <h3 className="text-xl font-bold text-gray-900">โครงการล่าสุด</h3>
             </div>
             <div className="p-6">
               {recentProjects.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {recentProjects.map((project) => (
                     <Link
                       key={project.id}
                       to={`/projects/${project.id}`}
-                      className="block p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all"
+                      className="block p-5 rounded-ios-lg bg-ios-gray-lighter hover:bg-ios-gray-light transition-all active:scale-98"
                     >
-                      <div className="flex justify-between items-start">
+                      <div className="flex justify-between items-start mb-3">
                         <div className="flex-1">
-                          <p className="font-medium text-gray-800">{project.name}</p>
-                          <p className="text-sm text-gray-600 mt-1">{project.department_name}</p>
-                          <p className="text-xs text-gray-500 mt-1">รหัส: {project.project_code}</p>
+                          <p className="font-semibold text-gray-900 text-base">{project.name}</p>
+                          <p className="text-sm text-ios-gray mt-1 font-medium">{project.department_name}</p>
+                          <p className="text-xs text-ios-gray mt-1">รหัส: {project.project_code}</p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
+                        <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${getStatusColor(project.status)}`}>
                           {getStatusText(project.status)}
                         </span>
                       </div>
-                      <div className="mt-2 flex items-center text-sm text-gray-600">
-                        <span>งบประมาณ: {project.budget?.toLocaleString()} บาท</span>
+                      <div className="flex items-center text-sm text-ios-gray font-medium gap-4">
+                        <span>💰 {project.budget?.toLocaleString()} บาท</span>
                         {project.total_steps > 0 && (
-                          <span className="ml-4">
-                            ขั้นตอน: {project.completed_steps}/{project.total_steps}
+                          <span>
+                            📋 {project.completed_steps}/{project.total_steps}
                           </span>
                         )}
                       </div>
@@ -247,38 +257,38 @@ const DashboardPage = () => {
                   ))}
                   <Link
                     to="/projects"
-                    className="block text-center text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="block text-center text-ios-blue hover:text-ios-blue-dark text-sm font-semibold py-3 rounded-ios-lg hover:bg-ios-blue/5 transition-all"
                   >
                     ดูทั้งหมด →
                   </Link>
                 </div>
               ) : (
-                <p className="text-center text-gray-500 py-8">ไม่มีข้อมูลโครงการ</p>
+                <p className="text-center text-ios-gray py-12 font-medium">ไม่มีข้อมูลโครงการ</p>
               )}
             </div>
           </div>
 
-          {/* Overdue Steps */}
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-800">ขั้นตอนที่ล่าช้า</h3>
+          {/* iOS Style Overdue Steps */}
+          <div className="bg-white rounded-ios-xl shadow-ios overflow-hidden">
+            <div className="px-6 py-5 border-b border-ios-gray-light">
+              <h3 className="text-xl font-bold text-gray-900">ขั้นตอนที่ล่าช้า</h3>
             </div>
             <div className="p-6">
               {overdueSteps.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {overdueSteps.map((step) => (
                     <Link
                       key={step.id}
                       to={`/projects/${step.project_id}`}
-                      className="block p-4 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 transition-colors"
+                      className="block p-5 rounded-ios-lg bg-ios-red/5 border border-ios-red/20 hover:bg-ios-red/10 transition-all active:scale-98"
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="font-medium text-gray-800">{step.step_name}</p>
-                          <p className="text-sm text-gray-600 mt-1">{step.project_name}</p>
-                          <p className="text-xs text-gray-500 mt-1">{step.department_name}</p>
+                          <p className="font-semibold text-gray-900 text-base">{step.step_name}</p>
+                          <p className="text-sm text-ios-gray mt-1 font-medium">{step.project_name}</p>
+                          <p className="text-xs text-ios-gray mt-1">{step.department_name}</p>
                         </div>
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-ios-red text-white shadow-ios-card whitespace-nowrap ml-2">
                           ล่าช้า {step.days_overdue} วัน
                         </span>
                       </div>
@@ -286,13 +296,16 @@ const DashboardPage = () => {
                   ))}
                   <Link
                     to="/overdue"
-                    className="block text-center text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="block text-center text-ios-blue hover:text-ios-blue-dark text-sm font-semibold py-3 rounded-ios-lg hover:bg-ios-blue/5 transition-all"
                   >
                     ดูทั้งหมด →
                   </Link>
                 </div>
               ) : (
-                <p className="text-center text-gray-500 py-8">ไม่มีขั้นตอนล่าช้า</p>
+                <div className="text-center py-12">
+                  <div className="text-5xl mb-3">✅</div>
+                  <p className="text-ios-gray font-medium">ไม่มีขั้นตอนล่าช้า</p>
+                </div>
               )}
             </div>
           </div>

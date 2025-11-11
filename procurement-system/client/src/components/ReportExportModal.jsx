@@ -139,88 +139,106 @@ const ReportExportModal = ({ isOpen, onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-800">📊 Export รายงาน</h2>
-          <button className="text-gray-400 hover:text-gray-600 text-2xl" onClick={onClose}>×</button>
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-end md:items-center justify-center z-50 animate-fadeIn" onClick={onClose}>
+      <div
+        className="bg-white rounded-t-ios-2xl md:rounded-ios-2xl shadow-ios-lg max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col animate-slideUp"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* iOS Drag Handle */}
+        <div className="pt-3 pb-2 flex justify-center">
+          <div className="w-10 h-1 bg-ios-gray-light rounded-full"></div>
         </div>
 
-        {/* Body */}
-        <div className="p-6 space-y-4">
-          {/* Report Type Selection */}
+        {/* Header - iOS Style */}
+        <div className="flex items-center justify-between px-6 pb-4">
+          <h2 className="text-3xl font-bold text-gray-900">📊 Export รายงาน</h2>
+          <button
+            className="w-8 h-8 rounded-full bg-ios-gray-light hover:bg-ios-gray-light/80 flex items-center justify-center text-ios-gray text-xl font-semibold transition-all active:scale-95"
+            onClick={onClose}
+          >
+            ×
+          </button>
+        </div>
+
+        {/* Body - iOS Style with Scroll */}
+        <div className="flex-1 overflow-y-auto px-6 pb-4 space-y-5">
+          {/* Report Type Selection - iOS Style */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">ประเภทรายงาน <span className="text-red-500">*</span></label>
-            <div className="flex gap-4">
-              <label className="flex items-center cursor-pointer">
+            <label className="block text-sm font-semibold text-gray-900 mb-3">
+              ประเภทรายงาน <span className="text-ios-red">*</span>
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-center cursor-pointer p-4 bg-ios-gray-lighter rounded-ios-lg hover:bg-ios-gray-light transition-all active:scale-98">
                 <input
                   type="radio"
                   name="reportType"
                   value="detailed"
                   checked={reportType === 'detailed'}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="mr-2"
+                  className="w-5 h-5 text-ios-blue focus:ring-ios-blue focus:ring-2"
                 />
-                รายละเอียดโครงการ (สำหรับผู้รับผิดชอบ)
+                <span className="ml-3 font-medium text-gray-900">รายละเอียดโครงการ (สำหรับผู้รับผิดชอบ)</span>
               </label>
-              <label className="flex items-center cursor-pointer">
+              <label className="flex items-center cursor-pointer p-4 bg-ios-gray-lighter rounded-ios-lg hover:bg-ios-gray-light transition-all active:scale-98">
                 <input
                   type="radio"
                   name="reportType"
                   value="executive"
                   checked={reportType === 'executive'}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="mr-2"
+                  className="w-5 h-5 text-ios-blue focus:ring-ios-blue focus:ring-2"
                 />
-                สรุปภาพรวม (สำหรับผู้บริหาร)
+                <span className="ml-3 font-medium text-gray-900">สรุปภาพรวม (สำหรับผู้บริหาร)</span>
               </label>
             </div>
           </div>
 
-          {/* File Format Selection */}
+          {/* File Format Selection - iOS Style */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">รูปแบบไฟล์ <span className="text-red-500">*</span></label>
-            <div className="flex gap-4">
-              <label className="flex items-center cursor-pointer">
+            <label className="block text-sm font-semibold text-gray-900 mb-3">
+              รูปแบบไฟล์ <span className="text-ios-red">*</span>
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-center cursor-pointer p-4 bg-ios-gray-lighter rounded-ios-lg hover:bg-ios-gray-light transition-all active:scale-98">
                 <input
                   type="radio"
                   name="fileFormat"
                   value="pdf"
                   checked={fileFormat === 'pdf'}
                   onChange={(e) => setFileFormat(e.target.value)}
-                  className="mr-2"
+                  className="w-5 h-5 text-ios-blue focus:ring-ios-blue focus:ring-2"
                 />
-                📄 PDF (สำหรับนำเสนอ/พิมพ์)
+                <span className="ml-3 font-medium text-gray-900">📄 PDF (สำหรับนำเสนอ/พิมพ์)</span>
               </label>
-              <label className="flex items-center cursor-pointer">
+              <label className="flex items-center cursor-pointer p-4 bg-ios-gray-lighter rounded-ios-lg hover:bg-ios-gray-light transition-all active:scale-98">
                 <input
                   type="radio"
                   name="fileFormat"
                   value="csv"
                   checked={fileFormat === 'csv'}
                   onChange={(e) => setFileFormat(e.target.value)}
-                  className="mr-2"
+                  className="w-5 h-5 text-ios-blue focus:ring-ios-blue focus:ring-2"
                 />
-                📊 CSV (สำหรับนำเข้าระบบอื่น)
+                <span className="ml-3 font-medium text-gray-900">📊 CSV (สำหรับนำเข้าระบบอื่น)</span>
               </label>
             </div>
           </div>
 
-          <hr className="my-4 border-gray-200" />
+          <div className="border-t border-ios-gray-light pt-4"></div>
 
-          <h3 className="text-lg font-semibold text-gray-800">ตัวกรองข้อมูล</h3>
+          <h3 className="text-xl font-bold text-gray-900">ตัวกรองข้อมูล</h3>
 
-          {/* Year Filter */}
+          {/* Year Filter - iOS Style */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              ปีงบประมาณ พ.ศ. <span className="text-red-500">*</span>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">
+              ปีงบประมาณ พ.ศ. <span className="text-ios-red">*</span>
             </label>
             <select
               value={filters.year}
               onChange={(e) => handleFilterChange('year', e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 appearance-none"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
             >
               <option value="">เลือกปีงบประมาณ</option>
               {yearOptions.map(year => (
@@ -229,13 +247,14 @@ const ReportExportModal = ({ isOpen, onClose }) => {
             </select>
           </div>
 
-          {/* Month Filter */}
+          {/* Month Filter - iOS Style */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">เดือน (ไม่บังคับ)</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">เดือน (ไม่บังคับ)</label>
             <select
               value={filters.month}
               onChange={(e) => handleFilterChange('month', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 appearance-none"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
             >
               <option value="">ทั้งหมด</option>
               {MONTHS.map(month => (
@@ -244,13 +263,14 @@ const ReportExportModal = ({ isOpen, onClose }) => {
             </select>
           </div>
 
-          {/* Department Filter */}
+          {/* Department Filter - iOS Style */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">กอง/สำนัก (ไม่บังคับ)</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">กอง/สำนัก (ไม่บังคับ)</label>
             <select
               value={filters.departmentId}
               onChange={(e) => handleFilterChange('departmentId', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 appearance-none"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
             >
               <option value="">ทั้งหมด</option>
               {departments.map(dept => (
@@ -259,13 +279,14 @@ const ReportExportModal = ({ isOpen, onClose }) => {
             </select>
           </div>
 
-          {/* Status Filter */}
+          {/* Status Filter - iOS Style */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">สถานะโครงการ (ไม่บังคับ)</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">สถานะโครงการ (ไม่บังคับ)</label>
             <select
               value={filters.status}
               onChange={(e) => handleFilterChange('status', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 appearance-none"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
             >
               {STATUS_OPTIONS.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
@@ -273,13 +294,14 @@ const ReportExportModal = ({ isOpen, onClose }) => {
             </select>
           </div>
 
-          {/* Procurement Method Filter */}
+          {/* Procurement Method Filter - iOS Style */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">วิธีจัดซื้อจัดจ้าง (ไม่บังคับ)</label>
+            <label className="block text-sm font-semibold text-gray-900 mb-2">วิธีจัดซื้อจัดจ้าง (ไม่บังคับ)</label>
             <select
               value={filters.procurementMethod}
               onChange={(e) => handleFilterChange('procurementMethod', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 appearance-none"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
             >
               {PROCUREMENT_METHODS.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
@@ -288,21 +310,21 @@ const ReportExportModal = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200">
+        {/* iOS Style Footer with Buttons */}
+        <div className="flex items-center gap-3 p-6 border-t border-ios-gray-light bg-white">
           <button
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex-1 px-6 py-3 bg-ios-gray-lighter text-gray-900 rounded-full hover:bg-ios-gray-light transition-all font-semibold active:scale-95"
             onClick={onClose}
             disabled={loading}
           >
             ยกเลิก
           </button>
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-6 py-3 bg-ios-blue text-white rounded-full hover:bg-ios-blue-dark transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-ios active:scale-95"
             onClick={handleExport}
             disabled={loading}
           >
-            {loading ? 'กำลังสร้างรายงาน...' : '📥 ดาวน์โหลดรายงาน'}
+            {loading ? '⏳ กำลังสร้าง...' : '📥 ดาวน์โหลด'}
           </button>
         </div>
       </div>
