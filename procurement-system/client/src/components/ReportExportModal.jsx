@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Modal.css';
 
 const MONTHS = [
   { value: 1, label: 'มกราคม' },
@@ -140,37 +139,39 @@ const ReportExportModal = ({ isOpen, onClose }) => {
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2>📊 Export รายงาน</h2>
-          <button className="modal-close" onClick={onClose}>×</button>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-800">📊 Export รายงาน</h2>
+          <button className="text-gray-400 hover:text-gray-600 text-2xl" onClick={onClose}>×</button>
         </div>
 
-        <div className="modal-body">
+        {/* Body */}
+        <div className="p-6 space-y-4">
           {/* Report Type Selection */}
-          <div className="form-group">
-            <label>ประเภทรายงาน *</label>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">ประเภทรายงาน <span className="text-red-500">*</span></label>
+            <div className="flex gap-4">
+              <label className="flex items-center cursor-pointer">
                 <input
                   type="radio"
                   name="reportType"
                   value="detailed"
                   checked={reportType === 'detailed'}
                   onChange={(e) => setReportType(e.target.value)}
-                  style={{ marginRight: '0.5rem' }}
+                  className="mr-2"
                 />
                 รายละเอียดโครงการ (สำหรับผู้รับผิดชอบ)
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <label className="flex items-center cursor-pointer">
                 <input
                   type="radio"
                   name="reportType"
                   value="executive"
                   checked={reportType === 'executive'}
                   onChange={(e) => setReportType(e.target.value)}
-                  style={{ marginRight: '0.5rem' }}
+                  className="mr-2"
                 />
                 สรุปภาพรวม (สำหรับผู้บริหาร)
               </label>
@@ -178,45 +179,48 @@ const ReportExportModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* File Format Selection */}
-          <div className="form-group">
-            <label>รูปแบบไฟล์ *</label>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">รูปแบบไฟล์ <span className="text-red-500">*</span></label>
+            <div className="flex gap-4">
+              <label className="flex items-center cursor-pointer">
                 <input
                   type="radio"
                   name="fileFormat"
                   value="pdf"
                   checked={fileFormat === 'pdf'}
                   onChange={(e) => setFileFormat(e.target.value)}
-                  style={{ marginRight: '0.5rem' }}
+                  className="mr-2"
                 />
                 📄 PDF (สำหรับนำเสนอ/พิมพ์)
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <label className="flex items-center cursor-pointer">
                 <input
                   type="radio"
                   name="fileFormat"
                   value="csv"
                   checked={fileFormat === 'csv'}
                   onChange={(e) => setFileFormat(e.target.value)}
-                  style={{ marginRight: '0.5rem' }}
+                  className="mr-2"
                 />
                 📊 CSV (สำหรับนำเข้าระบบอื่น)
               </label>
             </div>
           </div>
 
-          <hr style={{ margin: '1.5rem 0', border: 'none', borderTop: '1px solid #ddd' }} />
+          <hr className="my-4 border-gray-200" />
 
-          <h3 style={{ fontSize: '1rem', marginBottom: '1rem' }}>ตัวกรองข้อมูล</h3>
+          <h3 className="text-lg font-semibold text-gray-800">ตัวกรองข้อมูล</h3>
 
           {/* Year Filter */}
-          <div className="form-group">
-            <label>ปีงบประมาณ พ.ศ. *</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              ปีงบประมาณ พ.ศ. <span className="text-red-500">*</span>
+            </label>
             <select
               value={filters.year}
               onChange={(e) => handleFilterChange('year', e.target.value)}
               required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">เลือกปีงบประมาณ</option>
               {yearOptions.map(year => (
@@ -226,11 +230,12 @@ const ReportExportModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Month Filter */}
-          <div className="form-group">
-            <label>เดือน (ไม่บังคับ)</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">เดือน (ไม่บังคับ)</label>
             <select
               value={filters.month}
               onChange={(e) => handleFilterChange('month', e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">ทั้งหมด</option>
               {MONTHS.map(month => (
@@ -240,11 +245,12 @@ const ReportExportModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Department Filter */}
-          <div className="form-group">
-            <label>กอง/สำนัก (ไม่บังคับ)</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">กอง/สำนัก (ไม่บังคับ)</label>
             <select
               value={filters.departmentId}
               onChange={(e) => handleFilterChange('departmentId', e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">ทั้งหมด</option>
               {departments.map(dept => (
@@ -254,11 +260,12 @@ const ReportExportModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Status Filter */}
-          <div className="form-group">
-            <label>สถานะโครงการ (ไม่บังคับ)</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">สถานะโครงการ (ไม่บังคับ)</label>
             <select
               value={filters.status}
               onChange={(e) => handleFilterChange('status', e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {STATUS_OPTIONS.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
@@ -267,11 +274,12 @@ const ReportExportModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Procurement Method Filter */}
-          <div className="form-group">
-            <label>วิธีจัดซื้อจัดจ้าง (ไม่บังคับ)</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">วิธีจัดซื้อจัดจ้าง (ไม่บังคับ)</label>
             <select
               value={filters.procurementMethod}
               onChange={(e) => handleFilterChange('procurementMethod', e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {PROCUREMENT_METHODS.map(option => (
                 <option key={option.value} value={option.value}>{option.label}</option>
@@ -280,16 +288,17 @@ const ReportExportModal = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        <div className="modal-footer">
+        {/* Footer */}
+        <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200">
           <button
-            className="btn btn-secondary"
+            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             onClick={onClose}
             disabled={loading}
           >
             ยกเลิก
           </button>
           <button
-            className="btn btn-primary"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleExport}
             disabled={loading}
           >
