@@ -5,10 +5,16 @@ import morgan from 'morgan';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import config from './config/app.js';
 import { initializeDatabase, seedDatabase, closeDatabase } from './config/database.js';
 import routes from './routes/index.js';
+
+// ES Module path resolution
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables
 dotenv.config();
@@ -97,13 +103,17 @@ app.get('/health', (req, res) => {
 // API routes
 app.use('/api', routes);
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    error: 'Route not found',
-    path: req.path
-  });
+// ========================================
+// SERVE STATIC FILES (Production)
+// ========================================
+
+// Serve static files from the client's dist directory
+const clientDistPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientDistPath));
+
+// Handle client-side routing - send all non-API requests to index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 // ========================================
