@@ -171,9 +171,9 @@ export function updateStepStatus(stepId, status, userId) {
 
       // Log audit trail
       db.prepare(`
-        INSERT INTO audit_logs (
-          user_id, action, table_name, record_id,
-          changes, ip_address, created_at
+        INSERT INTO audit_log (
+          user_id, action, entity_type, entity_id,
+          new_values, ip_address, created_at
         ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
         userId,
@@ -287,9 +287,9 @@ export function updateStep(stepId, updateData, userId) {
 
       // Log audit trail
       db.prepare(`
-        INSERT INTO audit_logs (
-          user_id, action, table_name, record_id,
-          changes, ip_address, created_at
+        INSERT INTO audit_log (
+          user_id, action, entity_type, entity_id,
+          new_values, ip_address, created_at
         ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
         userId,
