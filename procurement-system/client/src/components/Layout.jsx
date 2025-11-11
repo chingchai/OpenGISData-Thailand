@@ -14,10 +14,15 @@ const Layout = ({ children }) => {
   };
 
   const navigation = [
-    { name: 'Dashboard', path: '/dashboard', icon: '📊' },
-    { name: 'โครงการทั้งหมด', path: '/projects', icon: '📁' },
-    { name: 'ขั้นตอนล่าช้า', path: '/overdue', icon: '⚠️' },
+    { name: 'Dashboard', path: '/dashboard', icon: '📊', roles: ['admin', 'staff', 'executive'] },
+    { name: 'โครงการทั้งหมด', path: '/projects', icon: '📁', roles: ['admin', 'staff', 'executive'] },
+    { name: 'ขั้นตอนล่าช้า', path: '/overdue', icon: '⚠️', roles: ['admin', 'staff', 'executive'] },
+    { name: 'จัดการโครงการ', path: '/admin/projects', icon: '⚙️', roles: ['admin'] },
   ];
+
+  const visibleNavigation = navigation.filter(item =>
+    !item.roles || item.roles.includes(user?.role)
+  );
 
   const isActive = (path) => location.pathname === path;
 
@@ -42,7 +47,7 @@ const Layout = ({ children }) => {
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-4">
-              {navigation.map((item) => (
+              {visibleNavigation.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
@@ -88,7 +93,7 @@ const Layout = ({ children }) => {
         {/* Mobile Navigation */}
         <div className="md:hidden border-t border-gray-200">
           <div className="flex justify-around py-2">
-            {navigation.map((item) => (
+            {visibleNavigation.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
