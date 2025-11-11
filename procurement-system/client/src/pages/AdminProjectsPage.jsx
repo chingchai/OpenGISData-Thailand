@@ -43,11 +43,18 @@ const AdminProjectsPage = () => {
       if (filter.method) params.procurementMethod = filter.method;
 
       const projectsRes = await projectsAPI.getAll(params);
-      setProjects(projectsRes.data.projects || projectsRes.data || []);
+      // API returns { data: [...], pagination: {...} }
+      // axios wraps this in .data, so we get projectsRes.data.data
+      const projectsData = Array.isArray(projectsRes.data.data)
+        ? projectsRes.data.data
+        : Array.isArray(projectsRes.data)
+        ? projectsRes.data
+        : [];
+      setProjects(projectsData);
 
       // Fetch departments (from first project or make separate API call)
       const uniqueDepts = [...new Map(
-        (projectsRes.data.projects || projectsRes.data || [])
+        projectsData
           .filter(p => p.department_name)
           .map(p => [p.department_id, { id: p.department_id, name: p.department_name }])
       ).values()];

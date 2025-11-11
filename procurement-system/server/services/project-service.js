@@ -246,7 +246,7 @@ export function createProject(projectData, userId) {
       const projectResult = db.prepare(`
         INSERT INTO projects (
           project_code, name, description, department_id,
-          procurement_method, budget_amount, budget_year,
+          procurement_method, budget, budget_year,
           status, planned_start, created_by, created_at
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
@@ -351,7 +351,7 @@ export function updateProject(projectId, updateData, userId) {
 
     // Build dynamic update query
     const allowedFields = [
-      'name', 'description', 'budget_amount', 'status',
+      'name', 'description', 'budget', 'status',
       'actual_start', 'actual_end', 'winner_vendor',
       'contract_number', 'contract_date', 'remarks'
     ];
@@ -360,7 +360,7 @@ export function updateProject(projectId, updateData, userId) {
     const fieldMapping = {
       name: 'name',
       description: 'description',
-      budgetAmount: 'budget_amount',
+      budgetAmount: 'budget',
       status: 'status',
       actualStartDate: 'actual_start',
       actualEndDate: 'actual_end',
@@ -638,8 +638,8 @@ export function getProjectStatistics(departmentId = null) {
         SUM(CASE WHEN p.status = 'completed' THEN 1 ELSE 0 END) as completed_count,
         SUM(CASE WHEN p.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_count,
         SUM(CASE WHEN p.status = 'on_hold' THEN 1 ELSE 0 END) as on_hold_count,
-        SUM(p.budget_amount) as total_budget,
-        AVG(p.budget_amount) as average_budget
+        SUM(p.budget) as total_budget,
+        AVG(p.budget) as average_budget
       FROM projects p
       ${whereClause}
     `, params);
