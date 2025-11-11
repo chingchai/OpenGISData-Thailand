@@ -5,7 +5,7 @@
 
 import express from 'express';
 import * as reportController from '../controllers/report-controller.js';
-import { authenticate, authorize } from '../middleware/auth.js';
+import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
