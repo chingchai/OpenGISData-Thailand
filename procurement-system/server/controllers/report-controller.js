@@ -6,7 +6,7 @@
 import * as reportService from '../services/report-service.js';
 import * as csvGenerator from '../utils/csv-generator.js';
 import * as pdfGenerator from '../utils/pdf-generator.js';
-import logger from '../config/logger.js';
+import logger from '../utils/logger.js';
 
 /**
  * Export detailed report as CSV

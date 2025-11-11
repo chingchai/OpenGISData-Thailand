@@ -4,7 +4,7 @@
  */
 
 import { query, queryOne } from '../config/database.js';
-import logger from '../config/logger.js';
+import logger from '../utils/logger.js';
 
 /**
  * Get detailed report - รายละเอียดโครงการทั้งหมด (สำหรับผู้รับผิดชอบโครงการ)
