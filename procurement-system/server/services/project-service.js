@@ -81,11 +81,6 @@ export function getAllProjects(filters = {}) {
       params.push(status);
     }
 
-    if (budgetYear) {
-      sql += ' AND p.budget_year = ?';
-      params.push(budgetYear);
-    }
-
     if (procurementMethod) {
       sql += ' AND p.procurement_method = ?';
       params.push(procurementMethod);
@@ -246,9 +241,9 @@ export function createProject(projectData, userId) {
       const projectResult = db.prepare(`
         INSERT INTO projects (
           project_code, name, description, department_id,
-          procurement_method, budget, budget_year,
-          status, planned_start, created_by, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+          procurement_method, budget,
+          status, start_date, created_by, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
         projectCode,
         name,
@@ -256,7 +251,6 @@ export function createProject(projectData, userId) {
         departmentId,
         procurementMethod,
         budgetAmount,
-        budgetYear,
         'draft',
         startDate || new Date().toISOString().split('T')[0],
         userId
@@ -393,8 +387,6 @@ export function updateProject(projectId, updateData, userId) {
 
     // Add updated timestamp and user
     updates.push('updated_at = datetime(\'now\')');
-    updates.push('updated_by = ?');
-    params.push(userId);
     params.push(projectId);
 
     const sql = `UPDATE projects SET ${updates.join(', ')} WHERE id = ?`;
@@ -543,8 +535,8 @@ const generateProjectCode = (departmentId, budgetYear) => {
     const countResult = queryOne(`
       SELECT COUNT(*) as count
       FROM projects
-      WHERE department_id = ? AND budget_year = ?
-    `, [departmentId, budgetYear]);
+      WHERE department_id = ?
+    `, [departmentId]);
     const count = countResult ? countResult.count : 0;
 
     const sequence = String(count + 1).padStart(4, '0');
