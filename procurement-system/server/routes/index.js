@@ -1,0 +1,36 @@
+import express from 'express';
+import authRoutes from './auth.js';
+import projectRoutes from './projects.js';
+import stepRoutes from './steps.js';
+import uploadRoutes from './upload.js';
+import reportRoutes from './reports.js';
+
+const router = express.Router();
+
+// API version info
+router.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Procurement System API',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/auth',
+      projects: '/api/projects',
+      projectSteps: '/api/projects/:projectId/steps',
+      steps: '/api/steps',
+      stepsByProject: '/api/projects/:projectId/steps',
+      overdueSteps: '/api/steps/overdue',
+      upload: '/api/upload',
+      reports: '/api/reports'
+    }
+  });
+});
+
+// Mount routes
+router.use('/auth', authRoutes);
+router.use('/projects', projectRoutes);
+router.use('/steps', stepRoutes);
+router.use('/upload', uploadRoutes);
+router.use('/reports', reportRoutes);
+
+export default router;

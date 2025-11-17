@@ -1,0 +1,310 @@
+[
+  {
+    "id": 1,
+    "code": "public_invitation",
+    "name": "วิธีประกาศเชิญชวนทั่วไป",
+    "nameEn": "Public Invitation Method",
+    "description": "การจัดซื้อจัดจ้างที่เปิดให้ผู้ประกอบการทั่วไปเข้าแข่งขัน",
+    "totalSteps": 7,
+    "estimatedDays": 60,
+    "steps": [
+      {
+        "stepNumber": 1,
+        "name": "จัดทำร่างขอบเขตงาน (TOR)",
+        "nameEn": "Prepare Terms of Reference (TOR)",
+        "description": "จัดทำเอกสารรายละเอียดคุณลักษณะเฉพาะและขอบเขตของงาน",
+        "defaultDays": 7,
+        "minDays": 3,
+        "maxDays": 14,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 2,
+        "name": "เสนอขออนุมัติหลักการ",
+        "nameEn": "Request Approval in Principle",
+        "description": "เสนอผู้มีอำนาจพิจารณาอนุมัติหลักการในการจัดซื้อจัดจ้าง",
+        "defaultDays": 5,
+        "minDays": 3,
+        "maxDays": 10,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 3,
+        "name": "ประกาศเชิญชวน",
+        "nameEn": "Public Announcement",
+        "description": "ประกาศเชิญชวนผู้ประกอบการเข้ายื่นข้อเสนอ",
+        "defaultDays": 21,
+        "minDays": 14,
+        "maxDays": 30,
+        "isCritical": true,
+        "allowWeekends": true
+      },
+      {
+        "stepNumber": 4,
+        "name": "รับซองข้อเสนอ",
+        "nameEn": "Receive Proposals",
+        "description": "รับซองข้อเสนอจากผู้ประกอบการ",
+        "defaultDays": 1,
+        "minDays": 1,
+        "maxDays": 1,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 5,
+        "name": "เปิดซองและพิจารณาข้อเสนอ",
+        "nameEn": "Open Bids and Evaluation",
+        "description": "เปิดซองข้อเสนอและพิจารณาผลการประกวดราคา",
+        "defaultDays": 7,
+        "minDays": 5,
+        "maxDays": 14,
+        "isCritical": true,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 6,
+        "name": "ประกาศผลผู้ชนะ",
+        "nameEn": "Announce Winner",
+        "description": "ประกาศรายชื่อผู้ชนะการเสนอราคา",
+        "defaultDays": 3,
+        "minDays": 1,
+        "maxDays": 5,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 7,
+        "name": "ทำสัญญาหรือข้อตกลง",
+        "nameEn": "Contract Signing",
+        "description": "ดำเนินการทำสัญญาจ้างหรือข้อตกลง",
+        "defaultDays": 14,
+        "minDays": 7,
+        "maxDays": 21,
+        "isCritical": true,
+        "allowWeekends": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "code": "selection",
+    "name": "วิธีคัดเลือก",
+    "nameEn": "Selection Method",
+    "description": "การจัดซื้อจัดจ้างโดยคัดเลือกจากผู้ประกอบการที่มีคุณสมบัติเหมาะสม",
+    "totalSteps": 8,
+    "estimatedDays": 50,
+    "steps": [
+      {
+        "stepNumber": 1,
+        "name": "จัดทำร่างขอบเขตงาน (TOR)",
+        "nameEn": "Prepare Terms of Reference (TOR)",
+        "description": "จัดทำเอกสารรายละเอียดคุณลักษณะเฉพาะและขอบเขตของงาน",
+        "defaultDays": 7,
+        "minDays": 3,
+        "maxDays": 14,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 2,
+        "name": "ขออนุมัติหลักการ",
+        "nameEn": "Request Approval",
+        "description": "เสนอผู้มีอำนาจพิจารณาอนุมัติหลักการ",
+        "defaultDays": 5,
+        "minDays": 3,
+        "maxDays": 10,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 3,
+        "name": "คัดเลือกผู้มีคุณสมบัติเหมาะสม",
+        "nameEn": "Select Qualified Vendors",
+        "description": "คัดเลือกผู้ประกอบการที่มีคุณสมบัติตรงตามเกณฑ์",
+        "defaultDays": 5,
+        "minDays": 3,
+        "maxDays": 7,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 4,
+        "name": "ขอเอกสารเสนอราคา",
+        "nameEn": "Request for Quotation",
+        "description": "ขอเอกสารและข้อเสนอราคาจากผู้ประกอบการที่คัดเลือก",
+        "defaultDays": 14,
+        "minDays": 10,
+        "maxDays": 21,
+        "isCritical": true,
+        "allowWeekends": true
+      },
+      {
+        "stepNumber": 5,
+        "name": "เปิดซองและพิจารณาข้อเสนอ",
+        "nameEn": "Evaluate Proposals",
+        "description": "พิจารณาข้อเสนอและราคา",
+        "defaultDays": 5,
+        "minDays": 3,
+        "maxDays": 10,
+        "isCritical": true,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 6,
+        "name": "เจรจาต่อรองราคา (ถ้าจำเป็น)",
+        "nameEn": "Price Negotiation (If Required)",
+        "description": "เจรจาต่อรองราคากับผู้ที่ได้รับการคัดเลือก",
+        "defaultDays": 3,
+        "minDays": 1,
+        "maxDays": 7,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 7,
+        "name": "อนุมัติผลการคัดเลือก",
+        "nameEn": "Approve Selection Result",
+        "description": "เสนอผู้มีอำนาจอนุมัติผลการคัดเลือก",
+        "defaultDays": 3,
+        "minDays": 1,
+        "maxDays": 5,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 8,
+        "name": "ทำสัญญาหรือข้อตกลง",
+        "nameEn": "Contract Signing",
+        "description": "ดำเนินการทำสัญญาจ้างหรือข้อตกลง",
+        "defaultDays": 14,
+        "minDays": 7,
+        "maxDays": 21,
+        "isCritical": true,
+        "allowWeekends": false
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "code": "specific",
+    "name": "วิธีเฉพาะเจาะจง",
+    "nameEn": "Specific Procurement Method",
+    "description": "การจัดซื้อจัดจ้างโดยตกลงกับผู้ประกอบการรายใดรายหนึ่งโดยเฉพาะ",
+    "totalSteps": 10,
+    "estimatedDays": 70,
+    "steps": [
+      {
+        "stepNumber": 1,
+        "name": "จัดทำร่างขอบเขตงาน (TOR)",
+        "nameEn": "Prepare Terms of Reference (TOR)",
+        "description": "จัดทำเอกสารรายละเอียดคุณลักษณะเฉพาะและขอบเขตของงาน",
+        "defaultDays": 7,
+        "minDays": 3,
+        "maxDays": 14,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 2,
+        "name": "คำนวณราคากลาง",
+        "nameEn": "Calculate Base Price",
+        "description": "คำนวณและจัดทำเอกสารราคากลาง",
+        "defaultDays": 5,
+        "minDays": 3,
+        "maxDays": 10,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 3,
+        "name": "เสนอขออนุมัติหลักการ",
+        "nameEn": "Request Approval in Principle",
+        "description": "เสนอผู้มีอำนาจพิจารณาอนุมัติหลักการ",
+        "defaultDays": 5,
+        "minDays": 3,
+        "maxDays": 10,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 4,
+        "name": "ประกาศเชิญชวน",
+        "nameEn": "Public Announcement",
+        "description": "ประกาศเชิญชวนตามหลักเกณฑ์",
+        "defaultDays": 21,
+        "minDays": 14,
+        "maxDays": 30,
+        "isCritical": true,
+        "allowWeekends": true
+      },
+      {
+        "stepNumber": 5,
+        "name": "รับซองข้อเสนอ",
+        "nameEn": "Receive Proposals",
+        "description": "รับซองข้อเสนอจากผู้ประกอบการ",
+        "defaultDays": 1,
+        "minDays": 1,
+        "maxDays": 1,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 6,
+        "name": "เปิดซองและพิจารณาคุณสมบัติ",
+        "nameEn": "Evaluate Qualifications",
+        "description": "เปิดซองและพิจารณาคุณสมบัติผู้เสนอราคา",
+        "defaultDays": 7,
+        "minDays": 5,
+        "maxDays": 14,
+        "isCritical": true,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 7,
+        "name": "คัดเลือกผู้ที่มีคุณสมบัติ",
+        "nameEn": "Select Qualified Vendor",
+        "description": "คัดเลือกผู้ประกอบการที่มีคุณสมบัติเหมาะสม",
+        "defaultDays": 3,
+        "minDays": 1,
+        "maxDays": 7,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 8,
+        "name": "เจรจาต่อรองราคา (ถ้าจำเป็น)",
+        "nameEn": "Price Negotiation (If Required)",
+        "description": "เจรจาต่อรองราคากับผู้ที่ได้รับการคัดเลือก",
+        "defaultDays": 5,
+        "minDays": 3,
+        "maxDays": 10,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 9,
+        "name": "ประกาศผลการคัดเลือก",
+        "nameEn": "Announce Selection Result",
+        "description": "ประกาศผลการคัดเลือกผู้ประกอบการ",
+        "defaultDays": 3,
+        "minDays": 1,
+        "maxDays": 5,
+        "isCritical": false,
+        "allowWeekends": false
+      },
+      {
+        "stepNumber": 10,
+        "name": "ทำสัญญาหรือข้อตกลง",
+        "nameEn": "Contract Signing",
+        "description": "ดำเนินการทำสัญญาจ้างหรือข้อตกลง",
+        "defaultDays": 14,
+        "minDays": 7,
+        "maxDays": 21,
+        "isCritical": true,
+        "allowWeekends": false
+      }
+    ]
+  }
+]
