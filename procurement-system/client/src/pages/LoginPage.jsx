@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -13,6 +13,7 @@ const LoginPage = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -43,41 +44,39 @@ const LoginPage = () => {
     setFormData({ username, password, role });
   };
 
-  // Initialize Lucide icons
-  useEffect(() => {
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
-  }, [error]);
-
   return (
-    <div className="min-h-screen bg-ios-gray-lighter font-ios flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-6">
       <div className="max-w-md w-full">
-        {/* iOS Style Header */}
+        {/* Modern Header with Icon */}
         <div className="text-center mb-10">
-          <div className="w-20 h-20 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-2xl mx-auto mb-4 flex items-center justify-center shadow-ios-lg">
-            <i data-lucide="building-2" className="w-10 h-10 text-white"></i>
+          <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-2xl border-4 border-white">
+            <i className="fas fa-building text-white text-5xl"></i>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-3">
             ระบบจัดซื้อจัดจ้าง
           </h1>
-          <p className="text-ios-gray font-medium">เทศบาลตำบลหัวทะเล</p>
+          <p className="text-gray-700 font-semibold text-lg">เทศบาลตำบลหัวทะเล</p>
         </div>
 
-        {/* iOS Style Login Form Card */}
-        <div className="bg-white rounded-ios-2xl shadow-ios-lg p-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">เข้าสู่ระบบ</h2>
+        {/* Modern Login Form Card */}
+        <div className="bg-white rounded-3xl shadow-2xl p-10 border-4 border-blue-100">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
+            <i className="fas fa-sign-in-alt text-blue-600"></i>
+            เข้าสู่ระบบ
+          </h2>
 
           {error && (
-            <div className="bg-ios-red/10 border border-ios-red/20 text-ios-red px-5 py-4 rounded-ios-lg mb-6 font-medium">
+            <div className="bg-gradient-to-r from-red-50 to-red-100 border-2 border-red-300 text-red-800 px-5 py-4 rounded-xl mb-6 font-semibold flex items-center gap-3 shadow-md">
+              <i className="fas fa-exclamation-triangle text-2xl"></i>
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Username - iOS Style */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Username */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                <i className="fas fa-user mr-2 text-blue-600"></i>
                 ชื่อผู้ใช้
               </label>
               <input
@@ -85,111 +84,138 @@ const LoginPage = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-4 py-3.5 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 placeholder-ios-gray"
+                className="w-full px-5 py-4 bg-white border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold text-gray-900 placeholder-gray-400 hover:border-blue-400 transition-all"
                 placeholder="กรอกชื่อผู้ใช้"
                 required
               />
             </div>
 
-            {/* Password - iOS Style */}
+            {/* Password */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                <i className="fas fa-lock mr-2 text-green-600"></i>
                 รหัสผ่าน
               </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-3.5 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 placeholder-ios-gray"
-                placeholder="กรอกรหัสผ่าน"
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-5 py-4 pr-14 bg-white border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold text-gray-900 placeholder-gray-400 hover:border-blue-400 transition-all"
+                  placeholder="กรอกรหัสผ่าน"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 transition-colors text-xl"
+                >
+                  <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                </button>
+              </div>
             </div>
 
-            {/* Role - iOS Style */}
+            {/* Role */}
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-2">
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                <i className="fas fa-user-tag mr-2 text-purple-600"></i>
                 ประเภทผู้ใช้
               </label>
               <select
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="w-full px-4 py-3.5 bg-ios-gray-lighter border-0 rounded-ios-lg focus:ring-2 focus:ring-ios-blue font-medium text-gray-900 appearance-none"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`, backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.5em 1.5em' }}
+                className="w-full px-5 py-4 bg-white border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-bold text-gray-900 hover:border-blue-400 transition-all cursor-pointer"
               >
-                <option value="staff">เจ้าหน้าที่</option>
-                <option value="admin">ผู้ดูแลระบบ</option>
-                <option value="executive">ผู้บริหาร</option>
+                <option value="staff">📋 เจ้าหน้าที่</option>
+                <option value="admin">👑 ผู้ดูแลระบบ</option>
+                <option value="executive">⭐ ผู้บริหาร</option>
               </select>
             </div>
 
-            {/* Submit Button - iOS Pill Style */}
+            {/* Submit Button - Modern Gradient Style */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-ios-blue hover:bg-ios-blue-dark text-white font-semibold py-4 px-6 rounded-full transition-all shadow-ios disabled:opacity-50 disabled:cursor-not-allowed active:scale-98 mt-6 border-2 border-ios-blue"
+              className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-lg py-5 px-6 rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed active:scale-95 border-2 border-blue-700 mt-8"
             >
               {loading ? (
                 <>
-                  <i data-lucide="loader-2" className="w-5 h-5 animate-spin"></i>
-                  กำลังเข้าสู่ระบบ...
+                  <i className="fas fa-spinner fa-spin text-2xl"></i>
+                  <span>กำลังเข้าสู่ระบบ...</span>
                 </>
               ) : (
                 <>
-                  <i data-lucide="log-in" className="w-5 h-5"></i>
-                  เข้าสู่ระบบ
+                  <i className="fas fa-sign-in-alt text-2xl"></i>
+                  <span>เข้าสู่ระบบ</span>
                 </>
               )}
             </button>
           </form>
 
-          {/* iOS Style Quick Login Demo */}
-          <div className="mt-8 pt-8 border-t border-ios-gray-light">
-            <p className="text-sm font-semibold text-ios-gray mb-4">ทดสอบระบบด่วน:</p>
+          {/* Modern Quick Login Demo */}
+          <div className="mt-10 pt-8 border-t-2 border-gray-200">
+            <p className="text-sm font-bold text-gray-700 mb-5 flex items-center gap-2">
+              <i className="fas fa-bolt text-yellow-500"></i>
+              ทดสอบระบบด่วน:
+            </p>
             <div className="space-y-3">
               <button
                 onClick={() => quickLogin('admin', 'password123', 'admin')}
-                className="w-full flex items-center gap-3 text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
+                className="w-full flex items-center gap-3 text-sm bg-gradient-to-r from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 text-gray-900 py-4 px-5 rounded-xl font-bold transition-all duration-200 border-2 border-purple-200 hover:border-purple-400 shadow-md hover:shadow-lg active:scale-95"
               >
-                <i data-lucide="shield" className="w-5 h-5 text-ios-blue"></i>
-                Admin (ผู้ดูแลระบบ)
+                <i className="fas fa-shield-halved text-xl text-purple-600"></i>
+                <div className="text-left flex-1">
+                  <div className="font-bold">Admin (ผู้ดูแลระบบ)</div>
+                  <div className="text-xs text-gray-600 font-semibold">admin / password123</div>
+                </div>
+                <i className="fas fa-arrow-right text-purple-600"></i>
               </button>
               <button
                 onClick={() => quickLogin('staff_engineering', 'password123', 'staff')}
-                className="w-full flex items-center gap-3 text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
+                className="w-full flex items-center gap-3 text-sm bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-gray-900 py-4 px-5 rounded-xl font-bold transition-all duration-200 border-2 border-blue-200 hover:border-blue-400 shadow-md hover:shadow-lg active:scale-95"
               >
-                <i data-lucide="hard-hat" className="w-5 h-5 text-ios-orange"></i>
-                Staff (กองช่าง)
+                <i className="fas fa-hard-hat text-xl text-blue-600"></i>
+                <div className="text-left flex-1">
+                  <div className="font-bold">Staff (กองช่าง)</div>
+                  <div className="text-xs text-gray-600 font-semibold">staff_engineering / password123</div>
+                </div>
+                <i className="fas fa-arrow-right text-blue-600"></i>
               </button>
               <button
                 onClick={() => quickLogin('executive_mayor', 'password123', 'executive')}
-                className="w-full flex items-center gap-3 text-sm bg-ios-gray-lighter hover:bg-ios-gray-light text-gray-900 py-3 px-4 rounded-ios-lg font-medium transition-all active:scale-98"
+                className="w-full flex items-center gap-3 text-sm bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 text-gray-900 py-4 px-5 rounded-xl font-bold transition-all duration-200 border-2 border-green-200 hover:border-green-400 shadow-md hover:shadow-lg active:scale-95"
               >
-                <i data-lucide="crown" className="w-5 h-5 text-ios-yellow"></i>
-                Executive (ผู้บริหาร)
+                <i className="fas fa-crown text-xl text-green-600"></i>
+                <div className="text-left flex-1">
+                  <div className="font-bold">Executive (ผู้บริหาร)</div>
+                  <div className="text-xs text-gray-600 font-semibold">executive_mayor / password123</div>
+                </div>
+                <i className="fas fa-arrow-right text-green-600"></i>
               </button>
             </div>
           </div>
 
-          {/* iOS Style View All Credentials Link */}
-          <div className="mt-6 text-center">
+          {/* Modern View All Credentials Link */}
+          <div className="mt-8 text-center">
             <Link
               to="/credentials"
-              className="inline-flex items-center gap-2 text-ios-blue hover:text-ios-blue-dark text-sm font-semibold transition-colors"
+              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-bold transition-colors bg-blue-50 hover:bg-blue-100 px-5 py-3 rounded-xl border-2 border-blue-200 hover:border-blue-400"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+              <i className="fas fa-file-lines"></i>
               ดูข้อมูลบัญชีผู้ใช้ทั้งหมด
+              <i className="fas fa-arrow-right text-xs"></i>
             </Link>
           </div>
         </div>
 
-        {/* iOS Style Footer */}
-        <div className="text-center mt-8 text-sm text-ios-gray font-medium">
-          <p>© 2024 เทศบาลตำบลหัวทะเล</p>
+        {/* Modern Footer */}
+        <div className="text-center mt-8 text-sm text-gray-700 font-semibold bg-white rounded-2xl py-4 px-6 shadow-lg border-2 border-gray-200">
+          <p className="flex items-center justify-center gap-2">
+            <i className="fas fa-copyright text-blue-600"></i>
+            2024 เทศบาลตำบลหัวทะเล
+          </p>
         </div>
       </div>
     </div>
