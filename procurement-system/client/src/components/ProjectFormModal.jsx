@@ -5,14 +5,11 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    department_id: '',
-    procurement_method: 'specific',
-    budget: '',
-    start_date: '',
-    expected_end_date: '',
-    status: 'draft',
-    urgency_level: 'normal',
-    contractor_type: 'construction'
+    departmentId: '',
+    procurementMethod: 'specific',
+    budgetAmount: '',
+    budgetYear: new Date().getFullYear(),
+    startDate: new Date().toISOString().split('T')[0]
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,28 +20,22 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
       setFormData({
         name: project.name || '',
         description: project.description || '',
-        department_id: project.department_id || '',
-        procurement_method: project.procurement_method || 'specific',
-        budget: project.budget || '',
-        start_date: project.start_date || '',
-        expected_end_date: project.expected_end_date || '',
-        status: project.status || 'draft',
-        urgency_level: project.urgency_level || 'normal',
-        contractor_type: project.contractor_type || 'construction'
+        departmentId: project.departmentId || project.department_id || '',
+        procurementMethod: project.procurementMethod || project.procurement_method || 'specific',
+        budgetAmount: project.budgetAmount || project.budget || '',
+        budgetYear: project.budgetYear || project.budget_year || new Date().getFullYear(),
+        startDate: project.startDate || project.start_date || new Date().toISOString().split('T')[0]
       });
     } else {
       // Create mode - reset form
       setFormData({
         name: '',
         description: '',
-        department_id: '',
-        procurement_method: 'specific',
-        budget: '',
-        start_date: '',
-        expected_end_date: '',
-        status: 'draft',
-        urgency_level: 'normal',
-        contractor_type: 'construction'
+        departmentId: '',
+        procurementMethod: 'specific',
+        budgetAmount: '',
+        budgetYear: new Date().getFullYear(),
+        startDate: new Date().toISOString().split('T')[0]
       });
     }
     setError('');
@@ -65,12 +56,23 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
     setError('');
 
     try {
+      // Prepare payload with proper data types
+      const payload = {
+        name: formData.name.trim(),
+        description: formData.description?.trim() || undefined,
+        departmentId: parseInt(formData.departmentId),
+        procurementMethod: formData.procurementMethod,
+        budgetAmount: parseFloat(formData.budgetAmount),
+        budgetYear: parseInt(formData.budgetYear),
+        startDate: formData.startDate
+      };
+
       if (project) {
         // Update existing project
-        await projectsAPI.update(project.id, formData);
+        await projectsAPI.update(project.id, payload);
       } else {
         // Create new project
-        await projectsAPI.create(formData);
+        await projectsAPI.create(payload);
       }
       onSuccess();
       onClose();
@@ -143,16 +145,16 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                หน่วยงาน <span className="text-red-500">*</span>
+                กอง/สำนัก <span className="text-red-500">*</span>
               </label>
               <select
-                name="department_id"
-                value={formData.department_id}
+                name="departmentId"
+                value={formData.departmentId}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="">เลือกหน่วยงาน</option>
+                <option value="">เลือกกอง/สำนัก</option>
                 {departments.map(dept => (
                   <option key={dept.id} value={dept.id}>{dept.name}</option>
                 ))}
@@ -165,11 +167,12 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
               </label>
               <input
                 type="number"
-                name="budget"
-                value={formData.budget}
+                name="budgetAmount"
+                value={formData.budgetAmount}
                 onChange={handleChange}
                 required
-                min="0"
+                min="1"
+                max="50000000"
                 step="0.01"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="0.00"
@@ -177,19 +180,20 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
             </div>
           </div>
 
-          {/* Procurement Method and Status - Row */}
+          {/* Procurement Method and Budget Year - Row */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 วิธีจัดซื้อจัดจ้าง <span className="text-red-500">*</span>
               </label>
               <select
-                name="procurement_method"
-                value={formData.procurement_method}
+                name="procurementMethod"
+                value={formData.procurementMethod}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
+                <option value="">เลือกวิธีจัดซื้อจัดจ้าง</option>
                 <option value="public_invitation">ประกาศเชิญชวน (e-bidding)</option>
                 <option value="selection">คัดเลือก</option>
                 <option value="specific">เฉพาะเจาะจง</option>
@@ -198,90 +202,35 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                สถานะ <span className="text-red-500">*</span>
-              </label>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="draft">ร่าง</option>
-                <option value="in_progress">กำลังดำเนินการ</option>
-                <option value="completed">เสร็จสิ้น</option>
-                <option value="delayed">ล่าช้า</option>
-                <option value="cancelled">ยกเลิก</option>
-                <option value="on_hold">พักการดำเนินการ</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Dates - Row */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                วันที่เริ่มต้น <span className="text-red-500">*</span>
+                ปีงบประมาณ (ค.ศ.) <span className="text-red-500">*</span>
               </label>
               <input
-                type="date"
-                name="start_date"
-                value={formData.start_date}
+                type="number"
+                name="budgetYear"
+                value={formData.budgetYear}
                 onChange={handleChange}
                 required
+                min="2020"
+                max="2100"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                วันที่คาดว่าแล้วเสร็จ <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="date"
-                name="expected_end_date"
-                value={formData.expected_end_date}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="2025"
               />
             </div>
           </div>
 
-          {/* Urgency and Contractor Type - Row */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                ความเร่งด่วน
-              </label>
-              <select
-                name="urgency_level"
-                value={formData.urgency_level}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="normal">ปกติ</option>
-                <option value="urgent">เร่งด่วน</option>
-                <option value="critical">เร่งด่วนมาก</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                ประเภทผู้รับจ้าง
-              </label>
-              <select
-                name="contractor_type"
-                value={formData.contractor_type}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="construction">ก่อสร้าง</option>
-                <option value="goods">จัดซื้อ</option>
-                <option value="services">จ้างเหมาบริการ</option>
-                <option value="consulting">จ้างที่ปรึกษา</option>
-              </select>
-            </div>
+          {/* Start Date */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              วันที่เริ่มต้นโครงการ <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
 
           {/* Buttons */}
