@@ -231,22 +231,21 @@ export function updateStep(stepId, updateData, userId) {
 
     // Allowed fields for update
     const allowedFields = [
-      'step_name', 'step_description', 'planned_start', 'planned_end',
+      'step_name', 'description', 'planned_start', 'planned_end',
       'actual_start', 'actual_end', 'sla_days', 'is_critical',
-      'allow_weekends', 'notes'
+      'notes'
     ];
 
     // Map camelCase to snake_case
     const fieldMapping = {
       stepName: 'step_name',
-      stepDescription: 'step_description',
+      stepDescription: 'description',
       plannedStartDate: 'planned_start',
       plannedEndDate: 'planned_end',
       actualStartDate: 'actual_start',
       actualEndDate: 'actual_end',
       slaDays: 'sla_days',
       isCritical: 'is_critical',
-      allowWeekends: 'allow_weekends',
       notes: 'notes'
     };
 
