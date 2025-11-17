@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import NotificationDropdown from './NotificationDropdown';
@@ -14,19 +14,12 @@ const Layout = ({ children }) => {
   };
 
   const navigation = [
-    { name: 'Dashboard', path: '/dashboard', icon: 'layout-dashboard', roles: ['admin', 'staff', 'executive'] },
-    { name: 'โครงการทั้งหมด', path: '/projects', icon: 'folder', roles: ['admin', 'staff', 'executive'] },
-    { name: 'ขั้นตอนล่าช้า', path: '/overdue', icon: 'alert-circle', roles: ['admin', 'staff', 'executive'] },
-    { name: 'จัดการโครงการ', path: '/admin/projects', icon: 'settings', roles: ['admin'] },
-    { name: 'จัดการผู้ใช้', path: '/admin/users', icon: 'users', roles: ['admin'] },
+    { name: 'Dashboard', path: '/dashboard', icon: 'fa-chart-line', roles: ['admin', 'staff', 'executive'] },
+    { name: 'โครงการทั้งหมด', path: '/projects', icon: 'fa-folder-open', roles: ['admin', 'staff', 'executive'] },
+    { name: 'ขั้นตอนล่าช้า', path: '/overdue', icon: 'fa-triangle-exclamation', roles: ['admin', 'staff', 'executive'] },
+    { name: 'จัดการโครงการ', path: '/admin/projects', icon: 'fa-gear', roles: ['admin'] },
+    { name: 'จัดการผู้ใช้', path: '/admin/users', icon: 'fa-users', roles: ['admin'] },
   ];
-
-  // Initialize Lucide icons
-  useEffect(() => {
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
-  }, [location.pathname]);
 
   const visibleNavigation = navigation.filter(item =>
     !item.roles || item.roles.includes(user?.role)
@@ -35,99 +28,101 @@ const Layout = ({ children }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-ios-gray-lighter font-ios">
-      {/* iOS Style Navbar */}
-      <nav className="bg-white/80 backdrop-blur-xl border-b border-ios-gray-light sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      {/* Modern Navbar with Gradient */}
+      <nav className="bg-white shadow-lg border-b-2 border-blue-500 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo & Title */}
             <div className="flex items-center">
               <Link to="/dashboard" className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-ios-blue to-ios-blue-dark rounded-ios-lg flex items-center justify-center shadow-ios">
-                  <i data-lucide="building-2" className="w-7 h-7 text-white"></i>
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-xl border-2 border-white">
+                  <i className="fas fa-building text-white text-2xl"></i>
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">
+                  <h1 className="text-xl font-bold text-gray-900 tracking-tight">
                     ระบบจัดซื้อจัดจ้าง
                   </h1>
-                  <p className="text-xs text-ios-gray">เทศบาลตำบลหัวทะเล</p>
+                  <p className="text-sm text-gray-600 font-medium">เทศบาลตำบลหัวทะเล</p>
                 </div>
               </Link>
             </div>
 
-            {/* Navigation Links - iOS Pill Style */}
-            <div className="hidden md:flex items-center gap-2">
+            {/* Navigation Links - Modern Pill Style with Border */}
+            <div className="hidden md:flex items-center gap-3">
               {visibleNavigation.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all duration-300 border-2 ${
                     isActive(item.path)
-                      ? 'bg-ios-blue text-white shadow-ios'
-                      : 'text-gray-700 hover:bg-ios-gray-light'
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg border-blue-700 transform scale-105'
+                      : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300 hover:border-blue-400 hover:shadow-md'
                   }`}
                 >
-                  <i data-lucide={item.icon} className="w-4 h-4"></i>
+                  <i className={`fas ${item.icon} text-base`}></i>
                   {item.name}
                 </Link>
               ))}
             </div>
 
-            {/* User Section - iOS Style */}
-            <div className="flex items-center gap-3">
+            {/* User Section */}
+            <div className="flex items-center gap-4">
               {/* Notification Bell */}
               <NotificationDropdown />
 
               {/* User Info Card */}
-              <div className="hidden sm:block text-right">
-                <p className="text-sm font-semibold text-gray-900">{user?.fullName}</p>
-                <p className="text-xs text-ios-gray">
-                  {user?.role === 'admin' && 'ผู้ดูแลระบบ'}
-                  {user?.role === 'staff' && 'เจ้าหน้าที่'}
-                  {user?.role === 'executive' && 'ผู้บริหาร'}
+              <div className="hidden sm:block text-right bg-gradient-to-br from-blue-50 to-indigo-50 px-4 py-2 rounded-xl border-2 border-blue-200">
+                <p className="text-sm font-bold text-gray-900">{user?.fullName}</p>
+                <p className="text-xs text-blue-700 font-semibold">
+                  {user?.role === 'admin' && '👑 ผู้ดูแลระบบ'}
+                  {user?.role === 'staff' && '📋 เจ้าหน้าที่'}
+                  {user?.role === 'executive' && '⭐ ผู้บริหาร'}
                 </p>
               </div>
 
-              {/* Logout Button - iOS Pill Style */}
+              {/* Logout Button - Red with Border */}
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 bg-ios-red hover:bg-red-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 shadow-ios active:scale-95 border-2 border-ios-red"
+                className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 shadow-lg hover:shadow-xl active:scale-95 border-2 border-red-800"
               >
-                <i data-lucide="log-out" className="w-4 h-4"></i>
+                <i className="fas fa-right-from-bracket text-base"></i>
                 <span className="hidden sm:inline">ออกจากระบบ</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation - iOS Tab Bar Style */}
-        <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-ios-gray-light">
+        {/* Mobile Navigation - Tab Bar Style */}
+        <div className="md:hidden bg-white border-t-2 border-blue-200">
           <div className="flex justify-around py-2">
             {visibleNavigation.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-col items-center px-4 py-2.5 text-xs font-medium transition-colors ${
-                  isActive(item.path) ? 'text-ios-blue' : 'text-ios-gray'
+                className={`flex flex-col items-center px-3 py-2 text-xs font-bold transition-all duration-200 rounded-lg ${
+                  isActive(item.path)
+                    ? 'text-blue-700 bg-blue-50 border-2 border-blue-300'
+                    : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                <i data-lucide={item.icon} className="w-6 h-6 mb-1"></i>
-                <span className="font-semibold">{item.name}</span>
+                <i className={`fas ${item.icon} text-xl mb-1`}></i>
+                <span>{item.name}</span>
               </Link>
             ))}
           </div>
         </div>
       </nav>
 
-      {/* Main Content - iOS Style */}
-      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+      {/* Main Content - Modern Card Style */}
+      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
         {children}
       </main>
 
-      {/* Footer - iOS Style */}
-      <footer className="bg-white/80 backdrop-blur-xl border-t border-ios-gray-light mt-12">
+      {/* Footer - Modern Style */}
+      <footer className="bg-white shadow-lg border-t-2 border-blue-500 mt-12">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-          <p className="text-center text-sm text-ios-gray font-medium">
+          <p className="text-center text-sm text-gray-700 font-semibold">
             © 2024 เทศบาลตำบลหัวทะเล - ระบบจัดการโครงการจัดซื้อจัดจ้าง
           </p>
         </div>

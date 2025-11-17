@@ -32,7 +32,9 @@ export default {
         'ios': '20px',
       },
       fontFamily: {
+        'sans': ['Sarabun', '-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
         'ios': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        'sarabun': ['Sarabun', 'sans-serif'],
       },
       keyframes: {
         fadeIn: {

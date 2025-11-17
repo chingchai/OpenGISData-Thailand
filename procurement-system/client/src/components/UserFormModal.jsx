@@ -95,33 +95,36 @@ const UserFormModal = ({ isOpen, onClose, onSuccess, user, departments }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-bold text-gray-800">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-4 border-blue-200">
+        {/* Header with Gradient */}
+        <div className="flex items-center justify-between p-6 border-b-4 border-blue-100 bg-gradient-to-r from-blue-600 to-indigo-600">
+          <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+            <i className={`fas ${isEditMode ? 'fa-user-edit' : 'fa-user-plus'} text-3xl`}></i>
             {isEditMode ? 'แก้ไขผู้ใช้' : 'เพิ่มผู้ใช้ใหม่'}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
+            className="text-white hover:bg-white hover:text-blue-600 rounded-full w-10 h-10 flex items-center justify-center transition-all duration-200 font-bold text-2xl border-2 border-white"
           >
             ×
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+            <div className="bg-gradient-to-r from-red-50 to-red-100 border-2 border-red-300 text-red-800 px-5 py-4 rounded-xl flex items-center gap-3 font-semibold shadow-md">
+              <i className="fas fa-exclamation-triangle text-2xl"></i>
               {error}
             </div>
           )}
 
           {/* Username (disabled in edit mode) */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              ชื่อผู้ใช้ <span className="text-red-500">*</span>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              <i className="fas fa-user mr-2 text-blue-600"></i>
+              ชื่อผู้ใช้ <span className="text-red-600">*</span>
             </label>
             <input
               type="text"
@@ -130,20 +133,24 @@ const UserFormModal = ({ isOpen, onClose, onSuccess, user, departments }) => {
               onChange={handleChange}
               disabled={isEditMode}
               required={!isEditMode}
-              className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                isEditMode ? 'bg-gray-100 cursor-not-allowed' : ''
+              className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold transition-all ${
+                isEditMode ? 'bg-gray-100 cursor-not-allowed border-gray-300' : 'border-gray-300 hover:border-blue-400 bg-white'
               }`}
               placeholder="กรอกชื่อผู้ใช้ (ภาษาอังกฤษ/ตัวเลข)"
             />
             {isEditMode && (
-              <p className="text-xs text-gray-500 mt-1">ไม่สามารถเปลี่ยนชื่อผู้ใช้ได้</p>
+              <p className="text-xs text-gray-500 mt-2 font-medium">
+                <i className="fas fa-info-circle mr-1"></i>
+                ไม่สามารถเปลี่ยนชื่อผู้ใช้ได้
+              </p>
             )}
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              รหัสผ่าน {!isEditMode && <span className="text-red-500">*</span>}
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              <i className="fas fa-key mr-2 text-green-600"></i>
+              รหัสผ่าน {!isEditMode && <span className="text-red-600">*</span>}
             </label>
             <div className="relative">
               <input
@@ -152,26 +159,30 @@ const UserFormModal = ({ isOpen, onClose, onSuccess, user, departments }) => {
                 value={formData.password}
                 onChange={handleChange}
                 required={!isEditMode}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                className="w-full px-4 py-3 pr-12 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold bg-white hover:border-blue-400 transition-all"
                 placeholder={isEditMode ? 'ใส่รหัสผ่านใหม่หากต้องการเปลี่ยน' : 'กรอกรหัสผ่าน (อย่างน้อย 6 ตัวอักษร)'}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 transition-colors text-xl"
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
               </button>
             </div>
             {isEditMode && (
-              <p className="text-xs text-gray-500 mt-1">เว้นว่างไว้หากไม่ต้องการเปลี่ยนรหัสผ่าน</p>
+              <p className="text-xs text-gray-500 mt-2 font-medium">
+                <i className="fas fa-info-circle mr-1"></i>
+                เว้นว่างไว้หากไม่ต้องการเปลี่ยนรหัสผ่าน
+              </p>
             )}
           </div>
 
           {/* Full Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              ชื่อ-นามสกุล <span className="text-red-500">*</span>
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              <i className="fas fa-id-card mr-2 text-purple-600"></i>
+              ชื่อ-นามสกุล <span className="text-red-600">*</span>
             </label>
             <input
               type="text"
@@ -179,14 +190,15 @@ const UserFormModal = ({ isOpen, onClose, onSuccess, user, departments }) => {
               value={formData.fullName}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold bg-white hover:border-blue-400 transition-all"
               placeholder="กรอกชื่อ-นามสกุล"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              <i className="fas fa-envelope mr-2 text-orange-600"></i>
               อีเมล
             </label>
             <input
@@ -194,7 +206,7 @@ const UserFormModal = ({ isOpen, onClose, onSuccess, user, departments }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold bg-white hover:border-blue-400 transition-all"
               placeholder="กรอกอีเมล (ถ้ามี)"
             />
           </div>
@@ -202,31 +214,33 @@ const UserFormModal = ({ isOpen, onClose, onSuccess, user, departments }) => {
           {/* Role and Department */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                ตำแหน่ง <span className="text-red-500">*</span>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                <i className="fas fa-user-tag mr-2 text-blue-600"></i>
+                ตำแหน่ง <span className="text-red-600">*</span>
               </label>
               <select
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-bold bg-white hover:border-blue-400 transition-all"
               >
-                <option value="staff">เจ้าหน้าที่</option>
-                <option value="admin">ผู้ดูแลระบบ</option>
-                <option value="executive">ผู้บริหาร</option>
+                <option value="staff">📋 เจ้าหน้าที่</option>
+                <option value="admin">👑 ผู้ดูแลระบบ</option>
+                <option value="executive">⭐ ผู้บริหาร</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                <i className="fas fa-building mr-2 text-indigo-600"></i>
                 หน่วยงาน
               </label>
               <select
                 name="departmentId"
                 value={formData.departmentId}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold bg-white hover:border-blue-400 transition-all"
               >
                 <option value="">-- ไม่ระบุ --</option>
                 {departments && departments.map(dept => (
@@ -237,35 +251,47 @@ const UserFormModal = ({ isOpen, onClose, onSuccess, user, departments }) => {
           </div>
 
           {/* Active Status */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3 bg-gradient-to-r from-gray-50 to-gray-100 p-4 rounded-xl border-2 border-gray-300">
             <input
               type="checkbox"
               name="active"
               id="active"
               checked={formData.active}
               onChange={handleChange}
-              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              className="w-5 h-5 text-blue-600 border-2 border-gray-400 rounded focus:ring-blue-500 cursor-pointer"
             />
-            <label htmlFor="active" className="text-sm font-medium text-gray-700">
+            <label htmlFor="active" className="text-base font-bold text-gray-700 cursor-pointer flex items-center gap-2">
+              <i className="fas fa-toggle-on text-green-600 text-xl"></i>
               เปิดใช้งาน
             </label>
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-3 pt-4 border-t border-gray-200">
+          <div className="flex gap-4 pt-4 border-t-2 border-gray-200">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="flex-1 px-6 py-4 border-2 border-gray-400 rounded-xl text-gray-700 font-bold hover:bg-gray-100 hover:border-gray-600 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 bg-white"
             >
+              <i className="fas fa-times text-lg"></i>
               ยกเลิก
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400"
+              className="flex-1 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed border-2 border-blue-700 flex items-center justify-center gap-2 active:scale-95"
             >
-              {loading ? 'กำลังบันทึก...' : (isEditMode ? 'บันทึกการแก้ไข' : 'เพิ่มผู้ใช้')}
+              {loading ? (
+                <>
+                  <i className="fas fa-spinner fa-spin text-lg"></i>
+                  กำลังบันทึก...
+                </>
+              ) : (
+                <>
+                  <i className={`fas ${isEditMode ? 'fa-save' : 'fa-user-plus'} text-lg`}></i>
+                  {isEditMode ? 'บันทึกการแก้ไข' : 'เพิ่มผู้ใช้'}
+                </>
+              )}
             </button>
           </div>
         </form>
