@@ -2,7 +2,7 @@
  * User Service - Business Logic for User Management
  */
 
-import { getDatabase, queryAll, queryOne, transaction } from '../config/database.js';
+import { getDatabase, query, queryOne, transaction } from '../config/database.js';
 import { ValidationError, NotFoundError, DatabaseError } from '../utils/errors.js';
 import bcrypt from 'bcrypt';
 import logger from '../utils/logger.js';
@@ -49,7 +49,7 @@ export function getAllUsers(filters = {}) {
     sql += ` LIMIT ? OFFSET ?`;
     params.push(limit, offset);
 
-    const users = queryAll(sql, params);
+    const users = query(sql, params);
 
     // Get total count
     let countSql = `SELECT COUNT(*) as total FROM users u WHERE 1=1`;
