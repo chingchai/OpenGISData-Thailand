@@ -62,8 +62,10 @@ CREATE TABLE IF NOT EXISTS projects (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     deleted_at DATETIME,
+    deleted_by INTEGER,
     FOREIGN KEY (department_id) REFERENCES departments(id),
-    FOREIGN KEY (created_by) REFERENCES users(id)
+    FOREIGN KEY (created_by) REFERENCES users(id),
+    FOREIGN KEY (deleted_by) REFERENCES users(id)
 );
 
 CREATE INDEX idx_projects_code ON projects(project_code);
