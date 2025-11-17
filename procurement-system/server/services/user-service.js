@@ -238,11 +238,25 @@ export async function updateUser(userId, updateData, updaterId) {
     Object.keys(updateData).forEach(key => {
       const dbField = fieldMapping[key] || key;
       if (allowedFields.includes(dbField) && updateData[key] !== undefined) {
+        let value = updateData[key];
+
+        // Convert values for SQLite compatibility
+        if (dbField === 'active') {
+          // Convert boolean to 0/1
+          value = value ? 1 : 0;
+        } else if (dbField === 'department_id') {
+          // Convert to number or null
+          value = value ? parseInt(value) : null;
+        } else if (dbField === 'email') {
+          // Convert empty string to null
+          value = value && value.trim() ? value.trim() : null;
+        }
+
         updates.push(`${dbField} = ?`);
-        params.push(updateData[key]);
+        params.push(value);
         changeLog[dbField] = {
           from: currentUser[dbField],
-          to: updateData[key]
+          to: value
         };
       }
     });
