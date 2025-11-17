@@ -15,7 +15,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-BRANCH_NAME="claude/procurement-system-functions-011CUyMA2PaywR21JfUuNsAK"
+BRANCH_NAME="claude/resolve-push-conflict-0196J5uMPwk5vDtQm3CLA5kJ"
 PROJECT_DIR="/root/OpenGISData-Thailand/procurement-system"
 
 echo -e "${BLUE}========================================${NC}"
