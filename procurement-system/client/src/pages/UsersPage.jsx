@@ -78,7 +78,7 @@ const UsersPage = () => {
   const getRoleName = (role) => {
     const roles = {
       staff: 'เจ้าหน้าที่',
-      admin: 'ผู้ดูแลระบบ',
+      admin: 'ผู้ดูแล',
       executive: 'ผู้บริหาร'
     };
     return roles[role] || role;
@@ -86,18 +86,18 @@ const UsersPage = () => {
 
   const getRoleBadgeColor = (role) => {
     const colors = {
-      staff: 'bg-gradient-to-r from-blue-500 to-blue-600 text-white border-2 border-blue-700',
-      admin: 'bg-gradient-to-r from-purple-500 to-purple-600 text-white border-2 border-purple-700',
-      executive: 'bg-gradient-to-r from-green-500 to-green-600 text-white border-2 border-green-700'
+      staff: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
+      admin: 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200',
+      executive: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
     };
-    return colors[role] || 'bg-gray-200 text-gray-800 border-2 border-gray-400';
+    return colors[role] || 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200';
   };
 
   if (loading) {
     return (
       <Layout>
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       </Layout>
     );
@@ -106,69 +106,66 @@ const UsersPage = () => {
   return (
     <Layout>
       <div className="space-y-6">
-        {/* Header with Gradient Background */}
-        <div className="flex justify-between items-center bg-white rounded-2xl shadow-xl p-6 border-2 border-blue-200">
+        {/* Header - iOS Clean */}
+        <div className="flex justify-between items-center bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div>
-            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-              <i className="fas fa-users mr-3"></i>
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white flex items-center gap-3">
+              <i className="fas fa-users text-blue-500"></i>
               จัดการผู้ใช้
             </h1>
-            <p className="text-gray-600 mt-2 font-semibold">จัดการบัญชีผู้ใช้และสิทธิ์การเข้าถึงระบบ</p>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">จัดการบัญชีผู้ใช้และสิทธิ์</p>
           </div>
           <button
             onClick={handleAddUser}
-            className="flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl transition-all duration-300 shadow-xl hover:shadow-2xl border-2 border-blue-700 font-bold text-base active:scale-95"
+            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl transition-all font-medium"
           >
-            <i className="fas fa-user-plus text-xl"></i>
-            เพิ่มผู้ใช้ใหม่
+            <i className="fas fa-plus"></i>
+            เพิ่มผู้ใช้
           </button>
         </div>
 
-        {/* Filters with Modern Style */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 border-2 border-gray-200">
+        {/* Filters - iOS Clean */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
-                <i className="fas fa-user-tag mr-2 text-blue-600"></i>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 ตำแหน่ง
               </label>
               <select
                 value={filters.role}
                 onChange={(e) => setFilters({ ...filters, role: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold bg-white hover:border-blue-400 transition-all"
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="">ทั้งหมด</option>
                 <option value="staff">เจ้าหน้าที่</option>
-                <option value="admin">ผู้ดูแลระบบ</option>
+                <option value="admin">ผู้ดูแล</option>
                 <option value="executive">ผู้บริหาร</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
-                <i className="fas fa-toggle-on mr-2 text-green-600"></i>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 สถานะ
               </label>
               <select
                 value={filters.active}
                 onChange={(e) => setFilters({ ...filters, active: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold bg-white hover:border-blue-400 transition-all"
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="">ทั้งหมด</option>
                 <option value="true">ใช้งาน</option>
-                <option value="false">ปิดการใช้งาน</option>
+                <option value="false">ปิดใช้งาน</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">
-                <i className="fas fa-building mr-2 text-purple-600"></i>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 หน่วยงาน
               </label>
               <select
                 value={filters.departmentId}
                 onChange={(e) => setFilters({ ...filters, departmentId: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold bg-white hover:border-blue-400 transition-all"
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="">ทั้งหมด</option>
                 {departments.map(dept => (
@@ -180,116 +177,112 @@ const UsersPage = () => {
             <div className="flex items-end">
               <button
                 onClick={() => setFilters({ role: '', active: '', departmentId: '' })}
-                className="w-full px-4 py-3 border-2 border-gray-400 rounded-xl text-gray-700 font-bold hover:bg-gray-100 hover:border-gray-600 transition-all duration-200 bg-white shadow-md hover:shadow-lg"
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all font-medium"
               >
-                <i className="fas fa-filter-circle-xmark mr-2"></i>
+                <i className="fas fa-rotate-right mr-2"></i>
                 ล้างตัวกรอง
               </button>
             </div>
           </div>
         </div>
 
-        {/* Users Table with Modern Design */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-gray-200">
-          <table className="min-w-full divide-y-2 divide-gray-200">
-            <thead className="bg-gradient-to-r from-blue-600 to-indigo-600">
-              <tr>
-                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
-                  <i className="fas fa-user mr-2"></i>ผู้ใช้
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
-                  <i className="fas fa-user-tag mr-2"></i>ตำแหน่ง
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
-                  <i className="fas fa-building mr-2"></i>หน่วยงาน
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
-                  <i className="fas fa-toggle-on mr-2"></i>สถานะ
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-white uppercase tracking-wider">
-                  <i className="fas fa-clock mr-2"></i>เข้าสู่ระบบล่าสุด
-                </th>
-                <th className="px-6 py-4 text-right text-sm font-bold text-white uppercase tracking-wider">
-                  <i className="fas fa-cog mr-2"></i>จัดการ
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {users.length === 0 ? (
+        {/* Users Table - iOS Clean */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden border border-gray-200 dark:border-gray-700">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                  <td colSpan="6" className="px-6 py-12 text-center text-gray-500 font-semibold">
-                    <i className="fas fa-inbox text-6xl text-gray-300 mb-4 block"></i>
-                    ไม่พบข้อมูลผู้ใช้
-                  </td>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    ผู้ใช้
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    ตำแหน่ง
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    หน่วยงาน
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    สถานะ
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    เข้าสู่ระบบล่าสุด
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    จัดการ
+                  </th>
                 </tr>
-              ) : (
-                users.map((user) => (
-                  <tr key={user.id} className="hover:bg-blue-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div>
-                        <div className="text-sm font-bold text-gray-900">
-                          <i className="fas fa-user-circle text-blue-600 mr-2"></i>
-                          {user.full_name}
-                        </div>
-                        <div className="text-sm text-gray-600 font-semibold">@{user.username}</div>
-                        {user.email && (
-                          <div className="text-xs text-gray-500 font-medium">
-                            <i className="fas fa-envelope mr-1"></i>
-                            {user.email}
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-4 py-2 text-sm font-bold rounded-xl shadow-md ${getRoleBadgeColor(user.role)}`}>
-                        {getRoleName(user.role)}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
-                      {user.department_name || '-'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-4 py-2 text-sm font-bold rounded-xl shadow-md border-2 ${
-                        user.active
-                          ? 'bg-gradient-to-r from-green-500 to-green-600 text-white border-green-700'
-                          : 'bg-gradient-to-r from-red-500 to-red-600 text-white border-red-700'
-                      }`}>
-                        <i className={`fas ${user.active ? 'fa-check-circle' : 'fa-times-circle'} mr-2`}></i>
-                        {user.active ? 'ใช้งาน' : 'ปิดการใช้งาน'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-semibold">
-                      {user.last_login ? new Date(user.last_login).toLocaleString('th-TH') : '-'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end gap-2">
-                        <button
-                          onClick={() => handleEditUser(user)}
-                          className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-xl font-bold transition-all duration-200 shadow-md hover:shadow-lg border-2 border-blue-800 active:scale-95"
-                          title="แก้ไข"
-                        >
-                          <i className="fas fa-edit"></i>
-                        </button>
-                        <button
-                          onClick={() => handleDeleteUser(user)}
-                          className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-2 rounded-xl font-bold transition-all duration-200 shadow-md hover:shadow-lg border-2 border-red-800 active:scale-95"
-                          title="ลบ"
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                        </button>
-                      </div>
+              </thead>
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                {users.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                      <i className="fas fa-inbox text-4xl mb-3 block opacity-50"></i>
+                      ไม่พบข้อมูลผู้ใช้
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  users.map((user) => (
+                    <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">
+                            {user.full_name}
+                          </div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">@{user.username}</div>
+                          {user.email && (
+                            <div className="text-xs text-gray-400 dark:text-gray-500">{user.email}</div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-lg ${getRoleBadgeColor(user.role)}`}>
+                          {getRoleName(user.role)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                        {user.department_name || '-'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-3 py-1 text-xs font-medium rounded-lg ${
+                          user.active
+                            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                            : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
+                        }`}>
+                          {user.active ? 'ใช้งาน' : 'ปิดใช้งาน'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        {user.last_login ? new Date(user.last_login).toLocaleString('th-TH') : '-'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={() => handleEditUser(user)}
+                            className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-all"
+                            title="แก้ไข"
+                          >
+                            <i className="fas fa-edit"></i>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteUser(user)}
+                            className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-all"
+                            title="ลบ"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* Summary with Modern Card */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-lg p-6 border-2 border-blue-200">
-          <p className="text-base text-gray-800 font-bold">
-            <i className="fas fa-chart-bar text-blue-600 mr-2"></i>
+        {/* Summary - iOS Clean */}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 border border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             แสดง {users.length} ผู้ใช้
           </p>
         </div>
