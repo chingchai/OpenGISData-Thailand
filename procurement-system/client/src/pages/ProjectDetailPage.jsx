@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { projectsAPI, stepsAPI } from '../services/api';
 import Layout from '../components/Layout';
+import StepEditModal from '../components/StepEditModal';
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -9,6 +10,8 @@ const ProjectDetailPage = () => {
   const [steps, setSteps] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editingStep, setEditingStep] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     fetchProjectDetails();
@@ -32,14 +35,50 @@ const ProjectDetailPage = () => {
     }
   };
 
+  const handleEditStep = (step) => {
+    setEditingStep(step);
+    setIsEditModalOpen(true);
+  };
+
+  const handleQuickStatusChange = async (stepId, newStatus) => {
+    try {
+      await stepsAPI.updateStatus(stepId, newStatus);
+      fetchProjectDetails(); // Refresh data
+    } catch (error) {
+      console.error('Error updating step status:', error);
+      alert('เกิดข้อผิดพลาดในการอัพเดทสถานะ');
+    }
+  };
+
+  const handleModalClose = () => {
+    setIsEditModalOpen(false);
+    setEditingStep(null);
+  };
+
+  const handleModalSuccess = () => {
+    fetchProjectDetails(); // Refresh data
+  };
+
   const getStepStatusColor = (status) => {
     const colors = {
       pending: 'bg-gray-100 text-gray-800',
       in_progress: 'bg-blue-100 text-blue-800',
       completed: 'bg-green-100 text-green-800',
-      overdue: 'bg-red-100 text-red-800'
+      overdue: 'bg-red-100 text-red-800',
+      on_hold: 'bg-yellow-100 text-yellow-800'
     };
     return colors[status] || 'bg-gray-100 text-gray-800';
+  };
+
+  const getStatusText = (status) => {
+    const texts = {
+      pending: 'รอดำเนินการ',
+      in_progress: 'กำลังดำเนินการ',
+      completed: 'เสร็จสิ้น',
+      overdue: 'ล่าช้า',
+      on_hold: 'พักชั่วคราว'
+    };
+    return texts[status] || status;
   };
 
   if (loading) {
@@ -149,7 +188,11 @@ const ProjectDetailPage = () => {
 
         {/* Steps Timeline */}
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold mb-6">ขั้นตอนการดำเนินงาน</h2>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold">ขั้นตอนการดำเนินงาน</h2>
+            <p className="text-sm text-gray-500">{steps.length} ขั้นตอน</p>
+          </div>
+
           {steps.length > 0 ? (
             <div className="space-y-4">
               {steps.map((step, index) => (
@@ -169,21 +212,60 @@ const ProjectDetailPage = () => {
                   </div>
 
                   <div className="flex-1 pb-8">
-                    <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-gray-800">{step.step_name}</h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          getStepStatusColor(step.computed_status || step.status)
-                        }`}>
-                          {step.computed_status === 'overdue' ? 'ล่าช้า' :
-                           step.status === 'completed' ? 'เสร็จสิ้น' :
-                           step.status === 'in_progress' ? 'กำลังดำเนินการ' :
-                           'รอดำเนินการ'}
-                        </span>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-gray-800">{step.step_name}</h3>
+                          <span className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium ${
+                            getStepStatusColor(step.computed_status || step.status)
+                          }`}>
+                            {getStatusText(step.computed_status || step.status)}
+                          </span>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex gap-2 ml-4">
+                          {/* Quick Status Change Buttons */}
+                          {step.status !== 'completed' && (
+                            <div className="flex gap-1">
+                              {step.status === 'pending' && (
+                                <button
+                                  onClick={() => handleQuickStatusChange(step.id, 'in_progress')}
+                                  className="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 text-xs font-medium transition-colors"
+                                  title="เริ่มดำเนินการ"
+                                >
+                                  เริ่ม
+                                </button>
+                              )}
+                              {step.status === 'in_progress' && (
+                                <button
+                                  onClick={() => handleQuickStatusChange(step.id, 'completed')}
+                                  className="px-3 py-1 bg-green-100 text-green-700 rounded hover:bg-green-200 text-xs font-medium transition-colors"
+                                  title="ทำเสร็จแล้ว"
+                                >
+                                  เสร็จสิ้น
+                                </button>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Edit Button */}
+                          <button
+                            onClick={() => handleEditStep(step)}
+                            className="px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-xs font-medium transition-colors"
+                            title="แก้ไขขั้นตอน"
+                          >
+                            <svg className="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
+
                       {step.description && (
-                        <p className="text-sm text-gray-600 mb-3">{step.description}</p>
+                        <p className="text-sm text-gray-600 mb-3 mt-2">{step.description}</p>
                       )}
+
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
                           <p className="text-gray-600">วันเริ่มตามแผน</p>
@@ -196,16 +278,23 @@ const ProjectDetailPage = () => {
                         {step.actual_start && (
                           <div>
                             <p className="text-gray-600">วันเริ่มจริง</p>
-                            <p className="font-medium">{new Date(step.actual_start).toLocaleDateString('th-TH')}</p>
+                            <p className="font-medium text-blue-600">{new Date(step.actual_start).toLocaleDateString('th-TH')}</p>
                           </div>
                         )}
                         {step.actual_end && (
                           <div>
                             <p className="text-gray-600">วันสิ้นสุดจริง</p>
-                            <p className="font-medium">{new Date(step.actual_end).toLocaleDateString('th-TH')}</p>
+                            <p className="font-medium text-green-600">{new Date(step.actual_end).toLocaleDateString('th-TH')}</p>
                           </div>
                         )}
                       </div>
+
+                      {step.notes && (
+                        <div className="mt-3 p-2 bg-blue-50 rounded text-sm text-blue-700">
+                          <strong>หมายเหตุ:</strong> {step.notes}
+                        </div>
+                      )}
+
                       {step.delay_days_computed > 0 && (
                         <div className="mt-3 p-2 bg-red-50 rounded text-sm text-red-700">
                           ⚠️ ล่าช้า {step.delay_days_computed} วัน
@@ -221,6 +310,14 @@ const ProjectDetailPage = () => {
           )}
         </div>
       </div>
+
+      {/* Edit Step Modal */}
+      <StepEditModal
+        isOpen={isEditModalOpen}
+        onClose={handleModalClose}
+        onSuccess={handleModalSuccess}
+        step={editingStep}
+      />
     </Layout>
   );
 };
