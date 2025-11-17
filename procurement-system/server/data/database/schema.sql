@@ -94,8 +94,11 @@ CREATE TABLE IF NOT EXISTS project_steps (
     notes TEXT,
     updated_by INTEGER,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    deleted_at DATETIME,
+    deleted_by INTEGER,
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
     FOREIGN KEY (updated_by) REFERENCES users(id),
+    FOREIGN KEY (deleted_by) REFERENCES users(id),
     UNIQUE(project_id, step_number)
 );
 
