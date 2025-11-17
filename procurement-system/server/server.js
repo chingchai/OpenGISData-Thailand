@@ -40,16 +40,15 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: config.RATE_LIMIT_WINDOW_MS,
-  max: config.RATE_LIMIT_MAX_REQUESTS,
-  message: 'Too many requests from this IP, please try again later.',
-  standardHeaders: true,
-  legacyHeaders: false
-});
-
-app.use('/api/', limiter);
+// Rate limiting - DISABLED
+// const limiter = rateLimit({
+//   windowMs: config.RATE_LIMIT_WINDOW_MS,
+//   max: config.RATE_LIMIT_MAX_REQUESTS,
+//   message: 'Too many requests from this IP, please try again later.',
+//   standardHeaders: true,
+//   legacyHeaders: false
+// });
+// app.use('/api/', limiter);
 
 // ========================================
 // GENERAL MIDDLEWARE
