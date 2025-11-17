@@ -262,10 +262,10 @@ export function createProject(projectData, userId) {
       const steps = generateProjectSteps(newProjectId, method, startDate);
       const stepInsert = db.prepare(`
         INSERT INTO project_steps (
-          project_id, step_number, step_name, step_description,
+          project_id, step_number, step_name, description,
           planned_start, planned_end, sla_days,
-          status, is_critical, allow_weekends, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+          status, is_critical
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       steps.forEach(step => {
@@ -278,8 +278,7 @@ export function createProject(projectData, userId) {
           step.plannedEndDate,
           step.slaDays,
           step.status,
-          step.isCritical ? 1 : 0,
-          step.allowWeekends ? 1 : 0
+          step.isCritical ? 1 : 0
         );
       });
 
