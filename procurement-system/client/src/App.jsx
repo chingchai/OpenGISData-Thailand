@@ -10,6 +10,7 @@ import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import OverduePage from './pages/OverduePage';
 import AdminProjectsPage from './pages/AdminProjectsPage';
+import UsersPage from './pages/UsersPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -77,6 +78,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AdminProjectsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute>
+                <UsersPage />
               </ProtectedRoute>
             }
           />

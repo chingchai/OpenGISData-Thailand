@@ -18,6 +18,7 @@ const Layout = ({ children }) => {
     { name: 'โครงการทั้งหมด', path: '/projects', icon: 'folder', roles: ['admin', 'staff', 'executive'] },
     { name: 'ขั้นตอนล่าช้า', path: '/overdue', icon: 'alert-circle', roles: ['admin', 'staff', 'executive'] },
     { name: 'จัดการโครงการ', path: '/admin/projects', icon: 'settings', roles: ['admin'] },
+    { name: 'จัดการผู้ใช้', path: '/admin/users', icon: 'users', roles: ['admin'] },
   ];
 
   // Initialize Lucide icons
