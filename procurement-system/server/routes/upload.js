@@ -10,7 +10,7 @@ import { authenticate, requireAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Configure multer for memory storage
+// Configure multer for Excel uploads
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -30,6 +30,30 @@ const upload = multer({
       cb(null, true);
     } else {
       cb(new Error('อนุญาตเฉพาะไฟล์ Excel (.xlsx, .xls) เท่านั้น'), false);
+    }
+  }
+});
+
+// Configure multer for image uploads
+const uploadImage = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit per image
+  },
+  fileFilter: (req, file, cb) => {
+    // Accept only image files
+    const allowedMimes = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/gif',
+      'image/webp'
+    ];
+
+    if (allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('อนุญาตเฉพาะไฟล์รูปภาพ (.jpg, .jpeg, .png, .gif, .webp) เท่านั้น'), false);
     }
   }
 });
@@ -69,6 +93,49 @@ router.get(
   authenticate,
   requireAdmin,
   uploadController.downloadTemplate
+);
+
+/**
+ * POST /api/upload/images
+ * Upload multiple images and return base64 encoded data URLs
+ * Authenticated users only
+ */
+router.post(
+  '/images',
+  authenticate,
+  uploadImage.array('images', 10), // Max 10 images
+  (req, res) => {
+    try {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'ไม่พบไฟล์รูปภาพที่อัพโหลด'
+        });
+      }
+
+      // Convert images to base64 data URLs
+      const imageUrls = req.files.map(file => {
+        const base64 = file.buffer.toString('base64');
+        const dataUrl = `data:${file.mimetype};base64,${base64}`;
+        return dataUrl;
+      });
+
+      res.json({
+        success: true,
+        data: {
+          imageUrls,
+          count: imageUrls.length
+        },
+        message: `อัพโหลดรูปภาพสำเร็จ ${imageUrls.length} ไฟล์`
+      });
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      res.status(500).json({
+        success: false,
+        error: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ'
+      });
+    }
+  }
 );
 
 export default router;

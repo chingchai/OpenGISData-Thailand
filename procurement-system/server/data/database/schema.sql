@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS project_steps (
     delay_days INTEGER DEFAULT 0,
     is_critical BOOLEAN DEFAULT 0,
     notes TEXT,
+    image_urls TEXT,
     updated_by INTEGER,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     deleted_at DATETIME,

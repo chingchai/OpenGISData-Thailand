@@ -93,4 +93,19 @@ export const departmentsAPI = {
   getById: (id) => api.get(`/departments/${id}`),
 };
 
+// Upload API
+export const uploadAPI = {
+  uploadImages: (files) => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('images', file);
+    });
+    return api.post('/upload/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+};
+
 export default api;

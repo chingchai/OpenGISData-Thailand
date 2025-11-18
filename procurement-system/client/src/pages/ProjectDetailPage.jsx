@@ -12,6 +12,7 @@ const ProjectDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [editingStep, setEditingStep] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
     fetchProjectDetails();
@@ -295,6 +296,55 @@ const ProjectDetailPage = () => {
                         </div>
                       )}
 
+                      {/* Step Images */}
+                      {(() => {
+                        try {
+                          const images = step.image_urls ? JSON.parse(step.image_urls) : [];
+                          if (Array.isArray(images) && images.length > 0) {
+                            return (
+                              <div className="mt-3">
+                                <p className="text-sm font-medium text-gray-700 mb-2">
+                                  รูปภาพประกอบ ({images.length} รูป)
+                                </p>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {images.map((imageUrl, imgIndex) => (
+                                    <div
+                                      key={imgIndex}
+                                      className="relative group cursor-pointer"
+                                      onClick={() => setLightboxImage(imageUrl)}
+                                    >
+                                      <img
+                                        src={imageUrl}
+                                        alt={`${step.step_name} - รูปที่ ${imgIndex + 1}`}
+                                        className="w-full h-32 object-cover rounded border border-gray-300 hover:border-blue-500 transition-all"
+                                      />
+                                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded transition-opacity flex items-center justify-center">
+                                        <svg
+                                          className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                                          />
+                                        </svg>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          }
+                        } catch (e) {
+                          console.error('Error parsing image_urls:', e);
+                        }
+                        return null;
+                      })()}
+
                       {step.delay_days_computed > 0 && (
                         <div className="mt-3 p-2 bg-red-50 rounded text-sm text-red-700">
                           ⚠️ ล่าช้า {step.delay_days_computed} วัน
@@ -310,6 +360,27 @@ const ProjectDetailPage = () => {
           )}
         </div>
       </div>
+
+      {/* Image Lightbox */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors"
+            onClick={() => setLightboxImage(null)}
+          >
+            ×
+          </button>
+          <img
+            src={lightboxImage}
+            alt="รูปภาพขยาย"
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
 
       {/* Edit Step Modal */}
       <StepEditModal
