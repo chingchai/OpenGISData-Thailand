@@ -5,6 +5,7 @@ import stepRoutes from './steps.js';
 import uploadRoutes from './upload.js';
 import reportRoutes from './reports.js';
 import userRoutes from './users.js';
+import departmentRoutes from './departments.js';
 
 const router = express.Router();
 
@@ -23,7 +24,8 @@ router.get('/', (req, res) => {
       overdueSteps: '/api/steps/overdue',
       upload: '/api/upload',
       reports: '/api/reports',
-      users: '/api/users'
+      users: '/api/users',
+      departments: '/api/departments'
     }
   });
 });
@@ -35,5 +37,6 @@ router.use('/steps', stepRoutes);
 router.use('/upload', uploadRoutes);
 router.use('/reports', reportRoutes);
 router.use('/users', userRoutes);
+router.use('/departments', departmentRoutes);
 
 export default router;

@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { usersAPI } from '../services/api';
+import { usersAPI, departmentsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import UserFormModal from '../components/UserFormModal';
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
-  const [departments, setDepartments] = useState([
-    { id: 1, name: 'สำนักปลัด' },
-    { id: 2, name: 'กองคลัง' },
-    { id: 3, name: 'กองช่าง' },
-    { id: 4, name: 'กองสาธารณสุขและสิ่งแวดล้อม' },
-    { id: 5, name: 'กองการศึกษา' },
-    { id: 6, name: 'กองสวัสดิการสังคม' },
-    { id: 7, name: 'หน่วยตรวจสอบภายใน' }
-  ]);
+  const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
@@ -24,8 +16,20 @@ const UsersPage = () => {
   });
 
   useEffect(() => {
+    fetchDepartments();
     fetchUsers();
   }, [filters]);
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await departmentsAPI.getAll();
+      setDepartments(response.data.data);
+    } catch (error) {
+      console.error('Error fetching departments:', error);
+      // ถ้า fetch ไม่สำเร็จ ใช้ค่าเริ่มต้น
+      setDepartments([]);
+    }
+  };
 
   const fetchUsers = async () => {
     try {

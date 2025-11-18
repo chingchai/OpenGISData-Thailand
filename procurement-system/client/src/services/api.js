@@ -87,4 +87,10 @@ export const usersAPI = {
   delete: (id) => api.delete(`/users/${id}`),
 };
 
+// Departments API
+export const departmentsAPI = {
+  getAll: () => api.get('/departments'),
+  getById: (id) => api.get(`/departments/${id}`),
+};
+
 export default api;
