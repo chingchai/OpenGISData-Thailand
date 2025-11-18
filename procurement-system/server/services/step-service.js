@@ -194,10 +194,10 @@ export function updateStepStatus(stepId, status, userId) {
 
     // Auto-start next step if current step is completed
     if (status === 'completed') {
-      exports.autoStartNextStep(currentStep.project_id, currentStep.step_number);
+      autoStartNextStep(currentStep.project_id, currentStep.step_number);
     }
 
-    return exports.getStepById(result);
+    return getStepById(result);
   } catch (error) {
     if (error instanceof ValidationError || error instanceof NotFoundError) {
       throw error;
@@ -315,7 +315,7 @@ export function updateStep(stepId, updateData, userId) {
       });
     });
 
-    return exports.getStepById(stepId);
+    return getStepById(stepId);
   } catch (error) {
     if (error instanceof NotFoundError || error instanceof ValidationError) {
       throw error;
@@ -531,7 +531,7 @@ export function autoStartNextStep(projectId, currentStepNumber) {
         nextStepId: nextStep.id
       });
 
-      return exports.getStepById(nextStep.id);
+      return getStepById(nextStep.id);
     }
 
     return null;
