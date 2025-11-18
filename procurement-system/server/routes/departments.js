@@ -4,8 +4,7 @@
 
 import express from 'express';
 import { getAllDepartments, getDepartmentById } from '../services/department-service.js';
-import { asyncHandler } from '../middleware/errorHandler.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -13,18 +12,26 @@ const router = express.Router();
  * GET /api/departments
  * Get all active departments
  */
-router.get('/', authenticateToken, asyncHandler(async (req, res) => {
-  const result = getAllDepartments();
-  res.json(result);
-}));
+router.get('/', authenticate, async (req, res, next) => {
+  try {
+    const result = getAllDepartments();
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * GET /api/departments/:id
  * Get department by ID
  */
-router.get('/:id', authenticateToken, asyncHandler(async (req, res) => {
-  const result = getDepartmentById(parseInt(req.params.id));
-  res.json(result);
-}));
+router.get('/:id', authenticate, async (req, res, next) => {
+  try {
+    const result = getDepartmentById(parseInt(req.params.id));
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
