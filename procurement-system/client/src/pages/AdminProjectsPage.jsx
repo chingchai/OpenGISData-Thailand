@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { projectsAPI } from '../services/api';
+import { projectsAPI, departmentsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import ProjectFormModal from '../components/ProjectFormModal';
 import ExcelUploadModal from '../components/ExcelUploadModal';
@@ -52,23 +52,14 @@ const AdminProjectsPage = () => {
         : [];
       setProjects(projectsData);
 
-      // Fetch departments (from first project or make separate API call)
-      const uniqueDepts = [...new Map(
-        projectsData
-          .filter(p => p.department_name)
-          .map(p => [p.department_id, { id: p.department_id, name: p.department_name }])
-      ).values()];
-
-      // Add hardcoded departments for form
-      setDepartments([
-        { id: 1, name: 'กองคลัง' },
-        { id: 2, name: 'กองช่าง' },
-        { id: 3, name: 'กองการศึกษา' },
-        { id: 4, name: 'กองสาธารณสุขและสิ่งแวดล้อม' },
-        { id: 5, name: 'สำนักปลัด' },
-        { id: 6, name: 'กองวิชาการและแผนงาน' },
-        { id: 7, name: 'กองธุรการ' }
-      ]);
+      // Fetch departments from API
+      try {
+        const deptsRes = await departmentsAPI.getAll();
+        setDepartments(deptsRes.data?.data || []);
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+        setDepartments([]);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
