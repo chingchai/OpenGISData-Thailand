@@ -23,7 +23,7 @@ const UsersPage = () => {
   const fetchDepartments = async () => {
     try {
       const response = await departmentsAPI.getAll();
-      setDepartments(response.data.data);
+      setDepartments(response.data?.data || []);
     } catch (error) {
       console.error('Error fetching departments:', error);
       // ถ้า fetch ไม่สำเร็จ ใช้ค่าเริ่มต้น
@@ -40,7 +40,7 @@ const UsersPage = () => {
       if (filters.departmentId) params.departmentId = filters.departmentId;
 
       const response = await usersAPI.getAll(params);
-      setUsers(response.data.data);
+      setUsers(response.data?.data || []);
     } catch (error) {
       console.error('Error fetching users:', error);
       if (error.response?.status !== 403) {
