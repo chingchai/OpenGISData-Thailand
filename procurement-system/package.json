@@ -1,0 +1,43 @@
+{
+  "name": "procurement-system",
+  "version": "1.0.0",
+  "description": "ระบบจัดการโครงการจัดซื้อจัดจ้าง - เทศบาลตำบลหัวทะเล",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "start": "cd server && npm start",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test",
+    "db:setup": "node scripts/setup.js",
+    "db:seed": "node scripts/seed.js",
+    "db:reset": "node scripts/reset.js",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "clean": "rm -rf node_modules client/node_modules server/node_modules client/dist server/dist",
+    "lint": "eslint . --ext .js,.jsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
+  },
+  "keywords": [
+    "procurement",
+    "government",
+    "project-management",
+    "thailand"
+  ],
+  "author": "เทศบาลตำบลหัวทะเล",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "prettier": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
