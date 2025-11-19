@@ -1,6 +1,76 @@
 import React, { useState, useEffect } from 'react';
 import { stepsAPI, uploadAPI } from '../services/api';
 
+// ImagePreview component with error handling
+const ImagePreview = ({ src, alt, onRemove, isNew = false }) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const handleImageError = () => {
+    console.error('Failed to load image:', src);
+    setImageError(true);
+    setImageLoading(false);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  if (imageError) {
+    return (
+      <div className="relative group">
+        <div className={`w-full h-24 bg-gray-200 rounded border ${isNew ? 'border-blue-300' : 'border-gray-300'} flex items-center justify-center`}>
+          <div className="text-center text-gray-500 px-1">
+            <svg className="w-8 h-8 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p className="text-xs">ไม่สามารถโหลด</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+          title={isNew ? "ยกเลิกรูปภาพ" : "ลบรูปภาพ"}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative group">
+      {imageLoading && (
+        <div className={`absolute inset-0 bg-gray-100 rounded border ${isNew ? 'border-blue-300' : 'border-gray-300'} flex items-center justify-center`}>
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        onError={handleImageError}
+        onLoad={handleImageLoad}
+        className={`w-full h-24 object-cover rounded border ${isNew ? 'border-blue-300' : 'border-gray-300'} bg-gray-100 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+        style={{ minHeight: '6rem' }}
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+        title={isNew ? "ยกเลิกรูปภาพ" : "ลบรูปภาพ"}
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  );
+};
+
 const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
   const [formData, setFormData] = useState({
     stepName: '',
@@ -332,23 +402,13 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
                 <p className="text-xs text-gray-600 mb-2">รูปภาพที่มีอยู่:</p>
                 <div className="grid grid-cols-3 gap-2">
                   {existingImages.map((imageUrl, index) => (
-                    <div key={`existing-${index}`} className="relative group">
-                      <img
-                        src={imageUrl}
-                        alt={`รูปที่ ${index + 1}`}
-                        className="w-full h-24 object-cover rounded border border-gray-300"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveExistingImage(index)}
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="ลบรูปภาพ"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
+                    <ImagePreview
+                      key={`existing-${index}`}
+                      src={imageUrl}
+                      alt={`รูปที่ ${index + 1}`}
+                      onRemove={() => handleRemoveExistingImage(index)}
+                      isNew={false}
+                    />
                   ))}
                 </div>
               </div>
@@ -360,23 +420,13 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
                 <p className="text-xs text-gray-600 mb-2">รูปภาพที่เลือกใหม่:</p>
                 <div className="grid grid-cols-3 gap-2">
                   {selectedFiles.map((file, index) => (
-                    <div key={`new-${index}`} className="relative group">
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={file.name}
-                        className="w-full h-24 object-cover rounded border border-blue-300"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveSelectedFile(index)}
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="ยกเลิกรูปภาพ"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
+                    <ImagePreview
+                      key={`new-${index}`}
+                      src={URL.createObjectURL(file)}
+                      alt={file.name}
+                      onRemove={() => handleRemoveSelectedFile(index)}
+                      isNew={true}
+                    />
                   ))}
                 </div>
               </div>

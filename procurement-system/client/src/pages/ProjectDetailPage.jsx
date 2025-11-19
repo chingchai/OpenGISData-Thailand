@@ -4,6 +4,71 @@ import { projectsAPI, stepsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import StepEditModal from '../components/StepEditModal';
 
+// ImageThumbnail component with error handling
+const ImageThumbnail = ({ imageUrl, altText, onClick }) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const handleImageError = () => {
+    console.error('Failed to load image:', imageUrl);
+    setImageError(true);
+    setImageLoading(false);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  if (imageError) {
+    return (
+      <div className="relative group">
+        <div className="w-full h-32 bg-gray-200 rounded border border-gray-300 flex items-center justify-center">
+          <div className="text-center text-gray-500 px-2">
+            <svg className="w-12 h-12 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p className="text-xs">ไม่สามารถโหลดรูปภาพ</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative group cursor-pointer" onClick={onClick}>
+      {imageLoading && (
+        <div className="absolute inset-0 bg-gray-100 rounded border border-gray-300 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        </div>
+      )}
+      <img
+        src={imageUrl}
+        alt={altText}
+        onError={handleImageError}
+        onLoad={handleImageLoad}
+        className={`w-full h-32 object-cover rounded border border-gray-300 hover:border-blue-500 transition-all bg-gray-100 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+        style={{ minHeight: '8rem' }}
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded transition-opacity flex items-center justify-center">
+        <svg
+          className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+};
+
 const ProjectDetailPage = () => {
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -308,32 +373,12 @@ const ProjectDetailPage = () => {
                                 </p>
                                 <div className="grid grid-cols-3 gap-2">
                                   {images.map((imageUrl, imgIndex) => (
-                                    <div
+                                    <ImageThumbnail
                                       key={imgIndex}
-                                      className="relative group cursor-pointer"
+                                      imageUrl={imageUrl}
+                                      altText={`${step.step_name} - รูปที่ ${imgIndex + 1}`}
                                       onClick={() => setLightboxImage(imageUrl)}
-                                    >
-                                      <img
-                                        src={imageUrl}
-                                        alt={`${step.step_name} - รูปที่ ${imgIndex + 1}`}
-                                        className="w-full h-32 object-cover rounded border border-gray-300 hover:border-blue-500 transition-all"
-                                      />
-                                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded transition-opacity flex items-center justify-center">
-                                        <svg
-                                          className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                                          />
-                                        </svg>
-                                      </div>
-                                    </div>
+                                    />
                                   ))}
                                 </div>
                               </div>
