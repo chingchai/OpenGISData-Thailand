@@ -380,10 +380,104 @@ export function deleteUser(userId, deleterId) {
   }
 }
 
+/**
+ * Bulk import users from array
+ * @param {Array} usersData - Array of user data
+ * @param {number} creatorId - ID of user performing the import
+ * @returns {Object} - { success: number, failed: number, errors: array }
+ */
+export async function bulkImportUsers(usersData, creatorId) {
+  const results = {
+    success: 0,
+    failed: 0,
+    errors: [],
+    successfulUsers: []
+  };
+
+  for (let i = 0; i < usersData.length; i++) {
+    const userData = usersData[i];
+    const rowNumber = i + 1; // Excel/CSV row number (assuming header is row 1)
+
+    try {
+      // Validate required fields
+      if (!userData.username || !userData.password || !userData.fullName || !userData.role) {
+        results.failed++;
+        results.errors.push({
+          row: rowNumber,
+          username: userData.username || '-',
+          error: 'ข้อมูลไม่ครบถ้วน (ต้องมี username, password, fullName, role)'
+        });
+        continue;
+      }
+
+      // Validate role
+      const validRoles = ['staff', 'admin', 'executive'];
+      if (!validRoles.includes(userData.role)) {
+        results.failed++;
+        results.errors.push({
+          row: rowNumber,
+          username: userData.username,
+          error: `role ไม่ถูกต้อง (ต้องเป็น ${validRoles.join(', ')})`
+        });
+        continue;
+      }
+
+      // Check if username already exists
+      const existingUser = queryOne('SELECT id FROM users WHERE username = ?', [userData.username]);
+      if (existingUser) {
+        results.failed++;
+        results.errors.push({
+          row: rowNumber,
+          username: userData.username,
+          error: 'ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว'
+        });
+        continue;
+      }
+
+      // Create user
+      const result = await createUser(userData, creatorId);
+      results.success++;
+      results.successfulUsers.push({
+        row: rowNumber,
+        username: userData.username,
+        fullName: userData.fullName
+      });
+
+      logger.info('Bulk import - User created', {
+        row: rowNumber,
+        username: userData.username,
+        creatorId
+      });
+    } catch (error) {
+      results.failed++;
+      results.errors.push({
+        row: rowNumber,
+        username: userData.username || '-',
+        error: error.message || 'เกิดข้อผิดพลาดในการสร้างผู้ใช้'
+      });
+      logger.error('Bulk import - Error creating user', {
+        row: rowNumber,
+        username: userData.username,
+        error: error.message
+      });
+    }
+  }
+
+  logger.info('Bulk import completed', {
+    total: usersData.length,
+    success: results.success,
+    failed: results.failed,
+    creatorId
+  });
+
+  return results;
+}
+
 export default {
   getAllUsers,
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  bulkImportUsers
 };
