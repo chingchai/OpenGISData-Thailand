@@ -120,4 +120,18 @@ export const uploadAPI = {
   },
 };
 
+// Notifications API
+export const notificationsAPI = {
+  getAll: (params) => api.get('/notifications', { params }),
+  markAsRead: (id) => api.put(`/notifications/${id}/read`),
+  markAllAsRead: () => api.put('/notifications/read-all'),
+};
+
+// Supervisor Reviews API
+export const supervisorReviewsAPI = {
+  create: (data) => api.post('/supervisor-reviews', data),
+  getByProject: (projectId) => api.get(`/supervisor-reviews/project/${projectId}`),
+  getReport: (params) => api.get('/supervisor-reviews/report', { params }),
+};
+
 export default api;

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { projectsAPI, stepsAPI } from '../services/api';
+import { projectsAPI, stepsAPI, supervisorReviewsAPI } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 import Layout from '../components/Layout';
 import StepEditModal from '../components/StepEditModal';
+import SupervisorReviewModal from '../components/SupervisorReviewModal';
 import { getBudgetTypeWithYear, getBudgetTypeColor } from '../utils/budgetTypes';
 
 // ImageThumbnail component with error handling
@@ -72,12 +74,15 @@ const ImageThumbnail = ({ imageUrl, altText, onClick }) => {
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
+  const { user } = useAuth();
   const [project, setProject] = useState(null);
   const [steps, setSteps] = useState([]);
   const [progress, setProgress] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingStep, setEditingStep] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
@@ -86,15 +91,17 @@ const ProjectDetailPage = () => {
 
   const fetchProjectDetails = async () => {
     try {
-      const [projectRes, stepsRes, progressRes] = await Promise.all([
+      const [projectRes, stepsRes, progressRes, reviewsRes] = await Promise.all([
         projectsAPI.getById(id),
         stepsAPI.getByProject(id),
-        stepsAPI.getProgress(id)
+        stepsAPI.getProgress(id),
+        supervisorReviewsAPI.getByProject(id).catch(() => ({ data: { data: [] } }))
       ]);
 
       setProject(projectRes.data.data);
       setSteps(stepsRes.data.data);
       setProgress(progressRes.data.data);
+      setReviews(reviewsRes.data.data || []);
     } catch (error) {
       console.error('Error fetching project details:', error);
     } finally {
@@ -184,12 +191,22 @@ const ProjectDetailPage = () => {
         </nav>
 
         {/* Project Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-start mb-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">{project.name}</h1>
-              <p className="text-gray-600 mt-2">{project.description}</p>
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{project.name}</h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-2">{project.description}</p>
             </div>
+            {/* Supervisor Review Button - Only for executives and admins */}
+            {(user?.role === 'executive' || user?.role === 'admin') && (
+              <button
+                onClick={() => setIsReviewModalOpen(true)}
+                className="ml-4 flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2.5 rounded-xl font-medium transition-all shadow-md"
+              >
+                <i className="fas fa-user-tie"></i>
+                <span>ส่งข้อความตรวจสอบ</span>
+              </button>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
@@ -222,10 +239,84 @@ const ProjectDetailPage = () => {
           )}
         </div>
 
+        {/* Supervisor Reviews Section */}
+        {reviews.length > 0 && (
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+              <i className="fas fa-user-tie text-purple-500"></i>
+              ข้อความตรวจสอบจากผู้บริหาร
+              <span className="ml-auto text-sm font-normal text-gray-500 dark:text-gray-400">
+                {reviews.length} รายการ
+              </span>
+            </h2>
+            <div className="space-y-4">
+              {reviews.map((review) => {
+                const reviewTypeConfig = {
+                  feedback: { label: 'ข้อเสนอแนะ', icon: 'fa-comment-dots', color: 'text-blue-500', bgColor: 'bg-blue-50 dark:bg-blue-900/20', borderColor: 'border-blue-200 dark:border-blue-800' },
+                  concern: { label: 'ข้อกังวล', icon: 'fa-exclamation-circle', color: 'text-orange-500', bgColor: 'bg-orange-50 dark:bg-orange-900/20', borderColor: 'border-orange-200 dark:border-orange-800' },
+                  approval: { label: 'อนุมัติ/เห็นชอบ', icon: 'fa-check-circle', color: 'text-green-500', bgColor: 'bg-green-50 dark:bg-green-900/20', borderColor: 'border-green-200 dark:border-green-800' },
+                  question: { label: 'คำถาม', icon: 'fa-question-circle', color: 'text-purple-500', bgColor: 'bg-purple-50 dark:bg-purple-900/20', borderColor: 'border-purple-200 dark:border-purple-800' }
+                };
+
+                const priorityConfig = {
+                  low: { label: 'ต่ำ', color: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300' },
+                  normal: { label: 'ปกติ', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
+                  high: { label: 'สูง', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
+                  urgent: { label: 'ด่วน', color: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' }
+                };
+
+                const typeInfo = reviewTypeConfig[review.review_type] || reviewTypeConfig.feedback;
+                const priorityInfo = priorityConfig[review.priority] || priorityConfig.normal;
+
+                return (
+                  <div
+                    key={review.id}
+                    className={`border-l-4 rounded-xl p-4 ${typeInfo.bgColor} ${typeInfo.borderColor}`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center ${typeInfo.color}`}>
+                        <i className={`fas ${typeInfo.icon}`}></i>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-gray-900 dark:text-white">
+                              {typeInfo.label}
+                            </span>
+                            <span className={`text-xs px-2 py-1 rounded-full font-medium ${priorityInfo.color}`}>
+                              {priorityInfo.label}
+                            </span>
+                          </div>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            {new Date(review.created_at).toLocaleDateString('th-TH', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                          {review.message}
+                        </p>
+                        <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                          <i className="fas fa-user"></i>
+                          <span>โดย: {review.supervisor_name}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Progress Overview */}
         {progress && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-lg font-semibold mb-4">ความคืบหน้า</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">ความคืบหน้า</h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div className="text-center">
                 <p className="text-2xl font-bold text-gray-800">{progress.totalSteps}</p>
@@ -482,6 +573,17 @@ const ProjectDetailPage = () => {
         onClose={handleModalClose}
         onSuccess={handleModalSuccess}
         step={editingStep}
+      />
+
+      {/* Supervisor Review Modal */}
+      <SupervisorReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        projectId={id}
+        projectName={project?.name}
+        onSuccess={() => {
+          fetchProjectDetails(); // Refresh to show new review
+        }}
       />
     </Layout>
   );

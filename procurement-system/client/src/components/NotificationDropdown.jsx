@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { projectsAPI } from '../services/api';
+import { notificationsAPI } from '../services/api';
 
 const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,80 +10,20 @@ const NotificationDropdown = () => {
 
   useEffect(() => {
     fetchNotifications();
-    // Refresh notifications every 5 minutes
-    const interval = setInterval(fetchNotifications, 5 * 60 * 1000);
+    // Refresh notifications every 2 minutes
+    const interval = setInterval(fetchNotifications, 2 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
   const fetchNotifications = async () => {
     try {
       setLoading(true);
-      const response = await projectsAPI.getAll();
-      const projects = response.data.data;
+      const response = await notificationsAPI.getAll({ limit: 20 });
 
-      const now = new Date();
-      const notifs = [];
-
-      projects.forEach(project => {
-        if (!project.expected_end_date || project.status === 'completed' || project.status === 'cancelled') {
-          return;
-        }
-
-        const endDate = new Date(project.expected_end_date);
-        const daysUntilDeadline = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24));
-
-        // Overdue projects (เกินกำหนด)
-        if (daysUntilDeadline < 0) {
-          notifs.push({
-            id: `overdue-${project.id}`,
-            projectId: project.id,
-            projectName: project.name,
-            type: 'overdue',
-            priority: 'high',
-            message: `เกินกำหนด ${Math.abs(daysUntilDeadline)} วัน`,
-            daysOverdue: Math.abs(daysUntilDeadline),
-            timestamp: endDate
-          });
-        }
-        // Approaching deadline - 7 days (ใกล้ถึงกำหนด)
-        else if (daysUntilDeadline >= 0 && daysUntilDeadline <= 7) {
-          notifs.push({
-            id: `approaching-${project.id}`,
-            projectId: project.id,
-            projectName: project.name,
-            type: 'approaching',
-            priority: daysUntilDeadline <= 3 ? 'medium' : 'low',
-            message: `เหลืออีก ${daysUntilDeadline} วัน`,
-            daysRemaining: daysUntilDeadline,
-            timestamp: endDate
-          });
-        }
-        // Warning - 14 days (เตือนล่วงหน้า)
-        else if (daysUntilDeadline > 7 && daysUntilDeadline <= 14) {
-          notifs.push({
-            id: `warning-${project.id}`,
-            projectId: project.id,
-            projectName: project.name,
-            type: 'warning',
-            priority: 'low',
-            message: `ครบกำหนดในอีก ${daysUntilDeadline} วัน`,
-            daysRemaining: daysUntilDeadline,
-            timestamp: endDate
-          });
-        }
-      });
-
-      // Sort by priority and date
-      notifs.sort((a, b) => {
-        const priorityOrder = { high: 0, medium: 1, low: 2 };
-        if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
-          return priorityOrder[a.priority] - priorityOrder[b.priority];
-        }
-        return new Date(a.timestamp) - new Date(b.timestamp);
-      });
-
-      setNotifications(notifs);
-      setUnreadCount(notifs.filter(n => n.type === 'overdue').length);
+      if (response.data.success) {
+        setNotifications(response.data.data || []);
+        setUnreadCount(response.data.unreadCount || 0);
+      }
     } catch (error) {
       console.error('Error fetching notifications:', error);
     } finally {
@@ -91,30 +31,98 @@ const NotificationDropdown = () => {
     }
   };
 
-  const getNotificationIcon = (type) => {
-    switch (type) {
-      case 'overdue':
-        return '🔴';
-      case 'approaching':
-        return '⚠️';
-      case 'warning':
-        return '🔔';
-      default:
-        return '📌';
+  const handleMarkAsRead = async (notificationId) => {
+    try {
+      await notificationsAPI.markAsRead(notificationId);
+      // Update local state
+      setNotifications(prev =>
+        prev.map(n => n.id === notificationId ? { ...n, is_read: true } : n)
+      );
+      setUnreadCount(prev => Math.max(0, prev - 1));
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
     }
   };
 
-  const getNotificationColor = (type) => {
-    switch (type) {
-      case 'overdue':
-        return 'bg-red-50 border-red-200 hover:bg-red-100';
-      case 'approaching':
-        return 'bg-yellow-50 border-yellow-200 hover:bg-yellow-100';
-      case 'warning':
-        return 'bg-blue-50 border-blue-200 hover:bg-blue-100';
-      default:
-        return 'bg-gray-50 border-gray-200 hover:bg-gray-100';
+  const handleMarkAllAsRead = async () => {
+    try {
+      await notificationsAPI.markAllAsRead();
+      // Update local state
+      setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
+      setUnreadCount(0);
+    } catch (error) {
+      console.error('Error marking all notifications as read:', error);
     }
+  };
+
+  const getNotificationIcon = (type) => {
+    switch (type) {
+      case 'supervisor_review':
+        return 'fa-user-tie';
+      case 'step_overdue':
+        return 'fa-exclamation-triangle';
+      case 'project_update':
+        return 'fa-folder-open';
+      case 'step_completed':
+        return 'fa-check-circle';
+      default:
+        return 'fa-bell';
+    }
+  };
+
+  const getNotificationColor = (type, isRead) => {
+    const baseOpacity = isRead ? 'opacity-60' : '';
+    switch (type) {
+      case 'supervisor_review':
+        return `bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900/30 ${baseOpacity}`;
+      case 'step_overdue':
+        return `bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/30 ${baseOpacity}`;
+      case 'project_update':
+        return `bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 ${baseOpacity}`;
+      case 'step_completed':
+        return `bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/30 ${baseOpacity}`;
+      default:
+        return `bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 ${baseOpacity}`;
+    }
+  };
+
+  const getIconColor = (type) => {
+    switch (type) {
+      case 'supervisor_review':
+        return 'text-purple-500';
+      case 'step_overdue':
+        return 'text-red-500';
+      case 'project_update':
+        return 'text-blue-500';
+      case 'step_completed':
+        return 'text-green-500';
+      default:
+        return 'text-gray-500';
+    }
+  };
+
+  const formatTimeAgo = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return 'เมื่อสักครู่';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} นาทีที่แล้ว`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} ชั่วโมงที่แล้ว`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} วันที่แล้ว`;
+
+    return date.toLocaleDateString('th-TH', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const handleNotificationClick = async (notification) => {
+    if (!notification.is_read) {
+      await handleMarkAsRead(notification.id);
+    }
+    setIsOpen(false);
   };
 
   return (
@@ -122,20 +130,14 @@ const NotificationDropdown = () => {
       {/* Bell Icon Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+        className="relative p-2.5 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+        title="การแจ้งเตือน"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-          />
-        </svg>
+        <i className="fas fa-bell text-gray-700 dark:text-gray-300"></i>
         {/* Unread Badge */}
         {unreadCount > 0 && (
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-            {unreadCount > 9 ? '9+' : unreadCount}
+          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full min-w-[20px]">
+            {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
       </button>
@@ -150,25 +152,35 @@ const NotificationDropdown = () => {
           />
 
           {/* Dropdown Content */}
-          <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-20 max-h-[500px] overflow-hidden flex flex-col">
+          <div className="absolute right-0 mt-2 w-96 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 z-20 max-h-[600px] overflow-hidden flex flex-col">
             {/* Header */}
-            <div className="p-4 border-b border-gray-200 bg-gray-50">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-800">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                  <i className="fas fa-bell text-blue-500"></i>
                   การแจ้งเตือน
                 </h3>
                 <button
                   onClick={fetchNotifications}
                   disabled={loading}
-                  className="text-sm text-blue-600 hover:text-blue-700 disabled:opacity-50"
+                  className="text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 disabled:opacity-50 flex items-center gap-1"
                 >
+                  <i className={`fas fa-sync-alt ${loading ? 'fa-spin' : ''}`}></i>
                   {loading ? 'กำลังโหลด...' : 'รีเฟรช'}
                 </button>
               </div>
-              {notifications.length > 0 && (
-                <p className="text-sm text-gray-600 mt-1">
-                  มี {notifications.length} รายการที่ต้องติดตาม
-                </p>
+              {unreadCount > 0 && (
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {unreadCount} รายการยังไม่ได้อ่าน
+                  </p>
+                  <button
+                    onClick={handleMarkAllAsRead}
+                    className="text-xs text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                  >
+                    ทำเครื่องหมายอ่านทั้งหมด
+                  </button>
+                </div>
               )}
             </div>
 
@@ -176,59 +188,66 @@ const NotificationDropdown = () => {
             <div className="overflow-y-auto flex-1">
               {loading ? (
                 <div className="p-8 text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                  <p className="mt-2 text-sm text-gray-500">กำลังโหลด...</p>
+                  <i className="fas fa-spinner fa-spin text-4xl text-blue-500 mb-3"></i>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">กำลังโหลดการแจ้งเตือน...</p>
                 </div>
               ) : notifications.length > 0 ? (
-                <div className="divide-y divide-gray-200">
+                <div className="divide-y divide-gray-200 dark:divide-gray-700">
                   {notifications.map((notif) => (
-                    <Link
+                    <div
                       key={notif.id}
-                      to={`/projects/${notif.projectId}`}
-                      onClick={() => setIsOpen(false)}
-                      className={`block p-4 border-l-4 transition-colors ${getNotificationColor(notif.type)}`}
+                      className={`relative ${getNotificationColor(notif.type, notif.is_read)}`}
                     >
-                      <div className="flex items-start gap-3">
-                        <span className="text-2xl">{getNotificationIcon(notif.type)}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
-                            {notif.projectName}
-                          </p>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {notif.message}
-                          </p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            กำหนดเสร็จ: {new Date(notif.timestamp).toLocaleDateString('th-TH')}
-                          </p>
+                      {notif.link ? (
+                        <Link
+                          to={notif.link}
+                          onClick={() => handleNotificationClick(notif)}
+                          className="block p-4 border-l-4"
+                        >
+                          <NotificationContent
+                            notif={notif}
+                            getNotificationIcon={getNotificationIcon}
+                            getIconColor={getIconColor}
+                            formatTimeAgo={formatTimeAgo}
+                          />
+                        </Link>
+                      ) : (
+                        <div
+                          onClick={() => !notif.is_read && handleMarkAsRead(notif.id)}
+                          className="p-4 border-l-4 cursor-pointer"
+                        >
+                          <NotificationContent
+                            notif={notif}
+                            getNotificationIcon={getNotificationIcon}
+                            getIconColor={getIconColor}
+                            formatTimeAgo={formatTimeAgo}
+                          />
                         </div>
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                    </Link>
+                      )}
+                      {!notif.is_read && (
+                        <div className="absolute top-4 right-4 w-2 h-2 bg-blue-500 rounded-full"></div>
+                      )}
+                    </div>
                   ))}
                 </div>
               ) : (
-                <div className="p-8 text-center">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <p className="mt-4 text-gray-500">ไม่มีการแจ้งเตือน</p>
-                  <p className="text-sm text-gray-400 mt-1">โครงการทั้งหมดเป็นไปตามแผน</p>
+                <div className="p-12 text-center">
+                  <i className="fas fa-check-circle text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                  <p className="text-gray-500 dark:text-gray-400 font-medium">ไม่มีการแจ้งเตือน</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">คุณอ่านทุกอย่างแล้ว</p>
                 </div>
               )}
             </div>
 
             {/* Footer */}
             {notifications.length > 0 && (
-              <div className="p-3 border-t border-gray-200 bg-gray-50">
-                <Link
-                  to="/projects"
+              <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+                <button
                   onClick={() => setIsOpen(false)}
-                  className="block text-center text-sm text-blue-600 hover:text-blue-700 font-medium"
+                  className="w-full text-center text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
                 >
-                  ดูโครงการทั้งหมด →
-                </Link>
+                  ปิด
+                </button>
               </div>
             )}
           </div>
@@ -237,5 +256,29 @@ const NotificationDropdown = () => {
     </div>
   );
 };
+
+// Separate component for notification content
+const NotificationContent = ({ notif, getNotificationIcon, getIconColor, formatTimeAgo }) => (
+  <div className="flex items-start gap-3">
+    <div className={`flex-shrink-0 w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center ${getIconColor(notif.type)}`}>
+      <i className={`fas ${getNotificationIcon(notif.type)}`}></i>
+    </div>
+    <div className="flex-1 min-w-0">
+      <p className="text-sm font-semibold text-gray-900 dark:text-white">
+        {notif.title}
+      </p>
+      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
+        {notif.message}
+      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-500 mt-2 flex items-center gap-1">
+        <i className="far fa-clock"></i>
+        {formatTimeAgo(notif.created_at)}
+      </p>
+    </div>
+    {notif.link && (
+      <i className="fas fa-chevron-right text-gray-400 dark:text-gray-500 flex-shrink-0"></i>
+    )}
+  </div>
+);
 
 export default NotificationDropdown;
