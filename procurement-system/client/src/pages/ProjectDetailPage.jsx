@@ -390,6 +390,44 @@ const ProjectDetailPage = () => {
                         return null;
                       })()}
 
+                      {/* Step Documents */}
+                      {(() => {
+                        try {
+                          const documents = step.document_urls ? JSON.parse(step.document_urls) : [];
+                          if (Array.isArray(documents) && documents.length > 0) {
+                            return (
+                              <div className="mt-3">
+                                <p className="text-sm font-medium text-gray-700 mb-2">
+                                  เอกสารแนบ ({documents.length} ไฟล์)
+                                </p>
+                                <div className="space-y-2">
+                                  {documents.map((doc, docIndex) => (
+                                    <a
+                                      key={docIndex}
+                                      href={doc.url}
+                                      download={doc.name || `document-${docIndex + 1}`}
+                                      className="flex items-center space-x-2 p-2 bg-blue-50 rounded hover:bg-blue-100 transition-colors"
+                                    >
+                                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                      </svg>
+                                      <span className="text-sm text-blue-700 font-medium">{doc.name || `เอกสาร ${docIndex + 1}`}</span>
+                                      {doc.size && <span className="text-xs text-gray-500">({(doc.size / 1024).toFixed(1)} KB)</span>}
+                                      <svg className="w-4 h-4 text-blue-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                      </svg>
+                                    </a>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          }
+                        } catch (e) {
+                          console.error('Error parsing document_urls:', e);
+                        }
+                        return null;
+                      })()}
+
                       {step.delay_days_computed > 0 && (
                         <div className="mt-3 p-2 bg-red-50 rounded text-sm text-red-700">
                           ⚠️ ล่าช้า {step.delay_days_computed} วัน

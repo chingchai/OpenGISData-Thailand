@@ -85,6 +85,8 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
+  const [selectedDocuments, setSelectedDocuments] = useState([]);
+  const [existingDocuments, setExistingDocuments] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -111,7 +113,16 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
         setExistingImages([]);
       }
 
+      // Load existing documents
+      try {
+        const docs = step.document_urls ? JSON.parse(step.document_urls) : [];
+        setExistingDocuments(Array.isArray(docs) ? docs : []);
+      } catch (e) {
+        setExistingDocuments([]);
+      }
+
       setSelectedFiles([]);
+      setSelectedDocuments([]);
       setError('');
     }
   }, [step, isOpen]);
@@ -162,6 +173,52 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
     setExistingImages(prev => prev.filter((_, i) => i !== index));
   };
 
+  const handleDocumentSelect = (e) => {
+    const files = Array.from(e.target.files);
+
+    // Validate file types
+    const validTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'text/plain',
+      'application/zip',
+      'application/x-zip-compressed'
+    ];
+    const invalidFiles = files.filter(file => !validTypes.includes(file.type));
+
+    if (invalidFiles.length > 0) {
+      setError('กรุณาเลือกเฉพาะไฟล์เอกสาร (.pdf, .doc, .docx, .xls, .xlsx, .txt, .zip)');
+      return;
+    }
+
+    // Validate file sizes (10MB each)
+    const oversizedFiles = files.filter(file => file.size > 10 * 1024 * 1024);
+    if (oversizedFiles.length > 0) {
+      setError('ขนาดไฟล์เอกสารต้องไม่เกิน 10MB');
+      return;
+    }
+
+    // Check total limit (10 documents max)
+    if (existingDocuments.length + selectedDocuments.length + files.length > 10) {
+      setError('สามารถอัพโหลดเอกสารได้สูงสุด 10 ไฟล์');
+      return;
+    }
+
+    setSelectedDocuments(prev => [...prev, ...files]);
+    setError('');
+  };
+
+  const handleRemoveSelectedDocument = (index) => {
+    setSelectedDocuments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveExistingDocument = (index) => {
+    setExistingDocuments(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -187,8 +244,29 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
         }
       }
 
+      // Upload new documents if any
+      let newDocumentData = [];
+      if (selectedDocuments.length > 0) {
+        setUploading(true);
+        try {
+          const uploadResponse = await uploadAPI.uploadDocuments(selectedDocuments);
+          newDocumentData = uploadResponse.data?.data?.documentUrls || [];
+        } catch (uploadErr) {
+          console.error('Error uploading documents:', uploadErr);
+          setError('เกิดข้อผิดพลาดในการอัพโหลดเอกสาร');
+          setLoading(false);
+          setUploading(false);
+          return;
+        } finally {
+          setUploading(false);
+        }
+      }
+
       // Combine existing and new images
       const allImageUrls = [...existingImages, ...newImageUrls];
+
+      // Combine existing and new documents
+      const allDocuments = [...existingDocuments, ...newDocumentData];
 
       // Prepare payload
       const payload = {
@@ -201,7 +279,8 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
         slaDays: formData.slaDays ? parseInt(formData.slaDays) : undefined,
         status: formData.status,
         notes: formData.notes?.trim() || undefined,
-        imageUrls: allImageUrls.length > 0 ? allImageUrls : undefined
+        imageUrls: allImageUrls.length > 0 ? allImageUrls : undefined,
+        documentUrls: allDocuments.length > 0 ? allDocuments : undefined
       };
 
       // Remove undefined values
@@ -443,6 +522,89 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
             />
             <p className="mt-1 text-xs text-gray-500">
               รองรับไฟล์: JPG, JPEG, PNG, GIF, WEBP
+            </p>
+          </div>
+
+          {/* Document Upload */}
+          <div className="mt-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              เอกสารแนบ
+              <span className="text-gray-500 font-normal ml-2 text-xs">
+                (สูงสุด 10 ไฟล์, ขนาดไม่เกิน 10MB/ไฟล์)
+              </span>
+            </label>
+
+            {/* Existing Documents */}
+            {existingDocuments.length > 0 && (
+              <div className="mb-3">
+                <p className="text-xs text-gray-600 mb-2">เอกสารที่มีอยู่:</p>
+                <div className="space-y-2">
+                  {existingDocuments.map((doc, index) => (
+                    <div key={`existing-doc-${index}`} className="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-300">
+                      <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-sm">{doc.name || 'เอกสาร'}</span>
+                        {doc.size && <span className="text-xs text-gray-500">({(doc.size / 1024).toFixed(1)} KB)</span>}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveExistingDocument(index)}
+                        className="text-red-500 hover:text-red-700"
+                        title="ลบเอกสาร"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Selected Documents Preview */}
+            {selectedDocuments.length > 0 && (
+              <div className="mb-3">
+                <p className="text-xs text-gray-600 mb-2">เอกสารที่เลือกใหม่:</p>
+                <div className="space-y-2">
+                  {selectedDocuments.map((file, index) => (
+                    <div key={`new-doc-${index}`} className="flex items-center justify-between p-2 bg-blue-50 rounded border border-blue-300">
+                      <div className="flex items-center space-x-2">
+                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-sm font-medium">{file.name}</span>
+                        <span className="text-xs text-gray-500">({(file.size / 1024).toFixed(1)} KB)</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSelectedDocument(index)}
+                        className="text-red-500 hover:text-red-700"
+                        title="ยกเลิกเอกสาร"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* File Input */}
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.zip"
+              multiple
+              onChange={handleDocumentSelect}
+              disabled={loading || uploading}
+              className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 disabled:opacity-50"
+            />
+            <p className="mt-1 text-xs text-gray-500">
+              รองรับไฟล์: PDF, Word, Excel, TXT, ZIP
             </p>
           </div>
 
