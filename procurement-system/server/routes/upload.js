@@ -95,6 +95,34 @@ router.get(
   uploadController.downloadTemplate
 );
 
+// Configure multer for document uploads
+const uploadDocument = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB limit per document
+  },
+  fileFilter: (req, file, cb) => {
+    // Accept documents
+    const allowedMimes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'text/plain',
+      'application/zip',
+      'application/x-zip-compressed'
+    ];
+
+    if (allowedMimes.includes(file.mimetype) ||
+        file.originalname.match(/\.(pdf|doc|docx|xls|xlsx|txt|zip)$/i)) {
+      cb(null, true);
+    } else {
+      cb(new Error('อนุญาตเฉพาะไฟล์เอกสาร (.pdf, .doc, .docx, .xls, .xlsx, .txt, .zip) เท่านั้น'), false);
+    }
+  }
+});
+
 /**
  * POST /api/upload/images
  * Upload multiple images and return base64 encoded data URLs
@@ -133,6 +161,54 @@ router.post(
       res.status(500).json({
         success: false,
         error: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ'
+      });
+    }
+  }
+);
+
+/**
+ * POST /api/upload/documents
+ * Upload multiple documents and return base64 encoded data URLs
+ * Authenticated users only
+ */
+router.post(
+  '/documents',
+  authenticate,
+  uploadDocument.array('documents', 10), // Max 10 documents
+  (req, res) => {
+    try {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'ไม่พบไฟล์เอกสารที่อัพโหลด'
+        });
+      }
+
+      // Convert documents to base64 data URLs with metadata
+      const documentUrls = req.files.map(file => {
+        const base64 = file.buffer.toString('base64');
+        const dataUrl = `data:${file.mimetype};base64,${base64}`;
+        return {
+          url: dataUrl,
+          name: file.originalname,
+          size: file.size,
+          type: file.mimetype
+        };
+      });
+
+      res.json({
+        success: true,
+        data: {
+          documentUrls,
+          count: documentUrls.length
+        },
+        message: `อัพโหลดเอกสารสำเร็จ ${documentUrls.length} ไฟล์`
+      });
+    } catch (error) {
+      console.error('Error uploading documents:', error);
+      res.status(500).json({
+        success: false,
+        error: 'เกิดข้อผิดพลาดในการอัพโหลดเอกสาร'
       });
     }
   }

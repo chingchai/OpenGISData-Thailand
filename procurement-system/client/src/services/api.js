@@ -106,6 +106,18 @@ export const uploadAPI = {
       },
     });
   },
+
+  uploadDocuments: (files) => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('documents', file);
+    });
+    return api.post('/upload/documents', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
 };
 
 export default api;
