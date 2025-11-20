@@ -43,7 +43,7 @@ const Layout = ({ children }) => {
                 </div>
                 <div className="hidden sm:block">
                   <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    ระบบจัดซื้อจัดจ้าง
+                    ระบบกำกับติดตามความก้าวหน้าโครงการ
                   </h1>
                 </div>
               </Link>

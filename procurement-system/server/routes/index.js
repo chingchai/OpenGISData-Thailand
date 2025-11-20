@@ -6,6 +6,8 @@ import uploadRoutes from './upload.js';
 import reportRoutes from './reports.js';
 import userRoutes from './users.js';
 import departmentRoutes from './departments.js';
+import notificationRoutes from './notifications.js';
+import supervisorReviewRoutes from './supervisor-reviews.js';
 
 const router = express.Router();
 
@@ -13,7 +15,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'Procurement System API',
+    message: 'ระบบกำกับติดตามความก้าวหน้าโครงการ API',
     version: '1.0.0',
     endpoints: {
       auth: '/api/auth',
@@ -25,7 +27,9 @@ router.get('/', (req, res) => {
       upload: '/api/upload',
       reports: '/api/reports',
       users: '/api/users',
-      departments: '/api/departments'
+      departments: '/api/departments',
+      notifications: '/api/notifications',
+      supervisorReviews: '/api/supervisor-reviews'
     }
   });
 });
@@ -38,5 +42,7 @@ router.use('/upload', uploadRoutes);
 router.use('/reports', reportRoutes);
 router.use('/users', userRoutes);
 router.use('/departments', departmentRoutes);
+router.use('/notifications', notificationRoutes);
+router.use('/supervisor-reviews', supervisorReviewRoutes);
 
 export default router;
