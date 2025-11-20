@@ -176,18 +176,9 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
   const handleDocumentSelect = (e) => {
     const files = Array.from(e.target.files);
 
-    // Validate file types
-    const validTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/vnd.ms-excel',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'text/plain',
-      'application/zip',
-      'application/x-zip-compressed'
-    ];
-    const invalidFiles = files.filter(file => !validTypes.includes(file.type));
+    // Validate file types by extension (more reliable than MIME type)
+    const validExtensions = /\.(pdf|doc|docx|xls|xlsx|txt|zip)$/i;
+    const invalidFiles = files.filter(file => !validExtensions.test(file.name));
 
     if (invalidFiles.length > 0) {
       setError('กรุณาเลือกเฉพาะไฟล์เอกสาร (.pdf, .doc, .docx, .xls, .xlsx, .txt, .zip)');
