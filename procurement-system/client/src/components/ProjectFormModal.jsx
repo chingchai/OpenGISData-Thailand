@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { projectsAPI } from '../services/api';
+import MapPicker from './MapPicker';
 
 const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departments = [] }) => {
+  // Default location - Hua Talay Municipality Office, Nakhon Ratchasima
+  const DEFAULT_LOCATION = {
+    type: 'Point',
+    coordinates: [102.0983, 14.9753] // [longitude, latitude]
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -11,7 +18,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
     budgetYear: new Date().getFullYear() + 543, // Thai Buddhist year
     budgetType: '',
     budgetFiscalYear: '',
-    startDate: new Date().toISOString().split('T')[0]
+    startDate: new Date().toISOString().split('T')[0],
+    location: DEFAULT_LOCATION
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -23,6 +31,19 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
       const dbYear = project.budgetYear || project.budget_year;
       const displayYear = dbYear ? parseInt(dbYear) + 543 : new Date().getFullYear() + 543;
 
+      // Parse location if it's a string
+      let projectLocation = DEFAULT_LOCATION;
+      if (project.location) {
+        try {
+          projectLocation = typeof project.location === 'string'
+            ? JSON.parse(project.location)
+            : project.location;
+        } catch (e) {
+          console.error('Error parsing location:', e);
+          projectLocation = DEFAULT_LOCATION;
+        }
+      }
+
       setFormData({
         name: project.name || '',
         description: project.description || '',
@@ -32,7 +53,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         budgetYear: displayYear,
         budgetType: project.budgetType || project.budget_type || '',
         budgetFiscalYear: project.budgetFiscalYear || project.budget_fiscal_year || '',
-        startDate: project.startDate || project.start_date || new Date().toISOString().split('T')[0]
+        startDate: project.startDate || project.start_date || new Date().toISOString().split('T')[0],
+        location: projectLocation
       });
     } else {
       // Create mode - reset form
@@ -45,7 +67,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         budgetYear: new Date().getFullYear() + 543, // Thai Buddhist year
         budgetType: '',
         budgetFiscalYear: '',
-        startDate: new Date().toISOString().split('T')[0]
+        startDate: new Date().toISOString().split('T')[0],
+        location: DEFAULT_LOCATION
       });
     }
     setError('');
@@ -58,6 +81,10 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
       [name]: value
     }));
     setError('');
+  };
+
+  const handleLocationChange = (location) => {
+    setFormData(prev => ({ ...prev, location }));
   };
 
   const handleSubmit = async (e) => {
@@ -79,7 +106,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         budgetYear: budgetYearChristian,
         budgetType: formData.budgetType ? parseInt(formData.budgetType) : undefined,
         budgetFiscalYear: formData.budgetFiscalYear ? parseInt(formData.budgetFiscalYear) : undefined,
-        startDate: formData.startDate
+        startDate: formData.startDate,
+        location: formData.location
       };
 
       if (project) {
@@ -335,6 +363,22 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          {/* Location Picker */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              ตำแหน่งที่ดำเนินโครงการ
+            </label>
+            <p className="text-xs text-gray-500 mb-2">
+              คลิกบนแผนที่เพื่อเลือกตำแหน่ง (ค่าเริ่มต้น: สำนักงานเทศบาลตำบลหัวทะเล จ.นครราชสีมา)
+            </p>
+            <MapPicker
+              location={formData.location}
+              onChange={handleLocationChange}
+              height={300}
+              disabled={loading}
             />
           </div>
 

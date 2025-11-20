@@ -18,6 +18,7 @@ const Layout = ({ children }) => {
   const navigation = [
     { name: 'Dashboard', path: '/dashboard', icon: 'fa-chart-line', roles: ['admin', 'staff', 'executive'] },
     { name: 'โครงการ', path: '/projects', icon: 'fa-folder-open', roles: ['admin', 'staff', 'executive'] },
+    { name: 'แผนที่', path: '/map', icon: 'fa-map-marked-alt', roles: ['admin', 'staff', 'executive'] },
     { name: 'ล่าช้า', path: '/overdue', icon: 'fa-clock', roles: ['admin', 'staff', 'executive'] },
     { name: 'จัดการ', path: '/admin/projects', icon: 'fa-gear', roles: ['admin'] },
     { name: 'ผู้ใช้', path: '/admin/users', icon: 'fa-users', roles: ['admin'] },

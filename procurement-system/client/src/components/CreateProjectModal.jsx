@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 import { projectsAPI, departmentsAPI } from '../services/api';
+import MapPicker from './MapPicker';
 
 const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
+  // Default location - Hua Talay Municipality Office, Nakhon Ratchasima
+  const DEFAULT_LOCATION = {
+    type: 'Point',
+    coordinates: [102.0983, 14.9753] // [longitude, latitude]
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -9,7 +16,8 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
     procurementMethod: '',
     budgetAmount: '',
     budgetYear: new Date().getFullYear() + 543, // Thai Buddhist year
-    startDate: new Date().toISOString().split('T')[0]
+    startDate: new Date().toISOString().split('T')[0],
+    location: DEFAULT_LOCATION
   });
   const [departments, setDepartments] = useState([]);
   const [errors, setErrors] = useState({});
@@ -46,6 +54,10 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+  };
+
+  const handleLocationChange = (location) => {
+    setFormData(prev => ({ ...prev, location }));
   };
 
   const validateForm = () => {
@@ -114,7 +126,8 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
         procurementMethod: formData.procurementMethod,
         budgetAmount: parseFloat(formData.budgetAmount),
         budgetYear: budgetYearChristian,
-        startDate: formData.startDate
+        startDate: formData.startDate,
+        location: formData.location
       };
 
       await projectsAPI.create(payload);
@@ -127,7 +140,8 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
         procurementMethod: '',
         budgetAmount: '',
         budgetYear: new Date().getFullYear() + 543,
-        startDate: new Date().toISOString().split('T')[0]
+        startDate: new Date().toISOString().split('T')[0],
+        location: DEFAULT_LOCATION
       });
 
       // Close modal and trigger success callback
@@ -154,7 +168,8 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
         procurementMethod: '',
         budgetAmount: '',
         budgetYear: new Date().getFullYear() + 543,
-        startDate: new Date().toISOString().split('T')[0]
+        startDate: new Date().toISOString().split('T')[0],
+        location: DEFAULT_LOCATION
       });
       setErrors({});
       setApiError('');
@@ -365,6 +380,22 @@ const CreateProjectModal = ({ isOpen, onClose, onSuccess }) => {
               {errors.startDate && (
                 <p className="mt-1 text-sm text-red-500">{errors.startDate}</p>
               )}
+            </div>
+
+            {/* Location Picker */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                ตำแหน่งที่ดำเนินโครงการ
+              </label>
+              <p className="text-xs text-gray-500 mb-2">
+                คลิกบนแผนที่เพื่อเลือกตำแหน่ง (ค่าเริ่มต้น: สำนักงานเทศบาลตำบลหัวทะเล จ.นครราชสีมา)
+              </p>
+              <MapPicker
+                location={formData.location}
+                onChange={handleLocationChange}
+                height={300}
+                disabled={loading}
+              />
             </div>
 
             {/* Footer */}

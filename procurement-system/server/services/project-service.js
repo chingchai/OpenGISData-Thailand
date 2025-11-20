@@ -222,7 +222,8 @@ export function createProject(projectData, userId) {
       budgetYear,
       budgetType,
       budgetFiscalYear,
-      startDate
+      startDate,
+      location
     } = projectData;
 
     // Validate procurement method
@@ -250,8 +251,8 @@ export function createProject(projectData, userId) {
         INSERT INTO projects (
           project_code, name, description, department_id,
           procurement_method, budget, budget_type, budget_fiscal_year,
-          status, start_date, created_by, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+          status, start_date, location, created_by, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
         projectCode,
         name,
@@ -263,6 +264,7 @@ export function createProject(projectData, userId) {
         budgetFiscalYear || null,
         'draft',
         startDate || new Date().toISOString().split('T')[0],
+        location ? JSON.stringify(location) : null,
         userId
       );
 
@@ -356,7 +358,7 @@ export function updateProject(projectId, updateData, userId) {
     const allowedFields = [
       'name', 'description', 'budget', 'budget_type', 'budget_fiscal_year', 'status',
       'actual_start', 'actual_end', 'winner_vendor',
-      'contract_number', 'contract_date', 'remarks'
+      'contract_number', 'contract_date', 'remarks', 'location'
     ];
 
     // Map camelCase to snake_case
@@ -372,7 +374,8 @@ export function updateProject(projectId, updateData, userId) {
       winnerVendor: 'winner_vendor',
       contractNumber: 'contract_number',
       contractDate: 'contract_date',
-      remarks: 'remarks'
+      remarks: 'remarks',
+      location: 'location'
     };
 
     const updates = [];
@@ -383,10 +386,14 @@ export function updateProject(projectId, updateData, userId) {
       const dbField = fieldMapping[key];
       if (dbField && updateData[key] !== undefined) {
         updates.push(`${dbField} = ?`);
-        params.push(updateData[key]);
+        // Serialize location to JSON if it's an object
+        const value = (key === 'location' && typeof updateData[key] === 'object')
+          ? JSON.stringify(updateData[key])
+          : updateData[key];
+        params.push(value);
         changeLog[dbField] = {
           from: currentProject[dbField],
-          to: updateData[key]
+          to: value
         };
       }
     });
