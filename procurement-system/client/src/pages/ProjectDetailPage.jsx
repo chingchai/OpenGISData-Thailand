@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { projectsAPI, stepsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import StepEditModal from '../components/StepEditModal';
+import { getBudgetTypeWithYear, getBudgetTypeColor } from '../utils/budgetTypes';
 
 // ImageThumbnail component with error handling
 const ImageThumbnail = ({ imageUrl, altText, onClick }) => {
@@ -209,6 +210,16 @@ const ProjectDetailPage = () => {
               <p className="font-semibold">{project.created_by_name}</p>
             </div>
           </div>
+
+          {/* Budget Type */}
+          {project.budget_type && (
+            <div className="mt-4">
+              <p className="text-sm text-gray-600 mb-2">ประเภทงบประมาณ</p>
+              <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getBudgetTypeColor(project.budget_type)}`}>
+                {getBudgetTypeWithYear(project.budget_type, project.budget_fiscal_year, true)}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Progress Overview */}

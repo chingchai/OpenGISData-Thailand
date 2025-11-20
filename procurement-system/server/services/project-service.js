@@ -48,6 +48,7 @@ export function getAllProjects(filters = {}) {
       departmentId,
       status,
       budgetYear,
+      budgetType,
       procurementMethod,
       page = 1,
       limit = 20
@@ -81,6 +82,11 @@ export function getAllProjects(filters = {}) {
       params.push(status);
     }
 
+    if (budgetType) {
+      sql += ' AND p.budget_type = ?';
+      params.push(budgetType);
+    }
+
     if (procurementMethod) {
       sql += ' AND p.procurement_method = ?';
       params.push(procurementMethod);
@@ -98,7 +104,7 @@ export function getAllProjects(filters = {}) {
     const projects = query(sql, params);
 
     logger.dbOperation('getAllProjects', 'projects', {
-      filters: { departmentId, status, budgetYear, procurementMethod },
+      filters: { departmentId, status, budgetYear, budgetType, procurementMethod },
       resultCount: projects.length,
       page,
       limit
@@ -636,7 +642,17 @@ export function getProjectStatistics(departmentId = null) {
         SUM(CASE WHEN p.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_count,
         SUM(CASE WHEN p.status = 'on_hold' THEN 1 ELSE 0 END) as on_hold_count,
         SUM(p.budget) as total_budget,
-        AVG(p.budget) as average_budget
+        AVG(p.budget) as average_budget,
+        SUM(CASE WHEN p.budget_type = 1 THEN 1 ELSE 0 END) as budget_type_1_count,
+        SUM(CASE WHEN p.budget_type = 2 THEN 1 ELSE 0 END) as budget_type_2_count,
+        SUM(CASE WHEN p.budget_type = 3 THEN 1 ELSE 0 END) as budget_type_3_count,
+        SUM(CASE WHEN p.budget_type = 4 THEN 1 ELSE 0 END) as budget_type_4_count,
+        SUM(CASE WHEN p.budget_type = 5 THEN 1 ELSE 0 END) as budget_type_5_count,
+        SUM(CASE WHEN p.budget_type = 1 THEN p.budget ELSE 0 END) as budget_type_1_total,
+        SUM(CASE WHEN p.budget_type = 2 THEN p.budget ELSE 0 END) as budget_type_2_total,
+        SUM(CASE WHEN p.budget_type = 3 THEN p.budget ELSE 0 END) as budget_type_3_total,
+        SUM(CASE WHEN p.budget_type = 4 THEN p.budget ELSE 0 END) as budget_type_4_total,
+        SUM(CASE WHEN p.budget_type = 5 THEN p.budget ELSE 0 END) as budget_type_5_total
       FROM projects p
       ${whereClause}
     `, params);
