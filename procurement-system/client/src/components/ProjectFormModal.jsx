@@ -8,7 +8,7 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
     departmentId: '',
     procurementMethod: 'specific',
     budgetAmount: '',
-    budgetYear: new Date().getFullYear(),
+    budgetYear: new Date().getFullYear() + 543, // Thai Buddhist year
     budgetType: '',
     budgetFiscalYear: '',
     startDate: new Date().toISOString().split('T')[0]
@@ -19,13 +19,17 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
   useEffect(() => {
     if (project) {
       // Edit mode - populate form
+      // Convert Christian year from DB to Buddhist year for display
+      const dbYear = project.budgetYear || project.budget_year;
+      const displayYear = dbYear ? parseInt(dbYear) + 543 : new Date().getFullYear() + 543;
+
       setFormData({
         name: project.name || '',
         description: project.description || '',
         departmentId: project.departmentId || project.department_id || '',
         procurementMethod: project.procurementMethod || project.procurement_method || 'specific',
         budgetAmount: project.budgetAmount || project.budget || '',
-        budgetYear: project.budgetYear || project.budget_year || new Date().getFullYear(),
+        budgetYear: displayYear,
         budgetType: project.budgetType || project.budget_type || '',
         budgetFiscalYear: project.budgetFiscalYear || project.budget_fiscal_year || '',
         startDate: project.startDate || project.start_date || new Date().toISOString().split('T')[0]
@@ -38,7 +42,7 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         departmentId: '',
         procurementMethod: 'specific',
         budgetAmount: '',
-        budgetYear: new Date().getFullYear(),
+        budgetYear: new Date().getFullYear() + 543, // Thai Buddhist year
         budgetType: '',
         budgetFiscalYear: '',
         startDate: new Date().toISOString().split('T')[0]
@@ -62,6 +66,9 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
     setError('');
 
     try {
+      // Convert Buddhist year to Christian year for API
+      const budgetYearChristian = parseInt(formData.budgetYear) - 543;
+
       // Prepare payload with proper data types
       const payload = {
         name: formData.name.trim(),
@@ -69,7 +76,7 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         departmentId: parseInt(formData.departmentId),
         procurementMethod: formData.procurementMethod,
         budgetAmount: parseFloat(formData.budgetAmount),
-        budgetYear: parseInt(formData.budgetYear),
+        budgetYear: budgetYearChristian,
         budgetType: formData.budgetType ? parseInt(formData.budgetType) : undefined,
         budgetFiscalYear: formData.budgetFiscalYear ? parseInt(formData.budgetFiscalYear) : undefined,
         startDate: formData.startDate
@@ -300,7 +307,7 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                ปีงบประมาณ (ค.ศ.) <span className="text-red-500">*</span>
+                ปีงบประมาณ (พ.ศ.) <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -308,10 +315,10 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
                 value={formData.budgetYear}
                 onChange={handleChange}
                 required
-                min="2020"
-                max="2100"
+                min="2563"
+                max="2643"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="2025"
+                placeholder="2568"
               />
             </div>
           </div>
