@@ -214,6 +214,8 @@ export function createProject(projectData, userId) {
       procurementMethod,
       budgetAmount,
       budgetYear,
+      budgetType,
+      budgetFiscalYear,
       startDate
     } = projectData;
 
@@ -241,9 +243,9 @@ export function createProject(projectData, userId) {
       const projectResult = db.prepare(`
         INSERT INTO projects (
           project_code, name, description, department_id,
-          procurement_method, budget,
+          procurement_method, budget, budget_type, budget_fiscal_year,
           status, start_date, created_by, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
         projectCode,
         name,
@@ -251,6 +253,8 @@ export function createProject(projectData, userId) {
         departmentId,
         procurementMethod,
         budgetAmount,
+        budgetType || null,
+        budgetFiscalYear || null,
         'draft',
         startDate || new Date().toISOString().split('T')[0],
         userId
@@ -344,7 +348,7 @@ export function updateProject(projectId, updateData, userId) {
 
     // Build dynamic update query
     const allowedFields = [
-      'name', 'description', 'budget', 'status',
+      'name', 'description', 'budget', 'budget_type', 'budget_fiscal_year', 'status',
       'actual_start', 'actual_end', 'winner_vendor',
       'contract_number', 'contract_date', 'remarks'
     ];
@@ -354,6 +358,8 @@ export function updateProject(projectId, updateData, userId) {
       name: 'name',
       description: 'description',
       budgetAmount: 'budget',
+      budgetType: 'budget_type',
+      budgetFiscalYear: 'budget_fiscal_year',
       status: 'status',
       actualStartDate: 'actual_start',
       actualEndDate: 'actual_end',

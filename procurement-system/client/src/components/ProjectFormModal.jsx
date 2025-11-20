@@ -9,6 +9,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
     procurementMethod: 'specific',
     budgetAmount: '',
     budgetYear: new Date().getFullYear(),
+    budgetType: '',
+    budgetFiscalYear: '',
     startDate: new Date().toISOString().split('T')[0]
   });
   const [loading, setLoading] = useState(false);
@@ -24,6 +26,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         procurementMethod: project.procurementMethod || project.procurement_method || 'specific',
         budgetAmount: project.budgetAmount || project.budget || '',
         budgetYear: project.budgetYear || project.budget_year || new Date().getFullYear(),
+        budgetType: project.budgetType || project.budget_type || '',
+        budgetFiscalYear: project.budgetFiscalYear || project.budget_fiscal_year || '',
         startDate: project.startDate || project.start_date || new Date().toISOString().split('T')[0]
       });
     } else {
@@ -35,6 +39,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         procurementMethod: 'specific',
         budgetAmount: '',
         budgetYear: new Date().getFullYear(),
+        budgetType: '',
+        budgetFiscalYear: '',
         startDate: new Date().toISOString().split('T')[0]
       });
     }
@@ -64,6 +70,8 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         procurementMethod: formData.procurementMethod,
         budgetAmount: parseFloat(formData.budgetAmount),
         budgetYear: parseInt(formData.budgetYear),
+        budgetType: formData.budgetType ? parseInt(formData.budgetType) : undefined,
+        budgetFiscalYear: formData.budgetFiscalYear ? parseInt(formData.budgetFiscalYear) : undefined,
         startDate: formData.startDate
       };
 
@@ -140,6 +148,96 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
               placeholder="กรอกรายละเอียดโครงการ"
             />
           </div>
+
+          {/* Budget Type */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              ประเภทงบประมาณ
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="1"
+                  checked={formData.budgetType === '1'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">
+                  1. เงินงบประมาณตามเทศบัญญัติ งบประมาณรายจ่าย ประจำปีงบประมาณ พ.ศ.
+                </span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="2"
+                  checked={formData.budgetType === '2'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">2. เงินอุดหนุนเฉพาะกิจ</span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="3"
+                  checked={formData.budgetType === '3'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">3. เงินสะสม</span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="4"
+                  checked={formData.budgetType === '4'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">
+                  4. เงินรายจ่ายค้างจ่าย (เงินกัน) ประจำปีงบประมาณ พ.ศ.
+                </span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="5"
+                  checked={formData.budgetType === '5'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">
+                  5. อื่นๆ (เงินที่มีการยกเว้นระเบียบ) ประจำปีงบประมาณ พ.ศ.
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {/* Budget Fiscal Year - Show only for types 1, 4, 5 */}
+          {(formData.budgetType === '1' || formData.budgetType === '4' || formData.budgetType === '5') && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                ปีงบประมาณ พ.ศ. <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="number"
+                name="budgetFiscalYear"
+                value={formData.budgetFiscalYear}
+                onChange={handleChange}
+                required
+                min="2500"
+                max="2700"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="เช่น 2568"
+              />
+            </div>
+          )}
 
           {/* Department and Budget - Row */}
           <div className="grid grid-cols-2 gap-4">
