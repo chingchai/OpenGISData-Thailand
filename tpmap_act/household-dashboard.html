@@ -403,6 +403,186 @@
             background: var(--ios-gray5);
         }
 
+        /* Selection Balloon Tip */
+        .selection-balloon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            z-index: 999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .selection-balloon.collapsed .balloon-content {
+            display: none;
+        }
+
+        .selection-balloon.collapsed {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .balloon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .balloon-header:hover {
+            background: rgba(0, 122, 255, 0.05);
+        }
+
+        .balloon-header:active {
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .balloon-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 17px;
+            color: #1C1C1E;
+        }
+
+        .balloon-title i {
+            color: var(--ios-blue);
+            font-size: 18px;
+        }
+
+        .selection-count {
+            background: var(--ios-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .balloon-toggle {
+            color: var(--ios-gray);
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .selection-balloon.collapsed .balloon-toggle {
+            transform: rotate(180deg);
+        }
+
+        .balloon-content {
+            padding: 0 20px 20px 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+        }
+
+        .balloon-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .balloon-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .balloon-content::-webkit-scrollbar-thumb {
+            background: var(--ios-gray3);
+            border-radius: 3px;
+        }
+
+        .balloon-content::-webkit-scrollbar-thumb:hover {
+            background: var(--ios-gray2);
+        }
+
+        .balloon-section {
+            margin-bottom: 16px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .balloon-section-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--ios-gray);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .balloon-section-title i {
+            font-size: 14px;
+        }
+
+        .balloon-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .balloon-item {
+            background: white;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #1C1C1E;
+            border: 1px solid var(--ios-gray5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInUp 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .balloon-item i {
+            color: var(--ios-green);
+            font-size: 12px;
+        }
+
+        .balloon-empty {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--ios-gray);
+        }
+
+        .balloon-empty i {
+            font-size: 48px;
+            color: var(--ios-gray4);
+            margin-bottom: 12px;
+        }
+
+        .balloon-empty p {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -424,6 +604,14 @@
 
             button {
                 width: 100%;
+            }
+
+            .selection-balloon {
+                width: calc(100vw - 40px);
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-height: 70vh;
             }
         }
     </style>
@@ -715,6 +903,48 @@
         <i class="fas fa-check-circle"></i> คัดลอกข้อความสำเร็จ!
     </div>
 
+    <!-- Selection Balloon Tip -->
+    <div id="selectionBalloon" class="selection-balloon">
+        <div class="balloon-header" onclick="toggleBalloon()">
+            <div class="balloon-title">
+                <i class="fas fa-list-check"></i>
+                <span>รายการที่เลือก</span>
+                <span class="selection-count" id="selectionCount">0</span>
+            </div>
+            <i class="fas fa-chevron-up balloon-toggle" id="balloonToggle"></i>
+        </div>
+        <div class="balloon-content" id="balloonContent">
+            <div class="balloon-section" id="occupationSection" style="display: none;">
+                <div class="balloon-section-title"><i class="fas fa-briefcase"></i> อาชีพ</div>
+                <div class="balloon-items" id="occupationItems"></div>
+            </div>
+            <div class="balloon-section" id="conditionSection" style="display: none;">
+                <div class="balloon-section-title"><i class="fas fa-tasks"></i> ตัวชี้วัด</div>
+                <div class="balloon-items" id="conditionItems"></div>
+            </div>
+            <div class="balloon-section" id="attitudeSection" style="display: none;">
+                <div class="balloon-section-title"><i class="fas fa-smile"></i> ทัศนคติ</div>
+                <div class="balloon-items" id="attitudeItems"></div>
+            </div>
+            <div class="balloon-section" id="skillSection" style="display: none;">
+                <div class="balloon-section-title"><i class="fas fa-tools"></i> ทักษะ</div>
+                <div class="balloon-items" id="skillItems"></div>
+            </div>
+            <div class="balloon-section" id="resourceSection" style="display: none;">
+                <div class="balloon-section-title"><i class="fas fa-warehouse"></i> ทรัพยากร</div>
+                <div class="balloon-items" id="resourceItems"></div>
+            </div>
+            <div class="balloon-section" id="solutionSection" style="display: none;">
+                <div class="balloon-section-title"><i class="fas fa-lightbulb"></i> ทางออก</div>
+                <div class="balloon-items" id="solutionItems"></div>
+            </div>
+            <div class="balloon-empty" id="balloonEmpty">
+                <i class="fas fa-inbox"></i>
+                <p>ยังไม่มีรายการที่เลือก</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         function generateOutput() {
             // ดึงค่าจากฟอร์ม
@@ -817,6 +1047,8 @@
                 document.getElementById('householdForm').reset();
                 document.getElementById('outputSection').classList.remove('show');
                 document.getElementById('outputContent').textContent = '';
+                // Update balloon after reset
+                updateBalloon();
             }
         }
 
@@ -825,6 +1057,100 @@
             if (e.key === 'Enter' && e.ctrlKey) {
                 generateOutput();
             }
+        });
+
+        // ===== Selection Balloon Functions =====
+
+        // Toggle balloon expand/collapse
+        function toggleBalloon() {
+            const balloon = document.getElementById('selectionBalloon');
+            balloon.classList.toggle('collapsed');
+        }
+
+        // Update balloon content
+        function updateBalloon() {
+            // Get selected occupations
+            const occupations = Array.from(document.querySelectorAll('input[name="occupation"]:checked'))
+                .map(cb => cb.value);
+
+            // Get selected conditions
+            const conditions = Array.from(document.querySelectorAll('input[name="condition"]:checked'))
+                .map(cb => cb.value);
+
+            // Get selected attitudes
+            const attitudes = Array.from(document.getElementById('attitude').selectedOptions)
+                .map(option => option.value);
+
+            // Get selected skills
+            const skills = Array.from(document.getElementById('skill').selectedOptions)
+                .map(option => option.value);
+
+            // Get selected resources
+            const resources = Array.from(document.getElementById('resource').selectedOptions)
+                .map(option => option.value);
+
+            // Get selected solutions
+            const solutions = Array.from(document.getElementById('solution').selectedOptions)
+                .map(option => option.value);
+
+            // Update count
+            const totalCount = occupations.length + conditions.length + attitudes.length +
+                             skills.length + resources.length + solutions.length;
+            document.getElementById('selectionCount').textContent = totalCount;
+
+            // Update sections
+            updateBalloonSection('occupationSection', 'occupationItems', occupations);
+            updateBalloonSection('conditionSection', 'conditionItems', conditions);
+            updateBalloonSection('attitudeSection', 'attitudeItems', attitudes);
+            updateBalloonSection('skillSection', 'skillItems', skills);
+            updateBalloonSection('resourceSection', 'resourceItems', resources);
+            updateBalloonSection('solutionSection', 'solutionItems', solutions);
+
+            // Show/hide empty state
+            const balloonEmpty = document.getElementById('balloonEmpty');
+            if (totalCount === 0) {
+                balloonEmpty.style.display = 'block';
+            } else {
+                balloonEmpty.style.display = 'none';
+            }
+        }
+
+        // Update individual balloon section
+        function updateBalloonSection(sectionId, itemsId, items) {
+            const section = document.getElementById(sectionId);
+            const itemsContainer = document.getElementById(itemsId);
+
+            if (items.length > 0) {
+                section.style.display = 'block';
+                itemsContainer.innerHTML = items.map(item =>
+                    `<div class="balloon-item"><i class="fas fa-check-circle"></i><span>${item}</span></div>`
+                ).join('');
+            } else {
+                section.style.display = 'none';
+                itemsContainer.innerHTML = '';
+            }
+        }
+
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add listeners to occupation checkboxes
+            document.querySelectorAll('input[name="occupation"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateBalloon);
+            });
+
+            // Add listeners to condition checkboxes
+            document.querySelectorAll('input[name="condition"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateBalloon);
+            });
+
+            // Add listeners to select elements
+            document.getElementById('attitude').addEventListener('change', updateBalloon);
+            document.getElementById('skill').addEventListener('change', updateBalloon);
+            document.getElementById('resource').addEventListener('change', updateBalloon);
+            document.getElementById('solution').addEventListener('change', updateBalloon);
+
+            // Initial update
+            updateBalloon();
         });
     </script>
 </body>
