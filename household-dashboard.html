@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดการข้อมูลครัวเรือน</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 1.05em;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select,
+        textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+            background-color: white;
+        }
+
+        select option {
+            padding: 10px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+        }
+
+        .btn-reset {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-reset:hover {
+            background: #e0e0e0;
+        }
+
+        .output-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border: 2px solid #667eea;
+            display: none;
+        }
+
+        .output-section.show {
+            display: block;
+        }
+
+        .output-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .output-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            font-family: 'Sarabun', monospace;
+            line-height: 1.8;
+            font-size: 1.05em;
+            border: 1px solid #e0e0e0;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 30px 0 20px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .multi-select-container {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .multi-select-container label {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            margin: 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .multi-select-container label:hover {
+            background: #f5f5f5;
+        }
+
+        .multi-select-container input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 ระบบจัดการข้อมูลครัวเรือน</h1>
+        <div class="subtitle">กรอกข้อมูลและเลือกรายการเพื่อสร้างข้อความสำหรับ Dashboard</div>
+
+        <form id="householdForm">
+            <!-- ข้อมูลพื้นฐานครัวเรือน -->
+            <div class="section-header">ข้อมูลพื้นฐานครัวเรือน</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="members">มีสมาชิกในครัวเรือน (คน)</label>
+                    <input type="number" id="members" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="elderly">ผู้สูงอายุ (คน)</label>
+                    <input type="number" id="elderly" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="disabled">ผู้พิการ (คน)</label>
+                    <input type="number" id="disabled" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="workers">วัยแรงงาน (คน)</label>
+                    <input type="number" id="workers" min="0" value="0">
+                </div>
+            </div>
+
+            <!-- อาชีพ -->
+            <div class="section-header">อาชีพของสมาชิกในครัวเรือน</div>
+            <div class="form-group">
+                <label>เลือกอาชีพ (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container" id="occupationContainer">
+                    <label><input type="checkbox" name="occupation" value="ทำนา/ทำสวน/ทำไร่/ปลูกพืช"> ทำนา/ทำสวน/ทำไร่/ปลูกพืช</label>
+                    <label><input type="checkbox" name="occupation" value="เลี้ยงสัตว์"> เลี้ยงสัตว์</label>
+                    <label><input type="checkbox" name="occupation" value="รับจ้างทั่วไป"> รับจ้างทั่วไป</label>
+                    <label><input type="checkbox" name="occupation" value="ค้าขาย"> ค้าขาย</label>
+                    <label><input type="checkbox" name="occupation" value="รับราชการ/พนักงานรัฐวิสาหกิจ"> รับราชการ/พนักงานรัฐวิสาหกิจ</label>
+                    <label><input type="checkbox" name="occupation" value="พนักงานบริษัท"> พนักงานบริษัท</label>
+                    <label><input type="checkbox" name="occupation" value="ธุรกิจส่วนตัว"> ธุรกิจส่วนตัว</label>
+                    <label><input type="checkbox" name="occupation" value="รับเหมา"> รับเหมา</label>
+                    <label><input type="checkbox" name="occupation" value="งานฝีมือ/หัตถกรรม"> งานฝีมือ/หัตถกรรม</label>
+                    <label><input type="checkbox" name="occupation" value="ว่างงาน"> ว่างงาน</label>
+                    <label><input type="checkbox" name="occupation" value="อื่นๆ"> อื่นๆ</label>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <label for="occupationOther">ระบุอาชีพอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="occupationOther" placeholder="ระบุอาชีพอื่นๆ">
+            </div>
+
+            <!-- สภาพครัวเรือน -->
+            <div class="section-header">สภาพครัวเรือน</div>
+            <div class="form-group">
+                <label>เลือกสภาพครัวเรือน (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container" id="conditionContainer">
+                    <label><input type="checkbox" name="condition" value="การขาดทรัพย์สินทางครัวเรือน"> การขาดทรัพย์สินทางครัวเรือน</label>
+                    <label><input type="checkbox" name="condition" value="เด็กแรกเกิดที่มีอายุ 0-2,500 กรัมขึ้นไป"> เด็กแรกเกิดที่มีอายุ 0-2,500 กรัมขึ้นไป</label>
+                    <label><input type="checkbox" name="condition" value="เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน"> เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน</label>
+                    <label><input type="checkbox" name="condition" value="เด็กแรกเกิด 12 ปี โดยมีระดับการเพิ่มความสูง"> เด็กแรกเกิด 12 ปี โดยมีระดับการเพิ่มความสูง</label>
+                    <label><input type="checkbox" name="condition" value="เด็ก เด็กวัยเรียนและเยาวชนคาดหวังทางการศึกษา"> เด็ก เด็กวัยเรียนและเยาวชนคาดหวังทางการศึกษา</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่มีงานทำขายตลาดหลักทรัพย์ปลอดภัย/ปศุสัตว์/โลจิสติกธุรกิจ"> ครัวเรือนที่มีงานทำขายตลาดหลักทรัพย์ปลอดภัย/ปศุสัตว์/โลจิสติกธุรกิจ</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่กว่าค่าเฉลี่ยมีป่องกันตนจากค่าใช้จ่ายจากสภาวะ"> ครัวเรือนที่กว่าค่าเฉลี่ยมีป่องกันตนจากค่าใช้จ่ายจากสภาวะ</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่มาจาก/ขาดแคลนต่ำ/สมาชิกเสียชีวิตจากความรุนแรงและอุบัติเหตุ"> ครัวเรือนที่มาจาก/ขาดแคลนต่ำ/สมาชิกเสียชีวิตจากความรุนแรงและอุบัติเหตุ</label>
+                    <label><input type="checkbox" name="condition" value="ตามยุทธ์ศาสตร์ มีชีวิตอยู่ออกกำลังกายและบล"> ตามยุทธ์ศาสตร์ มีชีวิตอยู่ออกกำลังกายและบล</label>
+                    <label><input type="checkbox" name="condition" value="ผู้สูงอายุที่แปงอารุคโรคอุจจาระหญ่า/สมบูรณ์/ภาวะซบเศร้า"> ผู้สูงอายุที่แปงอารุคโรคอุจจาระหญ่า/สมบูรณ์/ภาวะซบเศร้า</label>
+                    <label><input type="checkbox" name="condition" value="ดมโบราณครั้งแรกชั่นกินที่ครัวเรือนเอง/บุหรี่/ยากระตุ้น/สุรา/เหล้าเหนียวถ้วย"> ดมโบราณครั้งแรกชั่นกินที่ครัวเรือนเอง/บุหรี่/ยากระตุ้น/สุรา/เหล้าเหนียวถ้วย</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่จำนำสวัสดิการวิศวกรรมเศรษฐกิจ"> ครัวเรือนที่จำนำสวัสดิการวิศวกรรมเศรษฐกิจ</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่เปลี่ยนเป็นครัวเรือนนิสัยสม่ำเสมอเมื่อเร็วๆ/อลูมิมีอันธ์"> ครัวเรือนที่เปลี่ยนเป็นครัวเรือนนิสัยสม่ำเสมอเมื่อเร็วๆ/อลูมิมีอันธ์</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่ไม่บริษัทท่านกับผลแทนของความหรือนเอง"> ครัวเรือนที่ไม่บริษัทท่านกับผลแทนของความหรือนเอง</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่มีการผลผอ่านผมายและให้บริการผังคนกับผู้หญิงลุกของการนำผลปฐมภูมิ"> ครัวเรือนที่มีการผลผอ่านผมายและให้บริการผังคนกับผู้หญิงลุกของการนำผลปฐมภูมิ</label>
+                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่ไม่ผู้บริหารนทางประเภทการรว่มทดสอบ"> ครัวเรือนที่ไม่ผู้บริหารนทางประเภทการรว่มทดสอบ</label>
+                </div>
+            </div>
+
+            <!-- ทัศนคติ -->
+            <div class="section-header">ทัศนคติ</div>
+            <div class="form-group">
+                <label for="attitude">เลือกทัศนคติ</label>
+                <select id="attitude" multiple size="5" style="height: auto;">
+                    <option value="เชื่อมั่นในตนเอง มีความมั่นใจ">เชื่อมั่นในตนเอง มีความมั่นใจ</option>
+                    <option value="ไม่มั่นใจ ขาดความเชื่อมั่นในตัวเอง">ไม่มั่นใจ ขาดความเชื่อมั่นในตัวเอง</option>
+                    <option value="มองโลกในแง่ดี">มองโลกในแง่ดี</option>
+                    <option value="มองโลกในแง่ร้าย">มองโลกในแง่ร้าย</option>
+                    <option value="มีความคิดสร้างสรรค์">มีความคิดสร้างสรรค์</option>
+                    <option value="ขาดความคิดริเริ่ม">ขาดความคิดริเริ่ม</option>
+                    <option value="มีใจรักในการทำงาน">มีใจรักในการทำงาน</option>
+                    <option value="ท้อแท้ ไม่มีกำลังใจ">ท้อแท้ ไม่มีกำลังใจ</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="attitudeOther">ระบุทัศนคติอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="attitudeOther" placeholder="ระบุทัศนคติอื่นๆ">
+            </div>
+
+            <!-- ทักษะ -->
+            <div class="section-header">ทักษะ</div>
+            <div class="form-group">
+                <label for="skill">เลือกทักษะ</label>
+                <select id="skill" multiple size="5" style="height: auto;">
+                    <option value="ทักษะการทำเกษตร">ทักษะการทำเกษตร</option>
+                    <option value="ทักษะการเลี้ยงสัตว์">ทักษะการเลี้ยงสัตว์</option>
+                    <option value="ทักษะงานฝีมือ/หัตถกรรม">ทักษะงานฝีมือ/หัตถกรรม</option>
+                    <option value="ทักษะการค้าขาย">ทักษะการค้าขาย</option>
+                    <option value="ทักษะการจัดการเงิน">ทักษะการจัดการเงิน</option>
+                    <option value="ทักษะการใช้เทคโนโลยี">ทักษะการใช้เทคโนโลยี</option>
+                    <option value="ทักษะด้านสุขภาพและการดูแลตนเอง">ทักษะด้านสุขภาพและการดูแลตนเอง</option>
+                    <option value="ทักษะการสื่อสารและการทำงานร่วมกับผู้อื่น">ทักษะการสื่อสารและการทำงานร่วมกับผู้อื่น</option>
+                    <option value="ขาดทักษะ/ไม่มีความชำนาญเฉพาะด้าน">ขาดทักษะ/ไม่มีความชำนาญเฉพาะด้าน</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="skillOther">ระบุทักษะอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="skillOther" placeholder="ระบุทักษะอื่นๆ">
+            </div>
+
+            <!-- ทรัพยากร -->
+            <div class="section-header">ทรัพยากร</div>
+            <div class="form-group">
+                <label for="resource">เลือกทรัพยากร</label>
+                <select id="resource" multiple size="5" style="height: auto;">
+                    <option value="มีที่ดินทำกิน">มีที่ดินทำกิน</option>
+                    <option value="ไม่มีที่ดินทำกิน">ไม่มีที่ดินทำกิน</option>
+                    <option value="มีบ้านที่อยู่อาศัยเป็นของตนเอง">มีบ้านที่อยู่อาศัยเป็นของตนเอง</option>
+                    <option value="เช่าบ้าน/อาศัยบ้านผู้อื่น">เช่าบ้าน/อาศัยบ้านผู้อื่น</option>
+                    <option value="มีเครื่องมือทำการเกษตร">มีเครื่องมือทำการเกษตร</option>
+                    <option value="ขาดแคลนเครื่องมือทำการเกษตร">ขาดแคลนเครื่องมือทำการเกษตร</option>
+                    <option value="มีพาหนะ (รถยนต์/รถจักรยานยนต์)">มีพาหนะ (รถยนต์/รถจักรยานยนต์)</option>
+                    <option value="ไม่มีพาหนะ">ไม่มีพาหนะ</option>
+                    <option value="มีแหล่งน้ำใช้ในการเกษตร">มีแหล่งน้ำใช้ในการเกษตร</option>
+                    <option value="ขาดแคลนน้ำเพื่อการเกษตร">ขาดแคลนน้ำเพื่อการเกษตร</option>
+                    <option value="มีทุนในการประกอบอาชีพ">มีทุนในการประกอบอาชีพ</option>
+                    <option value="ขาดแคลนทุนทรัพย์">ขาดแคลนทุนทรัพย์</option>
+                    <option value="มีสัตว์เลี้ยง">มีสัตว์เลี้ยง</option>
+                    <option value="ไม่มีสัตว์เลี้ยง">ไม่มีสัตว์เลี้ยง</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="resourceOther">ระบุทรัพยากรอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="resourceOther" placeholder="ระบุทรัพยากรอื่นๆ">
+            </div>
+
+            <!-- ทางออก/ความต้องการ -->
+            <div class="section-header">ทางออก (ความต้องการ)</div>
+            <div class="form-group">
+                <label for="solution">เลือกทางออก/ความต้องการ</label>
+                <select id="solution" multiple size="5" style="height: auto;">
+                    <option value="ต้องการทุนประกอบอาชีพ">ต้องการทุนประกอบอาชีพ</option>
+                    <option value="ต้องการความรู้และทักษะในการประกอบอาชีพ">ต้องการความรู้และทักษะในการประกอบอาชีพ</option>
+                    <option value="ต้องการตลาดรองรับผลผลิต">ต้องการตลาดรองรับผลผลิต</option>
+                    <option value="ต้องการสวัสดิการจากภาครัฐ">ต้องการสวัสดิการจากภาครัฐ</option>
+                    <option value="ต้องการแหล่งน้ำเพื่อการเกษตร">ต้องการแหล่งน้ำเพื่อการเกษตร</option>
+                    <option value="ต้องการเครื่องมือทำการเกษตร">ต้องการเครื่องมือทำการเกษตร</option>
+                    <option value="ต้องการที่ดินทำกิน">ต้องการที่ดินทำกิน</option>
+                    <option value="ต้องการคำปรึกษาและให้กำลังใจ">ต้องการคำปรึกษาและให้กำลังใจ</option>
+                    <option value="ต้องการการรักษาพยาบาล">ต้องการการรักษาพยาบาล</option>
+                    <option value="ต้องการความช่วยเหลือด้านการศึกษาบุตร">ต้องการความช่วยเหลือด้านการศึกษาบุตร</option>
+                    <option value="ต้องการที่อยู่อาศัยที่มั่นคง">ต้องการที่อยู่อาศัยที่มั่นคง</option>
+                    <option value="ต้องการพัฒนาทักษะด้านเทคโนโลยี">ต้องการพัฒนาทักษะด้านเทคโนโลยี</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="solutionOther">ระบุทางออกอื่นๆ (ถ้ามี)</label>
+                <textarea id="solutionOther" placeholder="ระบุทางออก/ความต้องการอื่นๆ"></textarea>
+            </div>
+
+            <!-- ปุ่มต่างๆ -->
+            <div class="button-group">
+                <button type="button" class="btn-generate" onclick="generateOutput()">📝 สร้างข้อความ</button>
+                <button type="button" class="btn-copy" onclick="copyToClipboard()">📋 คัดลอกข้อความ</button>
+                <button type="button" class="btn-reset" onclick="resetForm()">🔄 ล้างข้อมูล</button>
+            </div>
+        </form>
+
+        <!-- แสดงผลลัพธ์ -->
+        <div id="outputSection" class="output-section">
+            <div class="output-title">
+                <span>✅ ผลลัพธ์</span>
+            </div>
+            <div id="outputContent" class="output-content"></div>
+        </div>
+    </div>
+
+    <!-- ข้อความแจ้งเตือน -->
+    <div id="successMessage" class="success-message">
+        ✅ คัดลอกข้อความสำเร็จ!
+    </div>
+
+    <script>
+        function generateOutput() {
+            // ดึงค่าจากฟอร์ม
+            const members = document.getElementById('members').value || '........';
+            const elderly = document.getElementById('elderly').value || '........';
+            const disabled = document.getElementById('disabled').value || '........';
+            const workers = document.getElementById('workers').value || '........';
+
+            // รวมอาชีพที่เลือก
+            const occupations = Array.from(document.querySelectorAll('input[name="occupation"]:checked'))
+                .map(cb => cb.value);
+            const occupationOther = document.getElementById('occupationOther').value;
+            if (occupationOther) {
+                occupations.push(occupationOther);
+            }
+            const occupationText = occupations.length > 0 ? occupations.join(', ') : '................................';
+
+            // รวมสภาพครัวเรือนที่เลือก
+            const conditions = Array.from(document.querySelectorAll('input[name="condition"]:checked'))
+                .map(cb => cb.value);
+            const conditionText = conditions.length > 0 ? conditions.join(', ') : '.........................................................................';
+
+            // ทัศนคติ
+            const attitudes = Array.from(document.getElementById('attitude').selectedOptions)
+                .map(option => option.value);
+            const attitudeOther = document.getElementById('attitudeOther').value;
+            if (attitudeOther) {
+                attitudes.push(attitudeOther);
+            }
+            const attitudeText = attitudes.length > 0 ? attitudes.join(', ') : '...............................................';
+
+            // ทักษะ
+            const skills = Array.from(document.getElementById('skill').selectedOptions)
+                .map(option => option.value);
+            const skillOther = document.getElementById('skillOther').value;
+            if (skillOther) {
+                skills.push(skillOther);
+            }
+            const skillText = skills.length > 0 ? skills.join(', ') : '..................................................';
+
+            // ทรัพยากร
+            const resources = Array.from(document.getElementById('resource').selectedOptions)
+                .map(option => option.value);
+            const resourceOther = document.getElementById('resourceOther').value;
+            if (resourceOther) {
+                resources.push(resourceOther);
+            }
+            const resourceText = resources.length > 0 ? resources.join(', ') : '..........................................';
+
+            // ทางออก
+            const solutions = Array.from(document.getElementById('solution').selectedOptions)
+                .map(option => option.value);
+            const solutionOther = document.getElementById('solutionOther').value;
+            if (solutionOther) {
+                solutions.push(solutionOther);
+            }
+            const solutionText = solutions.length > 0 ? solutions.join(', ') : '............................................';
+
+            // สร้างข้อความผลลัพธ์
+            const output = `มีสมาชิกในครัวเรือน ${members} คน
+ผู้สูงอายุ ${elderly} คน ผู้พิการ ${disabled} คน
+วัยแรงงาน ${workers} คน อาชีพ(ของสมาชิกในครัวเรือน) ${occupationText}
+สภาพครัวเรือน ${conditionText}
+ทัศนคติ ${attitudeText}
+ทักษะ ${skillText}
+ทรัพยากร ${resourceText}
+ทางออก(ความต้องการ) ${solutionText}`;
+
+            // แสดงผลลัพธ์
+            document.getElementById('outputContent').textContent = output;
+            document.getElementById('outputSection').classList.add('show');
+
+            // เลื่อนลงไปที่ผลลัพธ์
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyToClipboard() {
+            const outputContent = document.getElementById('outputContent').textContent;
+
+            if (!outputContent || outputContent.trim() === '') {
+                alert('⚠️ กรุณาสร้างข้อความก่อนคัดลอก');
+                return;
+            }
+
+            navigator.clipboard.writeText(outputContent).then(() => {
+                // แสดงข้อความแจ้งเตือน
+                const successMsg = document.getElementById('successMessage');
+                successMsg.style.display = 'block';
+
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 2000);
+            }).catch(err => {
+                alert('❌ เกิดข้อผิดพลาดในการคัดลอก: ' + err);
+            });
+        }
+
+        function resetForm() {
+            if (confirm('🔄 ต้องการล้างข้อมูลทั้งหมดหรือไม่?')) {
+                document.getElementById('householdForm').reset();
+                document.getElementById('outputSection').classList.remove('show');
+                document.getElementById('outputContent').textContent = '';
+            }
+        }
+
+        // เพิ่ม Enter เพื่อสร้างข้อความ
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                generateOutput();
+            }
+        });
+    </script>
+</body>
+</html>
