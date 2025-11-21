@@ -38,67 +38,54 @@ start household-dashboard.html  # Windows
 open indicators-selector.html
 ```
 
-### 2. Deploy บน Production Server (Ubuntu + Nginx)
+### 2. Deploy บน Production Server เป็น Subdirectory (แนะนำ)
 
-#### วิธีที่ 1: ใช้ Deploy Script (แนะนำ - ง่ายที่สุด)
+**ระบบนี้ออกแบบให้ทำงานเป็น subdirectory ของเว็บไซต์หลัก** ไม่ใช่ standalone site
+
+**URL ที่ได้:**
+- `https://your-domain.com/tpmap/household-dashboard.html`
+- `https://your-domain.com/tpmap/indicators-selector.html`
+
+#### Quick Start (5 ขั้นตอน)
 
 ```bash
-# คัดลอกโฟลเดอร์ไปยังเซิร์ฟเวอร์
+# 1. คัดลอกไฟล์
 scp -r tpmap_act user@your-server:/tmp/
 
-# SSH เข้าเซิร์ฟเวอร์
-ssh user@your-server
-
-# รัน deploy script
-cd /tmp/tpmap_act
-sudo ./deploy.sh
-```
-
-Script จะดำเนินการ:
-- ติดตั้ง Nginx
-- คัดลอกไฟล์
-- ตั้งค่า Nginx configuration
-- ตั้งค่า Firewall
-- ติดตั้ง SSL (ถ้าต้องการ)
-
-#### วิธีที่ 2: Manual Installation
-
-ดูคู่มือแบบละเอียดใน [`DEPLOYMENT.md`](./DEPLOYMENT.md)
-
-**ขั้นตอนย่อ:**
-
-```bash
-# 1. ติดตั้ง Nginx
-sudo apt update && sudo apt install nginx -y
-
-# 2. คัดลอกไฟล์
+# 2. ย้ายไฟล์
 sudo mkdir -p /var/www/tpmap-household-dashboard
-sudo cp -r tpmap_act /var/www/tpmap-household-dashboard/
+sudo mv /tmp/tpmap_act /var/www/tpmap-household-dashboard/
 
 # 3. ตั้งค่าสิทธิ์
 sudo chown -R www-data:www-data /var/www/tpmap-household-dashboard
 sudo chmod -R 755 /var/www/tpmap-household-dashboard
 
-# 4. ตั้งค่า Nginx
-sudo cp tpmap_act/nginx.conf /etc/nginx/sites-available/tpmap-household-dashboard
-# แก้ไขโดเมนในไฟล์
-sudo nano /etc/nginx/sites-available/tpmap-household-dashboard
-
-sudo ln -s /etc/nginx/sites-available/tpmap-household-dashboard \
-    /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-
-# 5. ตั้งค่า Firewall
-sudo ufw allow 'Nginx Full'
-sudo ufw enable
-
-# 6. ติดตั้ง SSL (ถ้าต้องการ)
-sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d your-domain.com
+# 4. แก้ไข nginx config ของระบบหลัก
+sudo nano /etc/nginx/sites-available/your-main-site
 ```
 
-### 3. Deploy ด้วย Docker (ทางเลือก)
+**เพิ่มโค้ดนี้ใน server block:**
+
+```nginx
+location /tpmap/ {
+    alias /var/www/tpmap-household-dashboard/tpmap_act/;
+    index household-dashboard.html indicators-selector.html;
+    try_files $uri $uri/ =404;
+}
+```
+
+```bash
+# 5. Reload nginx
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+**เอกสารเพิ่มเติม:**
+- [`QUICK-START-SUBDIRECTORY.md`](./QUICK-START-SUBDIRECTORY.md) - Quick start แบบละเอียด
+- [`DEPLOYMENT.md`](./DEPLOYMENT.md) - คู่มือติดตั้งแบบสมบูรณ์
+- [`nginx-subdirectory-example.conf`](./nginx-subdirectory-example.conf) - ตัวอย่าง config
+
+### 3. Deploy ด้วย Docker (ทางเลือก - Standalone)
 
 สร้างไฟล์ `Dockerfile`:
 

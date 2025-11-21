@@ -1,128 +1,153 @@
 # คู่มือการติดตั้งระบบบน Production Server (Ubuntu + Nginx)
 
+## ภาพรวม
+
+เว็บนี้ออกแบบให้ทำงานเป็น **subdirectory** ของระบบหลักที่มีอยู่แล้ว ไม่ใช่ standalone site
+
+**URL ตัวอย่าง:**
+- `https://your-domain.com/tpmap/household-dashboard.html`
+- `https://your-domain.com/tpmap/indicators-selector.html`
+
 ## ข้อกำหนดเบื้องต้น
 
 - Ubuntu Server 20.04 LTS หรือใหม่กว่า
-- Nginx
+- **Nginx ติดตั้งและทำงานอยู่แล้ว** (ระบบหลักรันอยู่)
 - สิทธิ์ root หรือ sudo
-- (Optional) Domain name สำหรับใช้ HTTPS
+- ระบบหลักมี nginx config อยู่แล้วใน `/etc/nginx/sites-available/`
 
 ## ขั้นตอนการติดตั้ง
 
-### 1. อัปเดตระบบและติดตั้ง Nginx
+### 1. ตรวจสอบ Nginx ที่มีอยู่
 
 ```bash
-# อัปเดตแพ็กเกจ
-sudo apt update && sudo apt upgrade -y
-
-# ติดตั้ง Nginx
-sudo apt install nginx -y
-
-# เริ่มและเปิดใช้งาน Nginx
-sudo systemctl start nginx
-sudo systemctl enable nginx
-
-# ตรวจสอบสถานะ
+# ตรวจสอบว่า Nginx ทำงานอยู่
 sudo systemctl status nginx
+
+# ดูไฟล์ config ของระบบหลัก
+ls -la /etc/nginx/sites-available/
+ls -la /etc/nginx/sites-enabled/
+
+# ตรวจสอบ config ปัจจุบัน
+sudo nginx -t
 ```
 
-### 2. สร้างไดเรกทอรีสำหรับแอปพลิเคชัน
+### 2. สร้างไดเรกทอรีและคัดลอกไฟล์
 
 ```bash
-# สร้างไดเรกทอรีหลัก
+# สร้างไดเรกทอรีสำหรับ TPMAP
 sudo mkdir -p /var/www/tpmap-household-dashboard
 
-# คัดลอกไฟล์โปรเจกต์ไปยังเซิร์ฟเวอร์
 # วิธีที่ 1: ใช้ Git (แนะนำ)
 cd /var/www/tpmap-household-dashboard
 sudo git clone https://github.com/bogarb12/OpenGISData-Thailand.git .
 
-# วิธีที่ 2: ใช้ SCP/SFTP
-# scp -r /path/to/local/tpmap_act user@server:/var/www/tpmap-household-dashboard/
+# วิธีที่ 2: ใช้ SCP/SFTP จากเครื่อง local
+# scp -r tpmap_act user@your-server:/tmp/
+# sudo mv /tmp/tpmap_act /var/www/tpmap-household-dashboard/
 
 # ตั้งค่าสิทธิ์
 sudo chown -R www-data:www-data /var/www/tpmap-household-dashboard
 sudo chmod -R 755 /var/www/tpmap-household-dashboard
 ```
 
-### 3. ตั้งค่า Nginx
+### 3. เพิ่ม Location Block ใน Nginx Config ของระบบหลัก
+
+**สำคัญ:** ไม่ต้องสร้างไฟล์ config ใหม่ แต่เพิ่ม location block เข้าไปในไฟล์ที่มีอยู่
 
 ```bash
-# คัดลอกไฟล์คอนฟิก
-sudo cp /var/www/tpmap-household-dashboard/tpmap_act/nginx.conf \
-    /etc/nginx/sites-available/tpmap-household-dashboard
+# หาไฟล์ config ของระบบหลัก
+# ตัวอย่าง: /etc/nginx/sites-available/your-main-site
+# หรือ: /etc/nginx/sites-available/default
 
-# แก้ไขคอนฟิกให้เหมาะกับโดเมนของคุณ
-sudo nano /etc/nginx/sites-available/tpmap-household-dashboard
-# เปลี่ยน "your-domain.com" เป็นโดเมนจริงของคุณ
+# ดูรายชื่อไฟล์ config
+ls -la /etc/nginx/sites-available/
 
-# สร้าง symbolic link ไปยัง sites-enabled
-sudo ln -s /etc/nginx/sites-available/tpmap-household-dashboard \
-    /etc/nginx/sites-enabled/
+# เปิดไฟล์ config ของระบบหลัก (แทน 'your-main-site' ด้วยชื่อจริง)
+sudo nano /etc/nginx/sites-available/your-main-site
+```
 
-# ลบคอนฟิกเริ่มต้น (ถ้ามี)
-sudo rm /etc/nginx/sites-enabled/default
+**เพิ่ม location block นี้เข้าไปใน `server { }` block:**
 
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+    root /var/www/your-main-site;
+
+    # ระบบหลักที่มีอยู่แล้ว
+    location / {
+        # main site configuration
+    }
+
+    # เพิ่ม location block สำหรับ TPMAP
+    location /tpmap/ {
+        alias /var/www/tpmap-household-dashboard/tpmap_act/;
+        index household-dashboard.html indicators-selector.html;
+        try_files $uri $uri/ =404;
+
+        # Security headers
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+    }
+}
+```
+
+**บันทึกและทดสอบ:**
+
+```bash
 # ทดสอบคอนฟิก
 sudo nginx -t
 
-# Reload Nginx
+# ถ้า OK ให้ reload nginx
 sudo systemctl reload nginx
+
+# ตรวจสอบ error log ถ้ามีปัญหา
+sudo tail -f /var/log/nginx/error.log
 ```
 
-### 4. ตั้งค่า Firewall (UFW)
+### 4. ทดสอบการทำงาน
 
 ```bash
-# เปิดใช้งาน UFW
-sudo ufw enable
+# ทดสอบการเข้าถึงด้วย curl
+curl -I http://your-domain.com/tpmap/household-dashboard.html
+curl -I http://your-domain.com/tpmap/indicators-selector.html
 
-# อนุญาตการเข้าถึง HTTP และ HTTPS
-sudo ufw allow 'Nginx Full'
+# ตรวจสอบ nginx access log
+sudo tail -f /var/log/nginx/access.log
 
-# หรือระบุพอร์ตเอง
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-
-# อนุญาต SSH (สำคัญ!)
-sudo ufw allow OpenSSH
-
-# ตรวจสอบสถานะ
-sudo ufw status
+# ตรวจสอบ nginx error log
+sudo tail -f /var/log/nginx/error.log
 ```
 
-### 5. ติดตั้ง SSL Certificate ด้วย Let's Encrypt (แนะนำ)
+**เปิดเว็บเบราว์เซอร์และทดสอบ:**
+- `http://your-domain.com/tpmap/household-dashboard.html`
+- `http://your-domain.com/tpmap/indicators-selector.html`
+- `https://your-domain.com/tpmap/household-dashboard.html` (ถ้ามี SSL)
 
-```bash
-# ติดตั้ง Certbot
-sudo apt install certbot python3-certbot-nginx -y
+### 5. (ทางเลือก) ตั้งค่า Custom Subdirectory Path
 
-# ขอ SSL Certificate (แทน your-domain.com ด้วยโดเมนจริง)
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
+หากต้องการใช้ path อื่นแทน `/tpmap/` เช่น `/household/` หรือ `/dashboard/`:
 
-# ตอบคำถามตามที่ Certbot ถาม:
-# - Email address สำหรับการแจ้งเตือน
-# - ยอมรับเงื่อนไขการใช้งาน
-# - เลือก redirect HTTP to HTTPS (แนะนำ: Yes)
+```nginx
+# แทนที่ /tpmap/ ด้วย path ที่ต้องการ
+location /household/ {
+    alias /var/www/tpmap-household-dashboard/tpmap_act/;
+    index household-dashboard.html indicators-selector.html;
+    try_files $uri $uri/ =404;
+}
 
-# ทดสอบการต่ออายุอัตโนมัติ
-sudo certbot renew --dry-run
+# หรือ
+location /dashboard/tpmap/ {
+    alias /var/www/tpmap-household-dashboard/tpmap_act/;
+    index household-dashboard.html indicators-selector.html;
+    try_files $uri $uri/ =404;
+}
 ```
 
-### 6. ตรวจสอบการทำงาน
-
-```bash
-# ตรวจสอบ logs
-sudo tail -f /var/log/nginx/tpmap-household-dashboard-access.log
-sudo tail -f /var/log/nginx/tpmap-household-dashboard-error.log
-
-# ทดสอบการเข้าถึง
-curl http://your-domain.com
-curl https://your-domain.com
-```
-
-เปิดเว็บเบราว์เซอร์และเข้าถึง:
-- `http://your-domain.com/household-dashboard.html`
-- `http://your-domain.com/indicators-selector.html`
+**URL ที่ได้:**
+- `https://your-domain.com/household/household-dashboard.html`
+- `https://your-domain.com/dashboard/tpmap/household-dashboard.html`
 
 ---
 
