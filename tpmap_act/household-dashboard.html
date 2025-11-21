@@ -667,114 +667,231 @@
             </div>
 
             <!-- สภาพครัวเรือนตามตัวชี้วัด -->
-            <div class="section-header"><i class="fas fa-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม)</div>
+            <div class="section-header"><i class="fas fa-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม) - ทั้งหมด 38 ตัวชี้วัด</div>
 
+            <!-- ด้านสุขภาพ (12 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fas fa-heartbeat"></i> <strong>ด้านสุขภาพ</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fas fa-heartbeat"></i> <strong>ด้านสุขภาพ</strong> - 12 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
-                        <input type="checkbox" name="condition" value="1. [H01] เด็กแรกเกิดที่มีน้ำหนักต่ำกว่า 2,500 กรัม">
-                        <span><strong>1. [H01]</strong> เด็กแรกเกิดที่มีน้ำหนักต่ำกว่า 2,500 กรัม</span>
+                        <input type="checkbox" name="condition" value="1. [H01] การฝากครรภ์อย่างมีคุณภาพ">
+                        <span><strong>1. [H01]</strong> การฝากครรภ์อย่างมีคุณภาพ</span>
                         <span class="category-badge badge-health">สุขภาพ</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="2. [H02] เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน">
-                        <span><strong>2. [H02]</strong> เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน</span>
+                        <input type="checkbox" name="condition" value="2. [H02] เด็กแรกเกิดมีน้ำหนัก 2,500 กรัมขึ้นไป">
+                        <span><strong>2. [H02]</strong> เด็กแรกเกิดมีน้ำหนัก 2,500 กรัมขึ้นไป</span>
                         <span class="category-badge badge-health">สุขภาพ</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="3. [H03] เด็กอายุ 0-12 ปี มีภาวะเตี้ย (สูงไม่เหมาะสมตามเกณฑ์)">
-                        <span><strong>3. [H03]</strong> เด็กอายุ 0-12 ปี มีภาวะเตี้ย (สูงไม่เหมาะสมตามเกณฑ์)</span>
+                        <input type="checkbox" name="condition" value="3. [H03] เด็กแรกเกิดได้กินนมแม่อย่างเดียวอย่างน้อย 6 เดือน">
+                        <span><strong>3. [H03]</strong> เด็กแรกเกิดได้กินนมแม่อย่างเดียวอย่างน้อย 6 เดือน</span>
                         <span class="category-badge badge-health">สุขภาพ</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="4. [H04] ผู้สูงอายุมีภาวะพึ่งพิง/ติดเตียง/ภาวะซึมเศร้า">
-                        <span><strong>4. [H04]</strong> ผู้สูงอายุมีภาวะพึ่งพิง/ติดเตียง/ภาวะซึมเศร้า</span>
+                        <input type="checkbox" name="condition" value="4. [H04] เด็กแรกเกิดถึง 12 ปี ได้รับวัคซีนครบตามตาราง">
+                        <span><strong>4. [H04]</strong> เด็กแรกเกิดถึง 12 ปี ได้รับวัคซีนครบตามตาราง</span>
                         <span class="category-badge badge-health">สุขภาพ</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="5. [H05] สมาชิกในครัวเรือนไม่ออกกำลังกายอย่างสม่ำเสมอ">
-                        <span><strong>5. [H05]</strong> สมาชิกในครัวเรือนไม่ออกกำลังกายอย่างสม่ำเสมอ</span>
+                        <input type="checkbox" name="condition" value="5. [H05] เด็กได้รับการดูแลและมีพัฒนาการเหมาะสม">
+                        <span><strong>5. [H05]</strong> เด็กได้รับการดูแลและมีพัฒนาการเหมาะสม</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="6. [H06] ครัวเรือนกินอาหารถูกสุขลักษณะ ปลอดภัย ได้มาตรฐาน">
+                        <span><strong>6. [H06]</strong> ครัวเรือนกินอาหารถูกสุขลักษณะ ปลอดภัย ได้มาตรฐาน</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="7. [H07] ครัวเรือนมีความรู้และป้องกันตนเองจากปัจจัยเสี่ยงสุขภาวะ">
+                        <span><strong>7. [H07]</strong> ครัวเรือนมีความรู้และป้องกันตนเองจากปัจจัยเสี่ยงสุขภาวะ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="8. [H08] ครัวเรือนสามารถดูแลตนเอง/สมาชิกเมื่อเจ็บป่วยเบื้องต้น">
+                        <span><strong>8. [H08]</strong> ครัวเรือนสามารถดูแลตนเอง/สมาชิกเมื่อเจ็บป่วยเบื้องต้น</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="9. [H09] คนอายุ 6 ปีขึ้นไป ออกกำลังกายสม่ำเสมอ">
+                        <span><strong>9. [H09]</strong> คนอายุ 6 ปีขึ้นไป ออกกำลังกายสม่ำเสมอ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="10. [H10] ผู้ป่วยติดเตียงได้รับการดูแลจากครอบครัว/ชุมชน/ภาครัฐ">
+                        <span><strong>10. [H10]</strong> ผู้ป่วยติดเตียงได้รับการดูแลจากครอบครัว/ชุมชน/ภาครัฐ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="11. [H11] คนในครัวเรือนมีประกันสุขภาพ/สิทธิรักษาพยาบาล และทราบสถานที่ใช้สิทธิ">
+                        <span><strong>11. [H11]</strong> คนในครัวเรือนมีประกันสุขภาพ/สิทธิรักษาพยาบาล และทราบสถานที่ใช้สิทธิ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="12. [H12] คนอายุ 35 ปีขึ้นไป ได้รับการตรวจสุขภาพประจำปี">
+                        <span><strong>12. [H12]</strong> คนอายุ 35 ปีขึ้นไป ได้รับการตรวจสุขภาพประจำปี</span>
                         <span class="category-badge badge-health">สุขภาพ</span>
                     </label>
                 </div>
             </div>
 
+            <!-- ด้านที่อยู่อาศัยและสิ่งแวดล้อม (9 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fas fa-coins"></i> <strong>ด้านเศรษฐกิจ</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fas fa-home"></i> <strong>ด้านที่อยู่อาศัยและสิ่งแวดล้อม</strong> - 9 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
-                        <input type="checkbox" name="condition" value="6. [E01] การขาดทรัพย์สินที่จำเป็นในครัวเรือน">
-                        <span><strong>6. [E01]</strong> การขาดทรัพย์สินที่จำเป็นในครัวเรือน</span>
-                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                        <input type="checkbox" name="condition" value="13. [HE01] ครัวเรือนมีความมั่นคงในที่อยู่อาศัย บ้านมีสภาพคงทนถาวร และอยู่ในสภาพแวดล้อมที่เหมาะสม">
+                        <span><strong>13. [HE01]</strong> ครัวเรือนมีความมั่นคงในที่อยู่อาศัย บ้านมีสภาพคงทนถาวร</span>
+                        <span class="category-badge badge-economy">ที่อยู่อาศัย</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="7. [E02] ครัวเรือนมีรายได้ต่ำกว่าเกณฑ์ความยากจน">
-                        <span><strong>7. [E02]</strong> ครัวเรือนมีรายได้ต่ำกว่าเกณฑ์ความยากจน</span>
-                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                        <input type="checkbox" name="condition" value="14. [HE02] ครัวเรือนมีการจัดบ้านเรือนและได้รับบริการจัดเก็บขยะมูลฝอยที่ถูกสุขลักษณะ">
+                        <span><strong>14. [HE02]</strong> ครัวเรือนมีการจัดบ้านเรือนและได้รับบริการจัดเก็บขยะมูลฝอยที่ถูกสุขลักษณะ</span>
+                        <span class="category-badge badge-economy">สิ่งแวดล้อม</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="8. [E03] ครัวเรือนไม่สามารถป้องกันตนเองจากค่าใช้จ่ายฉุกเฉิน">
-                        <span><strong>8. [E03]</strong> ครัวเรือนไม่สามารถป้องกันตนเองจากค่าใช้จ่ายฉุกเฉิน</span>
-                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                        <input type="checkbox" name="condition" value="15. [HE03] ครัวเรือนไม่ถูกรบกวนจากมลพิษ">
+                        <span><strong>15. [HE03]</strong> ครัวเรือนไม่ถูกรบกวนจากมลพิษ</span>
+                        <span class="category-badge badge-economy">สิ่งแวดล้อม</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="9. [E04] ครัวเรือนมีหนี้สินเกินความสามารถในการชำระ">
-                        <span><strong>9. [E04]</strong> ครัวเรือนมีหนี้สินเกินความสามารถในการชำระ</span>
-                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                        <input type="checkbox" name="condition" value="16. [HE04] ครัวเรือนมีการป้องกันอุบัติภัยอย่างถูกวิธี และมีการเตรียมความพร้อมรับมือกับภัยพิบัติ">
+                        <span><strong>16. [HE04]</strong> ครัวเรือนมีการป้องกันอุบัติภัยอย่างถูกวิธี และเตรียมความพร้อมรับมือภัยพิบัติ</span>
+                        <span class="category-badge badge-economy">ความปลอดภัย</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="17. [HE05] ครัวเรือนมีความปลอดภัยในชีวิตและทรัพย์สิน">
+                        <span><strong>17. [HE05]</strong> ครัวเรือนมีความปลอดภัยในชีวิตและทรัพย์สิน</span>
+                        <span class="category-badge badge-economy">ความปลอดภัย</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="18. [HE06] ครัวเรือนมีน้ำสำหรับบริโภคและอุปโภคเพียงพอตลอดปี">
+                        <span><strong>18. [HE06]</strong> ครัวเรือนมีน้ำสำหรับบริโภคและอุปโภคเพียงพอตลอดปี</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="19. [HE07] ครัวเรือนเข้าถึงไฟฟ้าและใช้บริการไฟฟ้า">
+                        <span><strong>19. [HE07]</strong> ครัวเรือนเข้าถึงไฟฟ้าและใช้บริการไฟฟ้า</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="20. [HE08] ครัวเรือนเข้าถึงและใช้บริการโทรศัพท์เคลื่อนที่และอินเทอร์เน็ต">
+                        <span><strong>20. [HE08]</strong> ครัวเรือนเข้าถึงและใช้บริการโทรศัพท์เคลื่อนที่และอินเทอร์เน็ต</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="21. [HE09] ครัวเรือนเข้าถึงบริการขนส่งสาธารณะ">
+                        <span><strong>21. [HE09]</strong> ครัวเรือนเข้าถึงบริการขนส่งสาธารณะ</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
                     </label>
                 </div>
             </div>
 
+            <!-- ด้านการศึกษาและการเรียนรู้ (5 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fas fa-graduation-cap"></i> <strong>ด้านการศึกษา</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fas fa-graduation-cap"></i> <strong>ด้านการศึกษาและการเรียนรู้</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
-                        <input type="checkbox" name="condition" value="10. [ED01] เด็กวัยเรียนขาดเรียนหรือมีความเสี่ยงที่จะออกกลางคัน">
-                        <span><strong>10. [ED01]</strong> เด็กวัยเรียนขาดเรียนหรือมีความเสี่ยงที่จะออกกลางคัน</span>
+                        <input type="checkbox" name="condition" value="22. [ED01] เด็กอายุต่ำกว่า 6 ปี มีพัฒนาการด้านสุขภาพ การเรียนรู้ และพัฒนาการทางบุคลิกภาพตามวัย">
+                        <span><strong>22. [ED01]</strong> เด็กอายุต่ำกว่า 6 ปี มีพัฒนาการด้านสุขภาพ การเรียนรู้ และพัฒนาการทางบุคลิกภาพตามวัย</span>
                         <span class="category-badge badge-social">การศึกษา</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="11. [ED02] เยาวชนไม่มีโอกาสเข้าถึงการศึกษาที่เหมาะสม">
-                        <span><strong>11. [ED02]</strong> เยาวชนไม่มีโอกาสเข้าถึงการศึกษาที่เหมาะสม</span>
+                        <input type="checkbox" name="condition" value="23. [ED02] เด็กอายุ 6–15 ปี ได้รับการศึกษาภาคบังคับ 9 ปี">
+                        <span><strong>23. [ED02]</strong> เด็กอายุ 6–15 ปี ได้รับการศึกษาภาคบังคับ 9 ปี</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="24. [ED03] เด็กจบชั้น ม.3 ได้เรียนต่อชั้น ม.4 หรือเทียบเท่า">
+                        <span><strong>24. [ED03]</strong> เด็กจบชั้น ม.3 ได้เรียนต่อชั้น ม.4 หรือเทียบเท่า</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="25. [ED04] คนอายุ 15–59 ปี อ่าน เขียนภาษาไทย ภาษาอังกฤษ หรือภาษาที่สาม และคิดเลขอย่างง่ายได้">
+                        <span><strong>25. [ED04]</strong> คนอายุ 15–59 ปี อ่าน เขียนภาษาไทย ภาษาอังกฤษ และคิดเลขอย่างง่ายได้</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="26. [ED05] เด็ก เยาวชน/ผู้ใหญ่ มีทักษะการเรียนรู้ที่จำเป็นในศตวรรษที่ 21">
+                        <span><strong>26. [ED05]</strong> เด็ก เยาวชน/ผู้ใหญ่ มีทักษะการเรียนรู้ที่จำเป็นในศตวรรษที่ 21</span>
                         <span class="category-badge badge-social">การศึกษา</span>
                     </label>
                 </div>
             </div>
 
+            <!-- ด้านเศรษฐกิจและอาชีพ (4 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fas fa-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fas fa-coins"></i> <strong>ด้านเศรษฐกิจและอาชีพ</strong> - 4 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
-                        <input type="checkbox" name="condition" value="12. [W01] ครัวเรือนไม่สามารถเข้าถึงสวัสดิการสังคม">
-                        <span><strong>12. [W01]</strong> ครัวเรือนไม่สามารถเข้าถึงสวัสดิการสังคม</span>
+                        <input type="checkbox" name="condition" value="27. [EC01] คนอายุ 15–59 ปี มีอาชีพและรายได้">
+                        <span><strong>27. [EC01]</strong> คนอายุ 15–59 ปี มีอาชีพและรายได้</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="28. [EC02] คนอายุ 60 ปีขึ้นไป มีอาชีพและรายได้">
+                        <span><strong>28. [EC02]</strong> คนอายุ 60 ปีขึ้นไป มีอาชีพและรายได้</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="29. [EC03] รายได้เฉลี่ยของคนในครัวเรือนต่อปี">
+                        <span><strong>29. [EC03]</strong> รายได้เฉลี่ยของคนในครัวเรือนต่อปี</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="30. [EC04] ครัวเรือนมีการเก็บออมเงิน">
+                        <span><strong>30. [EC04]</strong> ครัวเรือนมีการเก็บออมเงิน</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ด้านสวัสดิการสังคม (5 ตัวชี้วัด) -->
+            <div class="form-group">
+                <label><i class="fas fa-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="31. [W01] เด็กแรกเกิด–6 ปี ที่ครัวเรือนมีรายได้เฉลี่ยไม่เกิน 100,000 บาท/คน/ปี ได้รับเงินอุดหนุนจากภาครัฐ">
+                        <span><strong>31. [W01]</strong> เด็กแรกเกิด–6 ปี ที่ครัวเรือนมีรายได้ไม่เกิน 100,000 บาท/คน/ปี ได้รับเงินอุดหนุน</span>
                         <span class="category-badge badge-welfare">สวัสดิการ</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="13. [W02] ครัวเรือนไม่ได้รับความช่วยเหลือจากหน่วยงานที่เกี่ยวข้อง">
-                        <span><strong>13. [W02]</strong> ครัวเรือนไม่ได้รับความช่วยเหลือจากหน่วยงานที่เกี่ยวข้อง</span>
+                        <input type="checkbox" name="condition" value="32. [W02] ครัวเรือนที่มีรายได้ไม่เกิน 100,000 บาท/ปี และมีคุณสมบัติครบตามเกณฑ์บัตรสวัสดิการแห่งรัฐ">
+                        <span><strong>32. [W02]</strong> ครัวเรือนที่มีรายได้ไม่เกิน 100,000 บาท/ปี ได้รับเงินสวัสดิการแห่งรัฐ</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="33. [W03] ครัวเรือนได้รับการคุ้มครองตามระบบและมาตรการคุ้มครองทางสังคมจากภาครัฐ และ/หรือชุมชน ภาคเอกชน">
+                        <span><strong>33. [W03]</strong> ครัวเรือนได้รับการคุ้มครองตามระบบและมาตรการคุ้มครองทางสังคม</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="34. [W04] ผู้สูงอายุได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน">
+                        <span><strong>34. [W04]</strong> ผู้สูงอายุได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="35. [W05] ผู้พิการได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน">
+                        <span><strong>35. [W05]</strong> ผู้พิการได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน</span>
                         <span class="category-badge badge-welfare">สวัสดิการ</span>
                     </label>
                 </div>
             </div>
 
+            <!-- ด้านครอบครัวและชุมชน (2 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fas fa-users"></i> <strong>ด้านพฤติกรรมและสังคม</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fas fa-users"></i> <strong>ด้านครอบครัวและชุมชน</strong> - 2 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
-                        <input type="checkbox" name="condition" value="14. [S01] สมาชิกในครัวเรือนมีพฤติกรรมเสี่ยง (สูบบุหรี่/ดื่มสุรา/ยาเสพติด)">
-                        <span><strong>14. [S01]</strong> สมาชิกในครัวเรือนมีพฤติกรรมเสี่ยง (สูบบุหรี่/ดื่มสุรา/ยาเสพติด)</span>
-                        <span class="category-badge badge-social">พฤติกรรม</span>
+                        <input type="checkbox" name="condition" value="36. [FC01] ครอบครัวมีความอบอุ่น">
+                        <span><strong>36. [FC01]</strong> ครอบครัวมีความอบอุ่น</span>
+                        <span class="category-badge badge-social">ครอบครัว</span>
                     </label>
                     <label>
-                        <input type="checkbox" name="condition" value="15. [S02] สมาชิกในครัวเรือนประสบเหตุความรุนแรงหรืออุบัติเหตุ">
-                        <span><strong>15. [S02]</strong> สมาชิกในครัวเรือนประสบเหตุความรุนแรงหรืออุบัติเหตุ</span>
-                        <span class="category-badge badge-social">ความปลอดภัย</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" name="condition" value="16. [S03] ครัวเรือนมีปัญหาความขัดแย้งภายในครอบครัว">
-                        <span><strong>16. [S03]</strong> ครัวเรือนมีปัญหาความขัดแย้งภายในครอบครัว</span>
-                        <span class="category-badge badge-social">สังคม</span>
+                        <input type="checkbox" name="condition" value="38. [FC02] ครัวเรือนมีส่วนร่วมทำกิจกรรมสาธารณะเพื่อประโยชน์ของชุมชนหรือท้องถิ่น">
+                        <span><strong>38. [FC02]</strong> ครัวเรือนมีส่วนร่วมทำกิจกรรมสาธารณะเพื่อประโยชน์ของชุมชน</span>
+                        <span class="category-badge badge-social">ชุมชน</span>
                     </label>
                 </div>
             </div>
