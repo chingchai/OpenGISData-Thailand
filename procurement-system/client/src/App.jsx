@@ -8,6 +8,7 @@ import CredentialsPage from './pages/CredentialsPage';
 import DashboardPage from './pages/DashboardPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
+import ProjectMapDashboard from './pages/ProjectMapDashboard';
 import OverduePage from './pages/OverduePage';
 import AdminProjectsPage from './pages/AdminProjectsPage';
 import UsersPage from './pages/UsersPage';
@@ -62,6 +63,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProjectDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/map"
+            element={
+              <ProtectedRoute>
+                <ProjectMapDashboard />
               </ProtectedRoute>
             }
           />

@@ -233,7 +233,7 @@ export function updateStep(stepId, updateData, userId) {
     const allowedFields = [
       'step_name', 'description', 'planned_start', 'planned_end',
       'actual_start', 'actual_end', 'sla_days', 'is_critical',
-      'notes', 'image_urls'
+      'notes', 'image_urls', 'document_urls'
     ];
 
     // Map camelCase to snake_case
@@ -247,7 +247,8 @@ export function updateStep(stepId, updateData, userId) {
       slaDays: 'sla_days',
       isCritical: 'is_critical',
       notes: 'notes',
-      imageUrls: 'image_urls'
+      imageUrls: 'image_urls',
+      documentUrls: 'document_urls'
     };
 
     const updates = [];
@@ -259,8 +260,8 @@ export function updateStep(stepId, updateData, userId) {
       if (allowedFields.includes(dbField) && updateData[key] !== undefined) {
         let value = updateData[key];
 
-        // Stringify array fields (like image_urls)
-        if (dbField === 'image_urls' && Array.isArray(value)) {
+        // Stringify array fields (like image_urls, document_urls)
+        if ((dbField === 'image_urls' || dbField === 'document_urls') && Array.isArray(value)) {
           value = JSON.stringify(value);
         }
 

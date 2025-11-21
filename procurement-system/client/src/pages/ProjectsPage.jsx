@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { projectsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import CreateProjectModal from '../components/CreateProjectModal';
+import { getBudgetTypeName, getBudgetTypeColor, getBudgetTypeOptions } from '../utils/budgetTypes';
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
@@ -11,6 +12,7 @@ const ProjectsPage = () => {
   const [filters, setFilters] = useState({
     status: '',
     departmentId: '',
+    budgetType: '',
     procurementMethod: ''
   });
 
@@ -24,6 +26,7 @@ const ProjectsPage = () => {
       const params = {};
       if (filters.status) params.status = filters.status;
       if (filters.departmentId) params.departmentId = filters.departmentId;
+      if (filters.budgetType) params.budgetType = filters.budgetType;
       if (filters.procurementMethod) params.procurementMethod = filters.procurementMethod;
 
       const response = await projectsAPI.getAll(params);
@@ -93,7 +96,7 @@ const ProjectsPage = () => {
 
         {/* Filters */}
         <div className="bg-white rounded-lg shadow p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 สถานะ
@@ -108,6 +111,22 @@ const ProjectsPage = () => {
                 <option value="in_progress">ดำเนินการ</option>
                 <option value="completed">เสร็จสิ้น</option>
                 <option value="delayed">ล่าช้า</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                ประเภทงบประมาณ
+              </label>
+              <select
+                value={filters.budgetType}
+                onChange={(e) => setFilters({ ...filters, budgetType: e.target.value })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">ทั้งหมด</option>
+                {getBudgetTypeOptions().map(type => (
+                  <option key={type.id} value={type.id}>{type.shortName}</option>
+                ))}
               </select>
             </div>
 
@@ -129,7 +148,7 @@ const ProjectsPage = () => {
 
             <div className="flex items-end">
               <button
-                onClick={() => setFilters({ status: '', departmentId: '', procurementMethod: '' })}
+                onClick={() => setFilters({ status: '', departmentId: '', budgetType: '', procurementMethod: '' })}
                 className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition-colors"
               >
                 ล้างตัวกรอง
@@ -170,8 +189,15 @@ const ProjectsPage = () => {
                         <p>รหัสโครงการ: {project.project_code}</p>
                         <p>หน่วยงาน: {project.department_name}</p>
                         <p>วิธีจัดซื้อ: {getMethodText(project.procurement_method)}</p>
+                        {project.budget_type && (
+                          <div className="mt-2">
+                            <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getBudgetTypeColor(project.budget_type)}`}>
+                              {getBudgetTypeName(project.budget_type, true)}
+                            </span>
+                          </div>
+                        )}
                         {project.description && (
-                          <p className="text-gray-500">{project.description}</p>
+                          <p className="text-gray-500 mt-2">{project.description}</p>
                         )}
                       </div>
 

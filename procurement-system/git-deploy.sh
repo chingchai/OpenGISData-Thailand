@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-BRANCH_NAME="claude/resolve-push-conflict-0196J5uMPwk5vDtQm3CLA5kJ"
+BRANCH_NAME="claude/opengisdata-thailand-setup-01HZXbbUHkwi6iwLWuYHfazb"
 
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}🚀 Git Pull + Deploy${NC}"

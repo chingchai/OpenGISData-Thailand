@@ -76,8 +76,9 @@ export const authenticate = async (req, res, next) => {
 
 /**
  * Middleware to check if user has specific role
+ * @param {Array|string} roles - Array of roles or single role string
  */
-export const requireRole = (...roles) => {
+export const requireRole = (roles) => {
   return (req, res, next) => {
     if (!req.user) {
       return res.status(401).json({
@@ -86,11 +87,14 @@ export const requireRole = (...roles) => {
       });
     }
 
-    if (!roles.includes(req.user.role)) {
+    // Convert single role to array for consistency
+    const roleArray = Array.isArray(roles) ? roles : [roles];
+
+    if (!roleArray.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
         error: 'Insufficient permissions',
-        requiredRole: roles
+        requiredRole: roleArray
       });
     }
 
@@ -101,12 +105,12 @@ export const requireRole = (...roles) => {
 /**
  * Middleware to check if user is admin
  */
-export const requireAdmin = requireRole('admin');
+export const requireAdmin = requireRole(['admin']);
 
 /**
  * Middleware to check if user is admin or executive
  */
-export const requireAdminOrExecutive = requireRole('admin', 'executive');
+export const requireAdminOrExecutive = requireRole(['admin', 'executive']);
 
 /**
  * Middleware to check if user can access specific department

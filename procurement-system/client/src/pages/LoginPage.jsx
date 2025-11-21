@@ -52,7 +52,7 @@ const LoginPage = () => {
             <i className="fas fa-building text-white text-3xl"></i>
           </div>
           <h1 className="text-4xl font-semibold text-gray-900 dark:text-white mb-2">
-            ระบบจัดซื้อจัดจ้าง
+            ระบบกำกับติดตามความก้าวหน้าโครงการ
           </h1>
           <p className="text-gray-600 dark:text-gray-400">เทศบาลตำบลหัวทะเล</p>
         </div>

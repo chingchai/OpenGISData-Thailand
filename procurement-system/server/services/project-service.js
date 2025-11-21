@@ -48,6 +48,7 @@ export function getAllProjects(filters = {}) {
       departmentId,
       status,
       budgetYear,
+      budgetType,
       procurementMethod,
       page = 1,
       limit = 20
@@ -81,6 +82,11 @@ export function getAllProjects(filters = {}) {
       params.push(status);
     }
 
+    if (budgetType) {
+      sql += ' AND p.budget_type = ?';
+      params.push(budgetType);
+    }
+
     if (procurementMethod) {
       sql += ' AND p.procurement_method = ?';
       params.push(procurementMethod);
@@ -98,7 +104,7 @@ export function getAllProjects(filters = {}) {
     const projects = query(sql, params);
 
     logger.dbOperation('getAllProjects', 'projects', {
-      filters: { departmentId, status, budgetYear, procurementMethod },
+      filters: { departmentId, status, budgetYear, budgetType, procurementMethod },
       resultCount: projects.length,
       page,
       limit
@@ -214,7 +220,10 @@ export function createProject(projectData, userId) {
       procurementMethod,
       budgetAmount,
       budgetYear,
-      startDate
+      budgetType,
+      budgetFiscalYear,
+      startDate,
+      location
     } = projectData;
 
     // Validate procurement method
@@ -241,9 +250,9 @@ export function createProject(projectData, userId) {
       const projectResult = db.prepare(`
         INSERT INTO projects (
           project_code, name, description, department_id,
-          procurement_method, budget,
-          status, start_date, created_by, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+          procurement_method, budget, budget_type, budget_fiscal_year,
+          status, start_date, location, created_by, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
       `).run(
         projectCode,
         name,
@@ -251,8 +260,11 @@ export function createProject(projectData, userId) {
         departmentId,
         procurementMethod,
         budgetAmount,
+        budgetType || null,
+        budgetFiscalYear || null,
         'draft',
         startDate || new Date().toISOString().split('T')[0],
+        location ? JSON.stringify(location) : null,
         userId
       );
 
@@ -344,9 +356,9 @@ export function updateProject(projectId, updateData, userId) {
 
     // Build dynamic update query
     const allowedFields = [
-      'name', 'description', 'budget', 'status',
+      'name', 'description', 'budget', 'budget_type', 'budget_fiscal_year', 'status',
       'actual_start', 'actual_end', 'winner_vendor',
-      'contract_number', 'contract_date', 'remarks'
+      'contract_number', 'contract_date', 'remarks', 'location'
     ];
 
     // Map camelCase to snake_case
@@ -354,13 +366,16 @@ export function updateProject(projectId, updateData, userId) {
       name: 'name',
       description: 'description',
       budgetAmount: 'budget',
+      budgetType: 'budget_type',
+      budgetFiscalYear: 'budget_fiscal_year',
       status: 'status',
       actualStartDate: 'actual_start',
       actualEndDate: 'actual_end',
       winnerVendor: 'winner_vendor',
       contractNumber: 'contract_number',
       contractDate: 'contract_date',
-      remarks: 'remarks'
+      remarks: 'remarks',
+      location: 'location'
     };
 
     const updates = [];
@@ -371,10 +386,14 @@ export function updateProject(projectId, updateData, userId) {
       const dbField = fieldMapping[key];
       if (dbField && updateData[key] !== undefined) {
         updates.push(`${dbField} = ?`);
-        params.push(updateData[key]);
+        // Serialize location to JSON if it's an object
+        const value = (key === 'location' && typeof updateData[key] === 'object')
+          ? JSON.stringify(updateData[key])
+          : updateData[key];
+        params.push(value);
         changeLog[dbField] = {
           from: currentProject[dbField],
-          to: updateData[key]
+          to: value
         };
       }
     });
@@ -630,7 +649,17 @@ export function getProjectStatistics(departmentId = null) {
         SUM(CASE WHEN p.status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_count,
         SUM(CASE WHEN p.status = 'on_hold' THEN 1 ELSE 0 END) as on_hold_count,
         SUM(p.budget) as total_budget,
-        AVG(p.budget) as average_budget
+        AVG(p.budget) as average_budget,
+        SUM(CASE WHEN p.budget_type = 1 THEN 1 ELSE 0 END) as budget_type_1_count,
+        SUM(CASE WHEN p.budget_type = 2 THEN 1 ELSE 0 END) as budget_type_2_count,
+        SUM(CASE WHEN p.budget_type = 3 THEN 1 ELSE 0 END) as budget_type_3_count,
+        SUM(CASE WHEN p.budget_type = 4 THEN 1 ELSE 0 END) as budget_type_4_count,
+        SUM(CASE WHEN p.budget_type = 5 THEN 1 ELSE 0 END) as budget_type_5_count,
+        SUM(CASE WHEN p.budget_type = 1 THEN p.budget ELSE 0 END) as budget_type_1_total,
+        SUM(CASE WHEN p.budget_type = 2 THEN p.budget ELSE 0 END) as budget_type_2_total,
+        SUM(CASE WHEN p.budget_type = 3 THEN p.budget ELSE 0 END) as budget_type_3_total,
+        SUM(CASE WHEN p.budget_type = 4 THEN p.budget ELSE 0 END) as budget_type_4_total,
+        SUM(CASE WHEN p.budget_type = 5 THEN p.budget ELSE 0 END) as budget_type_5_total
       FROM projects p
       ${whereClause}
     `, params);

@@ -2,6 +2,76 @@ import React, { useState, useEffect } from 'react';
 import { stepsAPI, uploadAPI } from '../services/api';
 import FileThumbnail from './FileThumbnail';
 
+// ImagePreview component with error handling
+const ImagePreview = ({ src, alt, onRemove, isNew = false }) => {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const handleImageError = () => {
+    console.error('Failed to load image:', src);
+    setImageError(true);
+    setImageLoading(false);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  if (imageError) {
+    return (
+      <div className="relative group">
+        <div className={`w-full h-24 bg-gray-200 rounded border ${isNew ? 'border-blue-300' : 'border-gray-300'} flex items-center justify-center`}>
+          <div className="text-center text-gray-500 px-1">
+            <svg className="w-8 h-8 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p className="text-xs">ไม่สามารถโหลด</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+          title={isNew ? "ยกเลิกรูปภาพ" : "ลบรูปภาพ"}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative group">
+      {imageLoading && (
+        <div className={`absolute inset-0 bg-gray-100 rounded border ${isNew ? 'border-blue-300' : 'border-gray-300'} flex items-center justify-center`}>
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        onError={handleImageError}
+        onLoad={handleImageLoad}
+        className={`w-full h-24 object-cover rounded border ${isNew ? 'border-blue-300' : 'border-gray-300'} bg-gray-100 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+        style={{ minHeight: '6rem' }}
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+        title={isNew ? "ยกเลิกรูปภาพ" : "ลบรูปภาพ"}
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  );
+};
+
 const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
   const [formData, setFormData] = useState({
     stepName: '',
@@ -16,6 +86,8 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
+  const [selectedDocuments, setSelectedDocuments] = useState([]);
+  const [existingDocuments, setExistingDocuments] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -42,7 +114,16 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
         setExistingImages([]);
       }
 
+      // Load existing documents
+      try {
+        const docs = step.document_urls ? JSON.parse(step.document_urls) : [];
+        setExistingDocuments(Array.isArray(docs) ? docs : []);
+      } catch (e) {
+        setExistingDocuments([]);
+      }
+
       setSelectedFiles([]);
+      setSelectedDocuments([]);
       setError('');
     }
   }, [step, isOpen]);
@@ -110,6 +191,43 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
     setExistingImages(prev => prev.filter((_, i) => i !== index));
   };
 
+  const handleDocumentSelect = (e) => {
+    const files = Array.from(e.target.files);
+
+    // Validate file types by extension (more reliable than MIME type)
+    const validExtensions = /\.(pdf|doc|docx|xls|xlsx|txt|zip)$/i;
+    const invalidFiles = files.filter(file => !validExtensions.test(file.name));
+
+    if (invalidFiles.length > 0) {
+      setError('กรุณาเลือกเฉพาะไฟล์เอกสาร (.pdf, .doc, .docx, .xls, .xlsx, .txt, .zip)');
+      return;
+    }
+
+    // Validate file sizes (10MB each)
+    const oversizedFiles = files.filter(file => file.size > 10 * 1024 * 1024);
+    if (oversizedFiles.length > 0) {
+      setError('ขนาดไฟล์เอกสารต้องไม่เกิน 10MB');
+      return;
+    }
+
+    // Check total limit (10 documents max)
+    if (existingDocuments.length + selectedDocuments.length + files.length > 10) {
+      setError('สามารถอัพโหลดเอกสารได้สูงสุด 10 ไฟล์');
+      return;
+    }
+
+    setSelectedDocuments(prev => [...prev, ...files]);
+    setError('');
+  };
+
+  const handleRemoveSelectedDocument = (index) => {
+    setSelectedDocuments(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveExistingDocument = (index) => {
+    setExistingDocuments(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -135,8 +253,29 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
         }
       }
 
+      // Upload new documents if any
+      let newDocumentData = [];
+      if (selectedDocuments.length > 0) {
+        setUploading(true);
+        try {
+          const uploadResponse = await uploadAPI.uploadDocuments(selectedDocuments);
+          newDocumentData = uploadResponse.data?.data?.documentUrls || [];
+        } catch (uploadErr) {
+          console.error('Error uploading documents:', uploadErr);
+          setError('เกิดข้อผิดพลาดในการอัพโหลดเอกสาร');
+          setLoading(false);
+          setUploading(false);
+          return;
+        } finally {
+          setUploading(false);
+        }
+      }
+
       // Combine existing and new images
       const allImageUrls = [...existingImages, ...newImageUrls];
+
+      // Combine existing and new documents
+      const allDocuments = [...existingDocuments, ...newDocumentData];
 
       // Prepare payload
       const payload = {
@@ -149,7 +288,8 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
         slaDays: formData.slaDays ? parseInt(formData.slaDays) : undefined,
         status: formData.status,
         notes: formData.notes?.trim() || undefined,
-        imageUrls: allImageUrls.length > 0 ? allImageUrls : undefined
+        imageUrls: allImageUrls.length > 0 ? allImageUrls : undefined,
+        documentUrls: allDocuments.length > 0 ? allDocuments : undefined
       };
 
       // Remove undefined values
@@ -361,8 +501,8 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
               </div>
             )}
 
-            {/* Selected Files Preview */}
-            {selectedFiles.length > 0 && (
+            {/* Selected Documents Preview */}
+            {selectedDocuments.length > 0 && (
               <div className="mb-3">
                 <p className="text-xs text-gray-600 mb-2">ไฟล์ที่เลือกใหม่:</p>
                 <div className="grid grid-cols-3 gap-2">
@@ -384,9 +524,9 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
               type="file"
               accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,image/jpeg,image/jpg,image/png,image/gif,image/webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               multiple
-              onChange={handleFileSelect}
+              onChange={handleDocumentSelect}
               disabled={loading || uploading}
-              className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50"
+              className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 disabled:opacity-50"
             />
             <p className="mt-1 text-xs text-gray-500">
               รองรับไฟล์: รูปภาพ (JPG, PNG, GIF, WEBP), เอกสาร (PDF, DOC, DOCX, XLS, XLSX)

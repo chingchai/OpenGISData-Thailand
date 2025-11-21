@@ -37,9 +37,8 @@ export const login = async (req, res) => {
       });
     }
 
-    // For MVP, we'll check if password matches (in production, use bcrypt)
-    // Temporary: Accept 'password123' for all users
-    const isValidPassword = password === 'password123'; // TODO: Use bcrypt in production
+    // Verify password using bcrypt
+    const isValidPassword = await comparePassword(password, user.password);
 
     if (!isValidPassword) {
       return res.status(401).json({

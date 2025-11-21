@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { projectsAPI } from '../services/api';
+import MapPicker from './MapPicker';
 
 const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departments = [] }) => {
+  // Default location - Hua Talay Municipality Office, Nakhon Ratchasima
+  const DEFAULT_LOCATION = {
+    type: 'Point',
+    coordinates: [102.0983, 14.9753] // [longitude, latitude]
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     departmentId: '',
     procurementMethod: 'specific',
     budgetAmount: '',
-    budgetYear: new Date().getFullYear(),
-    startDate: new Date().toISOString().split('T')[0]
+    budgetYear: new Date().getFullYear() + 543, // Thai Buddhist year
+    budgetType: '',
+    budgetFiscalYear: '',
+    startDate: new Date().toISOString().split('T')[0],
+    location: DEFAULT_LOCATION
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -17,14 +27,34 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
   useEffect(() => {
     if (project) {
       // Edit mode - populate form
+      // Convert Christian year from DB to Buddhist year for display
+      const dbYear = project.budgetYear || project.budget_year;
+      const displayYear = dbYear ? parseInt(dbYear) + 543 : new Date().getFullYear() + 543;
+
+      // Parse location if it's a string
+      let projectLocation = DEFAULT_LOCATION;
+      if (project.location) {
+        try {
+          projectLocation = typeof project.location === 'string'
+            ? JSON.parse(project.location)
+            : project.location;
+        } catch (e) {
+          console.error('Error parsing location:', e);
+          projectLocation = DEFAULT_LOCATION;
+        }
+      }
+
       setFormData({
         name: project.name || '',
         description: project.description || '',
         departmentId: project.departmentId || project.department_id || '',
         procurementMethod: project.procurementMethod || project.procurement_method || 'specific',
         budgetAmount: project.budgetAmount || project.budget || '',
-        budgetYear: project.budgetYear || project.budget_year || new Date().getFullYear(),
-        startDate: project.startDate || project.start_date || new Date().toISOString().split('T')[0]
+        budgetYear: displayYear,
+        budgetType: project.budgetType || project.budget_type || '',
+        budgetFiscalYear: project.budgetFiscalYear || project.budget_fiscal_year || '',
+        startDate: project.startDate || project.start_date || new Date().toISOString().split('T')[0],
+        location: projectLocation
       });
     } else {
       // Create mode - reset form
@@ -34,8 +64,11 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         departmentId: '',
         procurementMethod: 'specific',
         budgetAmount: '',
-        budgetYear: new Date().getFullYear(),
-        startDate: new Date().toISOString().split('T')[0]
+        budgetYear: new Date().getFullYear() + 543, // Thai Buddhist year
+        budgetType: '',
+        budgetFiscalYear: '',
+        startDate: new Date().toISOString().split('T')[0],
+        location: DEFAULT_LOCATION
       });
     }
     setError('');
@@ -50,12 +83,19 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
     setError('');
   };
 
+  const handleLocationChange = (location) => {
+    setFormData(prev => ({ ...prev, location }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
+      // Convert Buddhist year to Christian year for API
+      const budgetYearChristian = parseInt(formData.budgetYear) - 543;
+
       // Prepare payload with proper data types
       const payload = {
         name: formData.name.trim(),
@@ -63,8 +103,11 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
         departmentId: parseInt(formData.departmentId),
         procurementMethod: formData.procurementMethod,
         budgetAmount: parseFloat(formData.budgetAmount),
-        budgetYear: parseInt(formData.budgetYear),
-        startDate: formData.startDate
+        budgetYear: budgetYearChristian,
+        budgetType: formData.budgetType ? parseInt(formData.budgetType) : undefined,
+        budgetFiscalYear: formData.budgetFiscalYear ? parseInt(formData.budgetFiscalYear) : undefined,
+        startDate: formData.startDate,
+        location: formData.location
       };
 
       if (project) {
@@ -141,6 +184,96 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
             />
           </div>
 
+          {/* Budget Type */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              ประเภทงบประมาณ
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="1"
+                  checked={formData.budgetType === '1'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">
+                  1. เงินงบประมาณตามเทศบัญญัติ งบประมาณรายจ่าย ประจำปีงบประมาณ พ.ศ.
+                </span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="2"
+                  checked={formData.budgetType === '2'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">2. เงินอุดหนุนเฉพาะกิจ</span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="3"
+                  checked={formData.budgetType === '3'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">3. เงินสะสม</span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="4"
+                  checked={formData.budgetType === '4'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">
+                  4. เงินรายจ่ายค้างจ่าย (เงินกัน) ประจำปีงบประมาณ พ.ศ.
+                </span>
+              </label>
+              <label className="flex items-start">
+                <input
+                  type="radio"
+                  name="budgetType"
+                  value="5"
+                  checked={formData.budgetType === '5'}
+                  onChange={handleChange}
+                  className="mt-1 mr-2"
+                />
+                <span className="text-sm text-gray-700">
+                  5. อื่นๆ (เงินที่มีการยกเว้นระเบียบ) ประจำปีงบประมาณ พ.ศ.
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {/* Budget Fiscal Year - Show only for types 1, 4, 5 */}
+          {(formData.budgetType === '1' || formData.budgetType === '4' || formData.budgetType === '5') && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                ปีงบประมาณ พ.ศ. <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="number"
+                name="budgetFiscalYear"
+                value={formData.budgetFiscalYear}
+                onChange={handleChange}
+                required
+                min="2500"
+                max="2700"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="เช่น 2568"
+              />
+            </div>
+          )}
+
           {/* Department and Budget - Row */}
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -202,7 +335,7 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                ปีงบประมาณ (ค.ศ.) <span className="text-red-500">*</span>
+                ปีงบประมาณ (พ.ศ.) <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -210,10 +343,10 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
                 value={formData.budgetYear}
                 onChange={handleChange}
                 required
-                min="2020"
-                max="2100"
+                min="2563"
+                max="2643"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="2025"
+                placeholder="2568"
               />
             </div>
           </div>
@@ -230,6 +363,22 @@ const ProjectFormModal = ({ isOpen, onClose, onSuccess, project = null, departme
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+
+          {/* Location Picker */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              ตำแหน่งที่ดำเนินโครงการ
+            </label>
+            <p className="text-xs text-gray-500 mb-2">
+              คลิกบนแผนที่เพื่อเลือกตำแหน่ง (ค่าเริ่มต้น: สำนักงานเทศบาลตำบลหัวทะเล จ.นครราชสีมา)
+            </p>
+            <MapPicker
+              location={formData.location}
+              onChange={handleLocationChange}
+              height={300}
+              disabled={loading}
             />
           </div>
 

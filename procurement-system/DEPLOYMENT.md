@@ -48,10 +48,10 @@ cd /root/OpenGISData-Thailand/procurement-system
 git fetch origin
 
 # Checkout branch
-git checkout claude/resolve-push-conflict-0196J5uMPwk5vDtQm3CLA5kJ
+git checkout claude/opengisdata-thailand-setup-01HZXbbUHkwi6iwLWuYHfazb
 
 # Pull latest
-git pull origin claude/resolve-push-conflict-0196J5uMPwk5vDtQm3CLA5kJ
+git pull origin claude/opengisdata-thailand-setup-01HZXbbUHkwi6iwLWuYHfazb
 
 # ตรวจสอบสถานะ
 git status
@@ -83,8 +83,8 @@ Script จะทำงานตามลำดับ:
 # 1. Pull โค้ดล่าสุด
 cd /root/OpenGISData-Thailand/procurement-system
 git fetch origin
-git checkout claude/resolve-push-conflict-0196J5uMPwk5vDtQm3CLA5kJ
-git pull origin claude/resolve-push-conflict-0196J5uMPwk5vDtQm3CLA5kJ
+git checkout claude/opengisdata-thailand-setup-01HZXbbUHkwi6iwLWuYHfazb
+git pull origin claude/opengisdata-thailand-setup-01HZXbbUHkwi6iwLWuYHfazb
 
 # 2. Install backend dependencies
 cd server
@@ -240,7 +240,7 @@ lsof -i :3000
 ## 📝 Git Branches
 
 - **Main Branch:** `master`
-- **Development Branch:** `claude/procurement-system-functions-011CUyMA2PaywR21JfUuNsAK`
+- **Current Branch:** `claude/opengisdata-thailand-setup-01HZXbbUHkwi6iwLWuYHfazb`
 
 ---
 
