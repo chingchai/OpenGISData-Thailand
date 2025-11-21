@@ -1,0 +1,127 @@
+##
+# ตัวอย่าง Nginx Configuration สำหรับ OpenGISData-Thailand
+# คัดลอกไฟล์นี้ไปที่: /etc/nginx/sites-available/opengisdata
+##
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    # เปลี่ยนเป็น domain ของคุณ
+    server_name opengisdata.example.com;
+
+    # ตำแหน่งของไฟล์
+    root /var/www/opengisdata/OpenGISData-Thailand;
+    index index.html index.htm;
+
+    # Logging
+    access_log /var/log/nginx/opengisdata_access.log;
+    error_log /var/log/nginx/opengisdata_error.log;
+
+    # Character set
+    charset utf-8;
+
+    # Main location
+    location / {
+        try_files $uri $uri/ =404;
+
+        # Enable directory listing (ถ้าต้องการ)
+        # autoindex on;
+        # autoindex_exact_size off;
+        # autoindex_localtime on;
+    }
+
+    # GeoJSON files - CORS enabled
+    location ~* \.geojson$ {
+        # CORS headers
+        add_header Access-Control-Allow-Origin * always;
+        add_header Access-Control-Allow-Methods 'GET, HEAD, OPTIONS' always;
+        add_header Access-Control-Allow-Headers 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range' always;
+
+        # Handle preflight requests
+        if ($request_method = 'OPTIONS') {
+            add_header Access-Control-Allow-Origin * always;
+            add_header Access-Control-Allow-Methods 'GET, HEAD, OPTIONS' always;
+            add_header Access-Control-Max-Age 1728000;
+            add_header Content-Type 'text/plain; charset=utf-8';
+            add_header Content-Length 0;
+            return 204;
+        }
+
+        # Cache settings
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+
+        # Content type
+        types {
+            application/geo+json geojson;
+        }
+    }
+
+    # Compression
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types
+        application/json
+        application/geo+json
+        application/javascript
+        text/plain
+        text/css
+        text/xml
+        application/xml;
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Deny access to git files
+    location ~ /\.git {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+}
+
+##
+# HTTPS Configuration (เมื่อใช้ SSL/TLS)
+# ใช้ certbot เพื่อติดตั้ง Let's Encrypt certificate
+# คำสั่ง: sudo certbot --nginx -d opengisdata.example.com
+##
+
+# server {
+#     listen 443 ssl http2;
+#     listen [::]:443 ssl http2;
+#
+#     server_name opengisdata.example.com;
+#
+#     # SSL certificates (certbot จะเพิ่มให้อัตโนมัติ)
+#     # ssl_certificate /etc/letsencrypt/live/opengisdata.example.com/fullchain.pem;
+#     # ssl_certificate_key /etc/letsencrypt/live/opengisdata.example.com/privkey.pem;
+#
+#     # SSL configuration
+#     ssl_protocols TLSv1.2 TLSv1.3;
+#     ssl_prefer_server_ciphers on;
+#     ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+#     ssl_session_cache shared:SSL:10m;
+#     ssl_session_timeout 10m;
+#
+#     # ... rest of the configuration same as above
+# }
+
+# Redirect HTTP to HTTPS
+# server {
+#     listen 80;
+#     listen [::]:80;
+#     server_name opengisdata.example.com;
+#     return 301 https://$server_name$request_uri;
+# }
