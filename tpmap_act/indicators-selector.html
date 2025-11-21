@@ -484,7 +484,7 @@
             <div class="stats-bar">
                 <div class="stat-badge total">
                     <i class="fas fa-list"></i>
-                    <span>ทั้งหมด: <strong id="totalCount">16</strong> ตัวชี้วัด</span>
+                    <span>ทั้งหมด: <strong id="totalCount">38</strong> ตัวชี้วัด</span>
                 </div>
                 <div class="stat-badge selected">
                     <i class="fas fa-check-circle"></i>
@@ -501,9 +501,9 @@
                 </div>
                 <div class="category-title">
                     <h2 class="health">ด้านสุขภาพ (Health)</h2>
-                    <span class="category-subtitle">สุขภาพแม่และเด็ก, ผู้สูงอายุ, และพฤติกรรมสุขภาพ</span>
+                    <span class="category-subtitle">สุขภาพแม่และเด็ก, การดูแลสุขภาพ, และพฤติกรรมสุขภาพ</span>
                 </div>
-                <div class="category-count">5 ตัวชี้วัด</div>
+                <div class="category-count">12 ตัวชี้วัด</div>
             </div>
             <div class="indicators-grid">
                 <div class="indicator-card" data-id="1" data-code="H01" data-category="สุขภาพ" onclick="toggleIndicator(this)">
@@ -511,7 +511,7 @@
                         <span class="indicator-number">1</span>
                         <span class="indicator-code">H01</span>
                     </div>
-                    <div class="indicator-title">เด็กแรกเกิดที่มีน้ำหนักต่ำกว่า 2,500 กรัม</div>
+                    <div class="indicator-title">การฝากครรภ์อย่างมีคุณภาพ</div>
                     <div class="indicator-meta">
                         <span class="meta-tag">สุขภาพแม่และเด็ก</span>
                     </div>
@@ -522,7 +522,7 @@
                         <span class="indicator-number">2</span>
                         <span class="indicator-code">H02</span>
                     </div>
-                    <div class="indicator-title">เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน</div>
+                    <div class="indicator-title">เด็กแรกเกิดมีน้ำหนัก 2,500 กรัมขึ้นไป</div>
                     <div class="indicator-meta">
                         <span class="meta-tag">สุขภาพแม่และเด็ก</span>
                     </div>
@@ -533,9 +533,9 @@
                         <span class="indicator-number">3</span>
                         <span class="indicator-code">H03</span>
                     </div>
-                    <div class="indicator-title">เด็กอายุ 0-12 ปี มีภาวะเตี้ย (สูงไม่เหมาะสมตามเกณฑ์)</div>
+                    <div class="indicator-title">เด็กแรกเกิดได้กินนมแม่อย่างเดียวอย่างน้อย 6 เดือน</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">สุขภาพเด็ก</span>
+                        <span class="meta-tag">สุขภาพแม่และเด็ก</span>
                     </div>
                 </div>
 
@@ -544,9 +544,9 @@
                         <span class="indicator-number">4</span>
                         <span class="indicator-code">H04</span>
                     </div>
-                    <div class="indicator-title">ผู้สูงอายุมีภาวะพึ่งพิง/ติดเตียง/ภาวะซึมเศร้า</div>
+                    <div class="indicator-title">เด็กแรกเกิดถึง 12 ปี ได้รับวัคซีนครบตามตาราง</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">สุขภาพผู้สูงอายุ</span>
+                        <span class="meta-tag">สุขภาพเด็ก</span>
                     </div>
                 </div>
 
@@ -555,68 +555,200 @@
                         <span class="indicator-number">5</span>
                         <span class="indicator-code">H05</span>
                     </div>
-                    <div class="indicator-title">สมาชิกในครัวเรือนไม่ออกกำลังกายอย่างสม่ำเสมอ</div>
+                    <div class="indicator-title">เด็กได้รับการดูแลและมีพัฒนาการเหมาะสม</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สุขภาพเด็ก</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="6" data-code="H06" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">6</span>
+                        <span class="indicator-code">H06</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนกินอาหารถูกสุขลักษณะ ปลอดภัย ได้มาตรฐาน</div>
                     <div class="indicator-meta">
                         <span class="meta-tag">พฤติกรรมสุขภาพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="7" data-code="H07" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">7</span>
+                        <span class="indicator-code">H07</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนมีความรู้และป้องกันตนเองจากปัจจัยเสี่ยงสุขภาวะ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">พฤติกรรมสุขภาพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="8" data-code="H08" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">8</span>
+                        <span class="indicator-code">H08</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนสามารถดูแลตนเอง/สมาชิกเมื่อเจ็บป่วยเบื้องต้น</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การดูแลสุขภาพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="9" data-code="H09" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">9</span>
+                        <span class="indicator-code">H09</span>
+                    </div>
+                    <div class="indicator-title">คนอายุ 6 ปีขึ้นไป ออกกำลังกายสม่ำเสมอ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">พฤติกรรมสุขภาพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="10" data-code="H10" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">10</span>
+                        <span class="indicator-code">H10</span>
+                    </div>
+                    <div class="indicator-title">ผู้ป่วยติดเตียงได้รับการดูแลจากครอบครัว/ชุมชน/ภาครัฐ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การดูแลสุขภาพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="11" data-code="H11" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">11</span>
+                        <span class="indicator-code">H11</span>
+                    </div>
+                    <div class="indicator-title">คนในครัวเรือนมีประกันสุขภาพ/สิทธิรักษาพยาบาล และทราบสถานที่ใช้สิทธิ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การดูแลสุขภาพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="12" data-code="H12" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">12</span>
+                        <span class="indicator-code">H12</span>
+                    </div>
+                    <div class="indicator-title">คนอายุ 35 ปีขึ้นไป ได้รับการตรวจสุขภาพประจำปี</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การดูแลสุขภาพ</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ด้านเศรษฐกิจ -->
+        <!-- ด้านที่อยู่อาศัยและสิ่งแวดล้อม -->
         <div class="category-section">
             <div class="category-header">
                 <div class="category-icon economy">
-                    <i class="fas fa-coins"></i>
+                    <i class="fas fa-home"></i>
                 </div>
                 <div class="category-title">
-                    <h2 class="economy">ด้านเศรษฐกิจ (Economy)</h2>
-                    <span class="category-subtitle">รายได้, ทรัพย์สิน, การเงิน, และหนี้สิน</span>
+                    <h2 class="economy">ด้านที่อยู่อาศัยและสิ่งแวดล้อม (Housing & Environment)</h2>
+                    <span class="category-subtitle">ที่อยู่อาศัย, สิ่งแวดล้อม, สาธารณูปโภค และความปลอดภัย</span>
                 </div>
-                <div class="category-count">4 ตัวชี้วัด</div>
+                <div class="category-count">9 ตัวชี้วัด</div>
             </div>
             <div class="indicators-grid">
-                <div class="indicator-card" data-id="6" data-code="E01" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="13" data-code="HE01" data-category="ที่อยู่อาศัย" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">6</span>
-                        <span class="indicator-code">E01</span>
+                        <span class="indicator-number">13</span>
+                        <span class="indicator-code">HE01</span>
                     </div>
-                    <div class="indicator-title">การขาดทรัพย์สินที่จำเป็นในครัวเรือน</div>
+                    <div class="indicator-title">ครัวเรือนมีความมั่นคงในที่อยู่อาศัย บ้านมีสภาพคงทนถาวร</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">ทรัพย์สินและสินทรัพย์</span>
+                        <span class="meta-tag">ที่อยู่อาศัย</span>
                     </div>
                 </div>
 
-                <div class="indicator-card" data-id="7" data-code="E02" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="14" data-code="HE02" data-category="สิ่งแวดล้อม" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">7</span>
-                        <span class="indicator-code">E02</span>
+                        <span class="indicator-number">14</span>
+                        <span class="indicator-code">HE02</span>
                     </div>
-                    <div class="indicator-title">ครัวเรือนมีรายได้ต่ำกว่าเกณฑ์ความยากจน</div>
+                    <div class="indicator-title">ครัวเรือนมีการจัดบ้านเรือนและได้รับบริการจัดเก็บขยะมูลฝอยที่ถูกสุขลักษณะ</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">รายได้และความยากจน</span>
+                        <span class="meta-tag">สิ่งแวดล้อม</span>
                     </div>
                 </div>
 
-                <div class="indicator-card" data-id="8" data-code="E03" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="15" data-code="HE03" data-category="สิ่งแวดล้อม" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">8</span>
-                        <span class="indicator-code">E03</span>
+                        <span class="indicator-number">15</span>
+                        <span class="indicator-code">HE03</span>
                     </div>
-                    <div class="indicator-title">ครัวเรือนไม่สามารถป้องกันตนเองจากค่าใช้จ่ายฉุกเฉิน</div>
+                    <div class="indicator-title">ครัวเรือนไม่ถูกรบกวนจากมลพิษ</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">การจัดการการเงิน</span>
+                        <span class="meta-tag">สิ่งแวดล้อม</span>
                     </div>
                 </div>
 
-                <div class="indicator-card" data-id="9" data-code="E04" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="16" data-code="HE04" data-category="ความปลอดภัย" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">9</span>
-                        <span class="indicator-code">E04</span>
+                        <span class="indicator-number">16</span>
+                        <span class="indicator-code">HE04</span>
                     </div>
-                    <div class="indicator-title">ครัวเรือนมีหนี้สินเกินความสามารถในการชำระ</div>
+                    <div class="indicator-title">ครัวเรือนมีการป้องกันอุบัติภัยอย่างถูกวิธี และเตรียมความพร้อมรับมือภัยพิบัติ</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">หนี้สิน</span>
+                        <span class="meta-tag">ความปลอดภัย</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="17" data-code="HE05" data-category="ความปลอดภัย" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">17</span>
+                        <span class="indicator-code">HE05</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนมีความปลอดภัยในชีวิตและทรัพย์สิน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ความปลอดภัย</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="18" data-code="HE06" data-category="สาธารณูปโภค" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">18</span>
+                        <span class="indicator-code">HE06</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนมีน้ำสำหรับบริโภคและอุปโภคเพียงพอตลอดปี</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สาธารณูปโภค</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="19" data-code="HE07" data-category="สาธารณูปโภค" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">19</span>
+                        <span class="indicator-code">HE07</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนเข้าถึงไฟฟ้าและใช้บริการไฟฟ้า</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สาธารณูปโภค</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="20" data-code="HE08" data-category="สาธารณูปโภค" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">20</span>
+                        <span class="indicator-code">HE08</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนเข้าถึงและใช้บริการโทรศัพท์เคลื่อนที่และอินเทอร์เน็ต</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สาธารณูปโภค</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="21" data-code="HE09" data-category="สาธารณูปโภค" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">21</span>
+                        <span class="indicator-code">HE09</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนเข้าถึงบริการขนส่งสาธารณะ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สาธารณูปโภค</span>
                     </div>
                 </div>
             </div>
@@ -629,31 +761,123 @@
                     <i class="fas fa-graduation-cap"></i>
                 </div>
                 <div class="category-title">
-                    <h2 class="education">ด้านการศึกษา (Education)</h2>
-                    <span class="category-subtitle">การเข้าถึงการศึกษาและโอกาสทางการศึกษา</span>
+                    <h2 class="education">ด้านการศึกษาและการเรียนรู้ (Education)</h2>
+                    <span class="category-subtitle">การศึกษาภาคบังคับ, พัฒนาการ และทักษะการเรียนรู้</span>
                 </div>
-                <div class="category-count">2 ตัวชี้วัด</div>
+                <div class="category-count">5 ตัวชี้วัด</div>
             </div>
             <div class="indicators-grid">
-                <div class="indicator-card" data-id="10" data-code="ED01" data-category="การศึกษา" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="22" data-code="ED01" data-category="การศึกษา" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">10</span>
+                        <span class="indicator-number">22</span>
                         <span class="indicator-code">ED01</span>
                     </div>
-                    <div class="indicator-title">เด็กวัยเรียนขาดเรียนหรือมีความเสี่ยงที่จะออกกลางคัน</div>
+                    <div class="indicator-title">เด็กอายุต่ำกว่า 6 ปี มีพัฒนาการด้านสุขภาพ การเรียนรู้ และพัฒนาการทางบุคลิกภาพตามวัย</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">การเข้าถึงการศึกษา</span>
+                        <span class="meta-tag">พัฒนาการเด็ก</span>
                     </div>
                 </div>
 
-                <div class="indicator-card" data-id="11" data-code="ED02" data-category="การศึกษา" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="23" data-code="ED02" data-category="การศึกษา" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">11</span>
+                        <span class="indicator-number">23</span>
                         <span class="indicator-code">ED02</span>
                     </div>
-                    <div class="indicator-title">เยาวชนไม่มีโอกาสเข้าถึงการศึกษาที่เหมาะสม</div>
+                    <div class="indicator-title">เด็กอายุ 6–15 ปี ได้รับการศึกษาภาคบังคับ 9 ปี</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">โอกาสทางการศึกษา</span>
+                        <span class="meta-tag">การศึกษาภาคบังคับ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="24" data-code="ED03" data-category="การศึกษา" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">24</span>
+                        <span class="indicator-code">ED03</span>
+                    </div>
+                    <div class="indicator-title">เด็กจบชั้น ม.3 ได้เรียนต่อชั้น ม.4 หรือเทียบเท่า</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การศึกษาต่อเนื่อง</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="25" data-code="ED04" data-category="การศึกษา" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">25</span>
+                        <span class="indicator-code">ED04</span>
+                    </div>
+                    <div class="indicator-title">คนอายุ 15–59 ปี อ่าน เขียนภาษาไทย ภาษาอังกฤษ และคิดเลขอย่างง่ายได้</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ทักษะพื้นฐาน</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="26" data-code="ED05" data-category="การศึกษา" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">26</span>
+                        <span class="indicator-code">ED05</span>
+                    </div>
+                    <div class="indicator-title">เด็ก เยาวชน/ผู้ใหญ่ มีทักษะการเรียนรู้ที่จำเป็นในศตวรรษที่ 21</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ทักษะศตวรรษที่ 21</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ด้านเศรษฐกิจ -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon economy">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="category-title">
+                    <h2 class="economy">ด้านเศรษฐกิจและอาชีพ (Economy)</h2>
+                    <span class="category-subtitle">อาชีพ, รายได้ และการออม</span>
+                </div>
+                <div class="category-count">4 ตัวชี้วัด</div>
+            </div>
+            <div class="indicators-grid">
+                <div class="indicator-card" data-id="27" data-code="EC01" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">27</span>
+                        <span class="indicator-code">EC01</span>
+                    </div>
+                    <div class="indicator-title">คนอายุ 15–59 ปี มีอาชีพและรายได้</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">อาชีพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="28" data-code="EC02" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">28</span>
+                        <span class="indicator-code">EC02</span>
+                    </div>
+                    <div class="indicator-title">คนอายุ 60 ปีขึ้นไป มีอาชีพและรายได้</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">อาชีพ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="29" data-code="EC03" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">29</span>
+                        <span class="indicator-code">EC03</span>
+                    </div>
+                    <div class="indicator-title">รายได้เฉลี่ยของคนในครัวเรือนต่อปี</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">รายได้</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="30" data-code="EC04" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">30</span>
+                        <span class="indicator-code">EC04</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนมีการเก็บออมเงิน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การออม</span>
                     </div>
                 </div>
             </div>
@@ -667,78 +891,100 @@
                 </div>
                 <div class="category-title">
                     <h2 class="welfare">ด้านสวัสดิการสังคม (Social Welfare)</h2>
-                    <span class="category-subtitle">การเข้าถึงสวัสดิการและการสนับสนุนจากรัฐ</span>
+                    <span class="category-subtitle">สวัสดิการ, การคุ้มครองทางสังคม และการดูแลกลุ่มเปราะบาง</span>
                 </div>
-                <div class="category-count">2 ตัวชี้วัด</div>
+                <div class="category-count">5 ตัวชี้วัด</div>
             </div>
             <div class="indicators-grid">
-                <div class="indicator-card" data-id="12" data-code="W01" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="31" data-code="W01" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">12</span>
+                        <span class="indicator-number">31</span>
                         <span class="indicator-code">W01</span>
                     </div>
-                    <div class="indicator-title">ครัวเรือนไม่สามารถเข้าถึงสวัสดิการสังคม</div>
+                    <div class="indicator-title">เด็กแรกเกิด–6 ปี ที่ครัวเรือนมีรายได้ไม่เกิน 100,000 บาท/คน/ปี ได้รับเงินอุดหนุน</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">การเข้าถึงสวัสดิการ</span>
+                        <span class="meta-tag">สวัสดิการเด็ก</span>
                     </div>
                 </div>
 
-                <div class="indicator-card" data-id="13" data-code="W02" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="32" data-code="W02" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">13</span>
+                        <span class="indicator-number">32</span>
                         <span class="indicator-code">W02</span>
                     </div>
-                    <div class="indicator-title">ครัวเรือนไม่ได้รับความช่วยเหลือจากหน่วยงานที่เกี่ยวข้อง</div>
+                    <div class="indicator-title">ครัวเรือนที่มีรายได้ไม่เกิน 100,000 บาท/ปี ได้รับเงินสวัสดิการแห่งรัฐ</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">การสนับสนุนจากภาครัฐ</span>
+                        <span class="meta-tag">บัตรสวัสดิการ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="33" data-code="W03" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">33</span>
+                        <span class="indicator-code">W03</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนได้รับการคุ้มครองตามระบบและมาตรการคุ้มครองทางสังคม</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การคุ้มครอง</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="34" data-code="W04" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">34</span>
+                        <span class="indicator-code">W04</span>
+                    </div>
+                    <div class="indicator-title">ผู้สูงอายุได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ผู้สูงอายุ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="35" data-code="W05" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">35</span>
+                        <span class="indicator-code">W05</span>
+                    </div>
+                    <div class="indicator-title">ผู้พิการได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ผู้พิการ</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ด้านพฤติกรรมและสังคม -->
+        <!-- ด้านครอบครัวและชุมชน -->
         <div class="category-section">
             <div class="category-header">
                 <div class="category-icon social">
                     <i class="fas fa-users"></i>
                 </div>
                 <div class="category-title">
-                    <h2 class="social">ด้านพฤติกรรมและสังคม (Behavior & Social)</h2>
-                    <span class="category-subtitle">พฤติกรรมเสี่ยง, ความปลอดภัย, และความสัมพันธ์ในครอบครัว</span>
+                    <h2 class="social">ด้านครอบครัวและชุมชน (Family & Community)</h2>
+                    <span class="category-subtitle">ความอบอุ่นในครอบครัวและการมีส่วนร่วมในชุมชน</span>
                 </div>
-                <div class="category-count">3 ตัวชี้วัด</div>
+                <div class="category-count">2 ตัวชี้วัด</div>
             </div>
             <div class="indicators-grid">
-                <div class="indicator-card" data-id="14" data-code="S01" data-category="พฤติกรรม" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="36" data-code="FC01" data-category="ครอบครัว" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">14</span>
-                        <span class="indicator-code">S01</span>
+                        <span class="indicator-number">36</span>
+                        <span class="indicator-code">FC01</span>
                     </div>
-                    <div class="indicator-title">สมาชิกในครัวเรือนมีพฤติกรรมเสี่ยง (สูบบุหรี่/ดื่มสุรา/ยาเสพติด)</div>
+                    <div class="indicator-title">ครอบครัวมีความอบอุ่น</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">พฤติกรรมเสี่ยง</span>
+                        <span class="meta-tag">ครอบครัว</span>
                     </div>
                 </div>
 
-                <div class="indicator-card" data-id="15" data-code="S02" data-category="ความปลอดภัย" onclick="toggleIndicator(this)">
+                <div class="indicator-card" data-id="38" data-code="FC02" data-category="ชุมชน" onclick="toggleIndicator(this)">
                     <div>
-                        <span class="indicator-number">15</span>
-                        <span class="indicator-code">S02</span>
+                        <span class="indicator-number">38</span>
+                        <span class="indicator-code">FC02</span>
                     </div>
-                    <div class="indicator-title">สมาชิกในครัวเรือนประสบเหตุความรุนแรงหรืออุบัติเหตุ</div>
+                    <div class="indicator-title">ครัวเรือนมีส่วนร่วมทำกิจกรรมสาธารณะเพื่อประโยชน์ของชุมชน</div>
                     <div class="indicator-meta">
-                        <span class="meta-tag">ความปลอดภัย</span>
-                    </div>
-                </div>
-
-                <div class="indicator-card" data-id="16" data-code="S03" data-category="สังคม" onclick="toggleIndicator(this)">
-                    <div>
-                        <span class="indicator-number">16</span>
-                        <span class="indicator-code">S03</span>
-                    </div>
-                    <div class="indicator-title">ครัวเรือนมีปัญหาความขัดแย้งภายในครอบครัว</div>
-                    <div class="indicator-meta">
-                        <span class="meta-tag">ความสัมพันธ์ในครอบครัว</span>
+                        <span class="meta-tag">ชุมชน</span>
                     </div>
                 </div>
             </div>
