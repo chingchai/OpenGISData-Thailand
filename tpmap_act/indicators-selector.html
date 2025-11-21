@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>เลือกตัวชี้วัดครัวเรือน TPMAP</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --ios-blue: #007AFF;
+            --ios-green: #34C759;
+            --ios-indigo: #5856D6;
+            --ios-orange: #FF9500;
+            --ios-pink: #FF2D55;
+            --ios-purple: #AF52DE;
+            --ios-red: #FF3B30;
+            --ios-teal: #5AC8FA;
+            --ios-yellow: #FFCC00;
+            --ios-gray: #8E8E93;
+            --ios-gray2: #AEAEB2;
+            --ios-gray3: #C7C7CC;
+            --ios-gray4: #D1D1D6;
+            --ios-gray5: #E5E5EA;
+            --ios-gray6: #F2F2F7;
+            --ios-background: #F2F2F7;
+            --ios-card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Sarabun', sans-serif;
+            background: linear-gradient(180deg, #F2F2F7 0%, #E5E5EA 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: var(--ios-blue);
+            font-size: 2.2em;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--ios-gray);
+            font-size: 1.1em;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-badge i {
+            font-size: 18px;
+        }
+
+        .stat-badge.total {
+            color: var(--ios-blue);
+        }
+
+        .stat-badge.selected {
+            background: var(--ios-green);
+            color: white;
+        }
+
+        .category-section {
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--ios-gray5);
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .category-icon.health { background: linear-gradient(135deg, var(--ios-green), #2DB54E); }
+        .category-icon.economy { background: linear-gradient(135deg, var(--ios-orange), #E68800); }
+        .category-icon.education { background: linear-gradient(135deg, var(--ios-purple), #9847C9); }
+        .category-icon.welfare { background: linear-gradient(135deg, var(--ios-blue), #0066E6); }
+        .category-icon.social { background: linear-gradient(135deg, var(--ios-pink), #E6264A); }
+
+        .category-title {
+            flex: 1;
+        }
+
+        .category-title h2 {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .category-title h2.health { color: var(--ios-green); }
+        .category-title h2.economy { color: var(--ios-orange); }
+        .category-title h2.education { color: var(--ios-purple); }
+        .category-title h2.welfare { color: var(--ios-blue); }
+        .category-title h2.social { color: var(--ios-pink); }
+
+        .category-subtitle {
+            color: var(--ios-gray);
+            font-size: 0.95em;
+        }
+
+        .category-count {
+            background: var(--ios-gray6);
+            color: var(--ios-gray);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .indicator-card {
+            background: white;
+            border: 2px solid var(--ios-gray5);
+            border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .indicator-card:hover {
+            border-color: var(--ios-blue);
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .indicator-card.selected {
+            border-color: var(--ios-green);
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.05), rgba(52, 199, 89, 0.1));
+            box-shadow: 0 4px 16px rgba(52, 199, 89, 0.2);
+        }
+
+        .indicator-card.selected::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            color: var(--ios-green);
+            font-size: 24px;
+        }
+
+        .indicator-number {
+            display: inline-block;
+            background: var(--ios-blue);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 36px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .indicator-card.selected .indicator-number {
+            background: var(--ios-green);
+        }
+
+        .indicator-code {
+            display: inline-block;
+            background: var(--ios-gray6);
+            color: var(--ios-gray);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .indicator-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1C1C1E;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .indicator-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .meta-tag {
+            background: var(--ios-gray6);
+            color: var(--ios-gray);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .fab-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab-button:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-button:active {
+            transform: scale(0.95);
+        }
+
+        .fab-button.primary {
+            background: linear-gradient(135deg, var(--ios-blue), #0066E6);
+        }
+
+        .fab-button.success {
+            background: linear-gradient(135deg, var(--ios-green), #2DB54E);
+        }
+
+        .fab-button.danger {
+            background: linear-gradient(135deg, var(--ios-red), #E63027);
+        }
+
+        .selection-panel {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            max-width: 400px;
+            width: calc(100vw - 48px);
+            max-height: 70vh;
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+
+        .selection-panel.show {
+            display: flex;
+        }
+
+        .panel-header {
+            padding: 20px;
+            background: var(--ios-blue);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .panel-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .panel-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .panel-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .selected-item {
+            background: white;
+            border: 1px solid var(--ios-gray5);
+            border-left: 4px solid var(--ios-green);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .selected-item-number {
+            background: var(--ios-green);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .selected-item-text {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--ios-gray);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--ios-gray4);
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .indicators-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: row;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .fab-button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .selection-panel {
+                left: 16px;
+                bottom: 80px;
+                width: calc(100vw - 32px);
+            }
+        }
+
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: var(--ios-green);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 2000;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-clipboard-check"></i> เลือกตัวชี้วัดครัวเรือน TPMAP</h1>
+            <p>เลือกตัวชี้วัดที่ต้องการวิเคราะห์ตามมิติต่างๆ (เลือกได้มากกว่า 1 รายการ)</p>
+
+            <div class="stats-bar">
+                <div class="stat-badge total">
+                    <i class="fas fa-list"></i>
+                    <span>ทั้งหมด: <strong id="totalCount">16</strong> ตัวชี้วัด</span>
+                </div>
+                <div class="stat-badge selected">
+                    <i class="fas fa-check-circle"></i>
+                    <span>เลือกแล้ว: <strong id="selectedCount">0</strong> รายการ</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ด้านสุขภาพ -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon health">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="category-title">
+                    <h2 class="health">ด้านสุขภาพ (Health)</h2>
+                    <span class="category-subtitle">สุขภาพแม่และเด็ก, ผู้สูงอายุ, และพฤติกรรมสุขภาพ</span>
+                </div>
+                <div class="category-count">5 ตัวชี้วัด</div>
+            </div>
+            <div class="indicators-grid">
+                <div class="indicator-card" data-id="1" data-code="H01" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">1</span>
+                        <span class="indicator-code">H01</span>
+                    </div>
+                    <div class="indicator-title">เด็กแรกเกิดที่มีน้ำหนักต่ำกว่า 2,500 กรัม</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สุขภาพแม่และเด็ก</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="2" data-code="H02" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">2</span>
+                        <span class="indicator-code">H02</span>
+                    </div>
+                    <div class="indicator-title">เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สุขภาพแม่และเด็ก</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="3" data-code="H03" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">3</span>
+                        <span class="indicator-code">H03</span>
+                    </div>
+                    <div class="indicator-title">เด็กอายุ 0-12 ปี มีภาวะเตี้ย (สูงไม่เหมาะสมตามเกณฑ์)</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สุขภาพเด็ก</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="4" data-code="H04" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">4</span>
+                        <span class="indicator-code">H04</span>
+                    </div>
+                    <div class="indicator-title">ผู้สูงอายุมีภาวะพึ่งพิง/ติดเตียง/ภาวะซึมเศร้า</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">สุขภาพผู้สูงอายุ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="5" data-code="H05" data-category="สุขภาพ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">5</span>
+                        <span class="indicator-code">H05</span>
+                    </div>
+                    <div class="indicator-title">สมาชิกในครัวเรือนไม่ออกกำลังกายอย่างสม่ำเสมอ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">พฤติกรรมสุขภาพ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ด้านเศรษฐกิจ -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon economy">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="category-title">
+                    <h2 class="economy">ด้านเศรษฐกิจ (Economy)</h2>
+                    <span class="category-subtitle">รายได้, ทรัพย์สิน, การเงิน, และหนี้สิน</span>
+                </div>
+                <div class="category-count">4 ตัวชี้วัด</div>
+            </div>
+            <div class="indicators-grid">
+                <div class="indicator-card" data-id="6" data-code="E01" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">6</span>
+                        <span class="indicator-code">E01</span>
+                    </div>
+                    <div class="indicator-title">การขาดทรัพย์สินที่จำเป็นในครัวเรือน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ทรัพย์สินและสินทรัพย์</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="7" data-code="E02" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">7</span>
+                        <span class="indicator-code">E02</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนมีรายได้ต่ำกว่าเกณฑ์ความยากจน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">รายได้และความยากจน</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="8" data-code="E03" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">8</span>
+                        <span class="indicator-code">E03</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนไม่สามารถป้องกันตนเองจากค่าใช้จ่ายฉุกเฉิน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การจัดการการเงิน</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="9" data-code="E04" data-category="เศรษฐกิจ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">9</span>
+                        <span class="indicator-code">E04</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนมีหนี้สินเกินความสามารถในการชำระ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">หนี้สิน</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ด้านการศึกษา -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon education">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="category-title">
+                    <h2 class="education">ด้านการศึกษา (Education)</h2>
+                    <span class="category-subtitle">การเข้าถึงการศึกษาและโอกาสทางการศึกษา</span>
+                </div>
+                <div class="category-count">2 ตัวชี้วัด</div>
+            </div>
+            <div class="indicators-grid">
+                <div class="indicator-card" data-id="10" data-code="ED01" data-category="การศึกษา" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">10</span>
+                        <span class="indicator-code">ED01</span>
+                    </div>
+                    <div class="indicator-title">เด็กวัยเรียนขาดเรียนหรือมีความเสี่ยงที่จะออกกลางคัน</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การเข้าถึงการศึกษา</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="11" data-code="ED02" data-category="การศึกษา" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">11</span>
+                        <span class="indicator-code">ED02</span>
+                    </div>
+                    <div class="indicator-title">เยาวชนไม่มีโอกาสเข้าถึงการศึกษาที่เหมาะสม</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">โอกาสทางการศึกษา</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ด้านสวัสดิการสังคม -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon welfare">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="category-title">
+                    <h2 class="welfare">ด้านสวัสดิการสังคม (Social Welfare)</h2>
+                    <span class="category-subtitle">การเข้าถึงสวัสดิการและการสนับสนุนจากรัฐ</span>
+                </div>
+                <div class="category-count">2 ตัวชี้วัด</div>
+            </div>
+            <div class="indicators-grid">
+                <div class="indicator-card" data-id="12" data-code="W01" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">12</span>
+                        <span class="indicator-code">W01</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนไม่สามารถเข้าถึงสวัสดิการสังคม</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การเข้าถึงสวัสดิการ</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="13" data-code="W02" data-category="สวัสดิการ" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">13</span>
+                        <span class="indicator-code">W02</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนไม่ได้รับความช่วยเหลือจากหน่วยงานที่เกี่ยวข้อง</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">การสนับสนุนจากภาครัฐ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ด้านพฤติกรรมและสังคม -->
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-icon social">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="category-title">
+                    <h2 class="social">ด้านพฤติกรรมและสังคม (Behavior & Social)</h2>
+                    <span class="category-subtitle">พฤติกรรมเสี่ยง, ความปลอดภัย, และความสัมพันธ์ในครอบครัว</span>
+                </div>
+                <div class="category-count">3 ตัวชี้วัด</div>
+            </div>
+            <div class="indicators-grid">
+                <div class="indicator-card" data-id="14" data-code="S01" data-category="พฤติกรรม" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">14</span>
+                        <span class="indicator-code">S01</span>
+                    </div>
+                    <div class="indicator-title">สมาชิกในครัวเรือนมีพฤติกรรมเสี่ยง (สูบบุหรี่/ดื่มสุรา/ยาเสพติด)</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">พฤติกรรมเสี่ยง</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="15" data-code="S02" data-category="ความปลอดภัย" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">15</span>
+                        <span class="indicator-code">S02</span>
+                    </div>
+                    <div class="indicator-title">สมาชิกในครัวเรือนประสบเหตุความรุนแรงหรืออุบัติเหตุ</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ความปลอดภัย</span>
+                    </div>
+                </div>
+
+                <div class="indicator-card" data-id="16" data-code="S03" data-category="สังคม" onclick="toggleIndicator(this)">
+                    <div>
+                        <span class="indicator-number">16</span>
+                        <span class="indicator-code">S03</span>
+                    </div>
+                    <div class="indicator-title">ครัวเรือนมีปัญหาความขัดแย้งภายในครอบครัว</div>
+                    <div class="indicator-meta">
+                        <span class="meta-tag">ความสัมพันธ์ในครอบครัว</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button class="fab-button primary" onclick="toggleSelectionPanel()" title="แสดงรายการที่เลือก">
+            <i class="fas fa-list"></i>
+        </button>
+        <button class="fab-button success" onclick="exportSelection()" title="ส่งออกรายการ">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="fab-button danger" onclick="clearSelection()" title="ล้างการเลือกทั้งหมด">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+
+    <!-- Selection Panel -->
+    <div class="selection-panel" id="selectionPanel">
+        <div class="panel-header">
+            <h3><i class="fas fa-check-double"></i> รายการที่เลือก</h3>
+            <button class="panel-close" onclick="toggleSelectionPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="panel-content" id="panelContent">
+            <div class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <p>ยังไม่มีรายการที่เลือก<br>คลิกที่ตัวชี้วัดเพื่อเลือก</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">สำเร็จ!</span>
+    </div>
+
+    <script>
+        let selectedIndicators = [];
+
+        function toggleIndicator(card) {
+            const id = card.dataset.id;
+            const code = card.dataset.code;
+            const title = card.querySelector('.indicator-title').textContent;
+            const category = card.dataset.category;
+
+            const index = selectedIndicators.findIndex(item => item.id === id);
+
+            if (index > -1) {
+                // Remove
+                selectedIndicators.splice(index, 1);
+                card.classList.remove('selected');
+            } else {
+                // Add
+                selectedIndicators.push({ id, code, title, category });
+                card.classList.add('selected');
+            }
+
+            updateStats();
+            updateSelectionPanel();
+        }
+
+        function updateStats() {
+            document.getElementById('selectedCount').textContent = selectedIndicators.length;
+        }
+
+        function updateSelectionPanel() {
+            const panelContent = document.getElementById('panelContent');
+
+            if (selectedIndicators.length === 0) {
+                panelContent.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>ยังไม่มีรายการที่เลือก<br>คลิกที่ตัวชี้วัดเพื่อเลือก</p>
+                    </div>
+                `;
+            } else {
+                const sortedItems = [...selectedIndicators].sort((a, b) => parseInt(a.id) - parseInt(b.id));
+                panelContent.innerHTML = sortedItems.map(item => `
+                    <div class="selected-item">
+                        <div class="selected-item-number">${item.id}</div>
+                        <div class="selected-item-text">
+                            <strong>[${item.code}]</strong> ${item.title}
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function toggleSelectionPanel() {
+            document.getElementById('selectionPanel').classList.toggle('show');
+        }
+
+        function clearSelection() {
+            if (selectedIndicators.length === 0) {
+                showToast('ไม่มีรายการที่จะลบ');
+                return;
+            }
+
+            if (confirm(`ต้องการล้างการเลือกทั้งหมด ${selectedIndicators.length} รายการหรือไม่?`)) {
+                selectedIndicators = [];
+                document.querySelectorAll('.indicator-card.selected').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                updateStats();
+                updateSelectionPanel();
+                showToast('ล้างการเลือกสำเร็จ');
+            }
+        }
+
+        function exportSelection() {
+            if (selectedIndicators.length === 0) {
+                showToast('กรุณาเลือกตัวชี้วัดอย่างน้อย 1 รายการ');
+                return;
+            }
+
+            const sortedItems = [...selectedIndicators].sort((a, b) => parseInt(a.id) - parseInt(b.id));
+
+            let output = `รายการตัวชี้วัดที่เลือก (${selectedIndicators.length} รายการ)\n`;
+            output += `${'='.repeat(60)}\n\n`;
+
+            sortedItems.forEach(item => {
+                output += `${item.id}. [${item.code}] ${item.title}\n`;
+                output += `   หมวดหมู่: ${item.category}\n\n`;
+            });
+
+            output += `\n${'='.repeat(60)}\n`;
+            output += `สร้างโดย: ระบบ TPMAP Indicators Selector\n`;
+            output += `วันที่: ${new Date().toLocaleDateString('th-TH', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            })}\n`;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(output).then(() => {
+                showToast(`คัดลอก ${selectedIndicators.length} รายการสำเร็จ!`);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                showToast('เกิดข้อผิดพลาดในการคัดลอก');
+            });
+
+            // Also download as file
+            const blob = new Blob([output], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `TPMAP_Indicators_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize
+        updateStats();
+    </script>
+</body>
+</html>
