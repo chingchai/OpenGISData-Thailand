@@ -2,50 +2,91 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>ระบบจัดการข้อมูลครัวเรือน</title>
+
+    <!-- Google Fonts for Thai -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- iOS Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
+        :root {
+            --ios-blue: #007AFF;
+            --ios-green: #34C759;
+            --ios-indigo: #5856D6;
+            --ios-orange: #FF9500;
+            --ios-pink: #FF2D55;
+            --ios-purple: #AF52DE;
+            --ios-red: #FF3B30;
+            --ios-teal: #5AC8FA;
+            --ios-yellow: #FFCC00;
+            --ios-gray: #8E8E93;
+            --ios-gray2: #AEAEB2;
+            --ios-gray3: #C7C7CC;
+            --ios-gray4: #D1D1D6;
+            --ios-gray5: #E5E5EA;
+            --ios-gray6: #F2F2F7;
+            --ios-background: #F2F2F7;
+            --ios-card-bg: rgba(255, 255, 255, 0.9);
+            --ios-border-radius: 16px;
+            --ios-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Sarabun', 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, #F2F2F7 0%, #E5E5EA 100%);
             min-height: 100vh;
             padding: 20px;
+            padding-top: max(20px, env(safe-area-inset-top));
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--ios-shadow);
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         h1 {
             text-align: center;
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+            color: var(--ios-blue);
+            margin-bottom: 8px;
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
-            margin-bottom: 40px;
-            font-size: 1.1em;
+            color: var(--ios-gray);
+            margin-bottom: 32px;
+            font-size: 1.05em;
+            font-weight: 400;
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .form-group {
@@ -54,22 +95,24 @@
         }
 
         label {
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 8px;
-            color: #333;
-            font-size: 1.05em;
+            color: #1C1C1E;
+            font-size: 15px;
         }
 
         input[type="number"],
         input[type="text"],
         select,
         textarea {
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-            font-family: 'Sarabun', sans-serif;
+            padding: 12px 16px;
+            border: 1px solid var(--ios-gray4);
+            border-radius: 12px;
+            font-size: 17px;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Sarabun', sans-serif;
+            background: white;
+            color: #1C1C1E;
         }
 
         input[type="number"]:focus,
@@ -77,78 +120,108 @@
         select:focus,
         textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: var(--ios-blue);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
         }
 
         select {
             cursor: pointer;
-            background-color: white;
+            background: white;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23007AFF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
         }
 
         select option {
-            padding: 10px;
+            padding: 12px;
         }
 
         textarea {
             resize: vertical;
             min-height: 100px;
+            line-height: 1.5;
         }
 
         .button-group {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 32px;
+            flex-wrap: wrap;
         }
 
         button {
-            padding: 15px 40px;
-            font-size: 1.1em;
+            padding: 14px 32px;
+            font-size: 17px;
             border: none;
-            border-radius: 10px;
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
             font-weight: 600;
-            font-family: 'Sarabun', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Sarabun', sans-serif;
+            letter-spacing: -0.3px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .btn-generate {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ios-blue);
             color: white;
+            flex: 1;
+            min-width: 200px;
         }
 
         .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-generate:active {
+            transform: scale(0.98);
         }
 
         .btn-copy {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: var(--ios-green);
             color: white;
+            flex: 1;
+            min-width: 200px;
         }
 
         .btn-copy:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(52, 199, 89, 0.3);
+        }
+
+        .btn-copy:active {
+            transform: scale(0.98);
         }
 
         .btn-reset {
-            background: #f0f0f0;
-            color: #333;
+            background: var(--ios-gray6);
+            color: var(--ios-gray);
+            flex: 1;
+            min-width: 150px;
         }
 
         .btn-reset:hover {
-            background: #e0e0e0;
+            background: var(--ios-gray5);
+        }
+
+        .btn-reset:active {
+            transform: scale(0.98);
         }
 
         .output-section {
-            margin-top: 40px;
-            padding: 30px;
-            background: #f8f9ff;
-            border-radius: 15px;
-            border: 2px solid #667eea;
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid var(--ios-blue);
             display: none;
+            animation: fadeIn 0.3s ease;
         }
 
         .output-section.show {
@@ -156,38 +229,44 @@
         }
 
         .output-title {
-            font-size: 1.3em;
+            font-size: 20px;
             font-weight: 600;
-            color: #667eea;
-            margin-bottom: 15px;
+            color: var(--ios-blue);
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            letter-spacing: -0.3px;
         }
 
         .output-content {
             background: white;
-            padding: 25px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 12px;
             white-space: pre-wrap;
-            font-family: 'Sarabun', monospace;
-            line-height: 1.8;
-            font-size: 1.05em;
-            border: 1px solid #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Sarabun', sans-serif;
+            line-height: 1.7;
+            font-size: 16px;
+            border: 1px solid var(--ios-gray4);
+            color: #1C1C1E;
         }
 
         .success-message {
             position: fixed;
-            top: 20px;
+            top: max(20px, env(safe-area-inset-top));
             right: 20px;
-            background: #4caf50;
+            background: var(--ios-green);
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 16px 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             display: none;
             z-index: 1000;
             animation: slideIn 0.3s ease;
+            font-weight: 500;
+            font-size: 17px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         @keyframes slideIn {
@@ -201,55 +280,162 @@
             }
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .section-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-indigo) 100%);
             color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin: 30px 0 20px 0;
-            font-size: 1.2em;
+            padding: 14px 20px;
+            border-radius: 14px;
+            margin: 32px 0 20px 0;
+            font-size: 19px;
             font-weight: 600;
+            letter-spacing: -0.3px;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.15);
         }
 
         .multi-select-container {
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 10px;
-            max-height: 200px;
+            border: 1px solid var(--ios-gray4);
+            border-radius: 12px;
+            padding: 8px;
+            max-height: 280px;
             overflow-y: auto;
             background: white;
+            -webkit-overflow-scrolling: touch;
         }
 
         .multi-select-container label {
             display: flex;
             align-items: center;
-            padding: 8px;
-            margin: 0;
+            padding: 10px 12px;
+            margin: 4px 0;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.2s;
+            border-radius: 10px;
+            transition: all 0.15s ease;
+            font-size: 16px;
         }
 
         .multi-select-container label:hover {
-            background: #f5f5f5;
+            background: var(--ios-gray6);
+        }
+
+        .multi-select-container label:active {
+            background: var(--ios-gray5);
+            transform: scale(0.98);
         }
 
         .multi-select-container input[type="checkbox"] {
-            margin-right: 10px;
+            margin-right: 12px;
             cursor: pointer;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--ios-blue);
+            border-radius: 6px;
+        }
+
+        /* iOS Category Badge */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .badge-health {
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--ios-green);
+        }
+
+        .badge-economy {
+            background: rgba(255, 149, 0, 0.15);
+            color: var(--ios-orange);
+        }
+
+        .badge-social {
+            background: rgba(175, 82, 222, 0.15);
+            color: var(--ios-purple);
+        }
+
+        .badge-welfare {
+            background: rgba(0, 122, 255, 0.15);
+            color: var(--ios-blue);
+        }
+
+        /* iOS List Group Style */
+        .ios-list-group {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--ios-gray4);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .ios-list-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--ios-gray5);
+            transition: background 0.15s ease;
+            cursor: pointer;
+        }
+
+        .ios-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .ios-list-item:hover {
+            background: var(--ios-gray6);
+        }
+
+        .ios-list-item:active {
+            background: var(--ios-gray5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 20px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 ระบบจัดการข้อมูลครัวเรือน</h1>
+        <h1><i class="fas fa-chart-pie"></i> ระบบจัดการข้อมูลครัวเรือน</h1>
         <div class="subtitle">กรอกข้อมูลและเลือกรายการเพื่อสร้างข้อความสำหรับ Dashboard</div>
 
         <form id="householdForm">
             <!-- ข้อมูลพื้นฐานครัวเรือน -->
-            <div class="section-header">ข้อมูลพื้นฐานครัวเรือน</div>
+            <div class="section-header"><i class="fas fa-home"></i> ข้อมูลพื้นฐานครัวเรือน</div>
             <div class="form-grid">
                 <div class="form-group">
                     <label for="members">มีสมาชิกในครัวเรือน (คน)</label>
@@ -270,7 +456,7 @@
             </div>
 
             <!-- อาชีพ -->
-            <div class="section-header">อาชีพของสมาชิกในครัวเรือน</div>
+            <div class="section-header"><i class="fas fa-briefcase"></i> อาชีพของสมาชิกในครัวเรือน</div>
             <div class="form-group">
                 <label>เลือกอาชีพ (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container" id="occupationContainer">
@@ -292,32 +478,121 @@
                 <input type="text" id="occupationOther" placeholder="ระบุอาชีพอื่นๆ">
             </div>
 
-            <!-- สภาพครัวเรือน -->
-            <div class="section-header">สภาพครัวเรือน</div>
+            <!-- สภาพครัวเรือนตามตัวชี้วัด -->
+            <div class="section-header"><i class="fas fa-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม)</div>
+
             <div class="form-group">
-                <label>เลือกสภาพครัวเรือน (เลือกได้มากกว่า 1 รายการ)</label>
-                <div class="multi-select-container" id="conditionContainer">
-                    <label><input type="checkbox" name="condition" value="การขาดทรัพย์สินทางครัวเรือน"> การขาดทรัพย์สินทางครัวเรือน</label>
-                    <label><input type="checkbox" name="condition" value="เด็กแรกเกิดที่มีอายุ 0-2,500 กรัมขึ้นไป"> เด็กแรกเกิดที่มีอายุ 0-2,500 กรัมขึ้นไป</label>
-                    <label><input type="checkbox" name="condition" value="เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน"> เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน</label>
-                    <label><input type="checkbox" name="condition" value="เด็กแรกเกิด 12 ปี โดยมีระดับการเพิ่มความสูง"> เด็กแรกเกิด 12 ปี โดยมีระดับการเพิ่มความสูง</label>
-                    <label><input type="checkbox" name="condition" value="เด็ก เด็กวัยเรียนและเยาวชนคาดหวังทางการศึกษา"> เด็ก เด็กวัยเรียนและเยาวชนคาดหวังทางการศึกษา</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่มีงานทำขายตลาดหลักทรัพย์ปลอดภัย/ปศุสัตว์/โลจิสติกธุรกิจ"> ครัวเรือนที่มีงานทำขายตลาดหลักทรัพย์ปลอดภัย/ปศุสัตว์/โลจิสติกธุรกิจ</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่กว่าค่าเฉลี่ยมีป่องกันตนจากค่าใช้จ่ายจากสภาวะ"> ครัวเรือนที่กว่าค่าเฉลี่ยมีป่องกันตนจากค่าใช้จ่ายจากสภาวะ</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่มาจาก/ขาดแคลนต่ำ/สมาชิกเสียชีวิตจากความรุนแรงและอุบัติเหตุ"> ครัวเรือนที่มาจาก/ขาดแคลนต่ำ/สมาชิกเสียชีวิตจากความรุนแรงและอุบัติเหตุ</label>
-                    <label><input type="checkbox" name="condition" value="ตามยุทธ์ศาสตร์ มีชีวิตอยู่ออกกำลังกายและบล"> ตามยุทธ์ศาสตร์ มีชีวิตอยู่ออกกำลังกายและบล</label>
-                    <label><input type="checkbox" name="condition" value="ผู้สูงอายุที่แปงอารุคโรคอุจจาระหญ่า/สมบูรณ์/ภาวะซบเศร้า"> ผู้สูงอายุที่แปงอารุคโรคอุจจาระหญ่า/สมบูรณ์/ภาวะซบเศร้า</label>
-                    <label><input type="checkbox" name="condition" value="ดมโบราณครั้งแรกชั่นกินที่ครัวเรือนเอง/บุหรี่/ยากระตุ้น/สุรา/เหล้าเหนียวถ้วย"> ดมโบราณครั้งแรกชั่นกินที่ครัวเรือนเอง/บุหรี่/ยากระตุ้น/สุรา/เหล้าเหนียวถ้วย</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่จำนำสวัสดิการวิศวกรรมเศรษฐกิจ"> ครัวเรือนที่จำนำสวัสดิการวิศวกรรมเศรษฐกิจ</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่เปลี่ยนเป็นครัวเรือนนิสัยสม่ำเสมอเมื่อเร็วๆ/อลูมิมีอันธ์"> ครัวเรือนที่เปลี่ยนเป็นครัวเรือนนิสัยสม่ำเสมอเมื่อเร็วๆ/อลูมิมีอันธ์</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่ไม่บริษัทท่านกับผลแทนของความหรือนเอง"> ครัวเรือนที่ไม่บริษัทท่านกับผลแทนของความหรือนเอง</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่มีการผลผอ่านผมายและให้บริการผังคนกับผู้หญิงลุกของการนำผลปฐมภูมิ"> ครัวเรือนที่มีการผลผอ่านผมายและให้บริการผังคนกับผู้หญิงลุกของการนำผลปฐมภูมิ</label>
-                    <label><input type="checkbox" name="condition" value="ครัวเรือนที่ไม่ผู้บริหารนทางประเภทการรว่มทดสอบ"> ครัวเรือนที่ไม่ผู้บริหารนทางประเภทการรว่มทดสอบ</label>
+                <label><i class="fas fa-heartbeat"></i> <strong>ด้านสุขภาพ</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="เด็กแรกเกิดที่มีน้ำหนักต่ำกว่า 2,500 กรัม">
+                        <span>เด็กแรกเกิดที่มีน้ำหนักต่ำกว่า 2,500 กรัม</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน">
+                        <span>เด็กแรกเกิดไม่ได้ดื่มนมแม่อย่างเดียวอย่างน้อย 6 เดือน</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="เด็กอายุ 0-12 ปี มีภาวะเตี้ย (สูงไม่เหมาะสมตามเกณฑ์)">
+                        <span>เด็กอายุ 0-12 ปี มีภาวะเตี้ย (สูงไม่เหมาะสมตามเกณฑ์)</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="ผู้สูงอายุมีภาวะพึ่งพิง/ติดเตียง/ภาวะซึมเศร้า">
+                        <span>ผู้สูงอายุมีภาวะพึ่งพิง/ติดเตียง/ภาวะซึมเศร้า</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="สมาชิกในครัวเรือนไม่ออกกำลังกายอย่างสม่ำเสมอ">
+                        <span>สมาชิกในครัวเรือนไม่ออกกำลังกายอย่างสม่ำเสมอ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-coins"></i> <strong>ด้านเศรษฐกิจ</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="การขาดทรัพย์สินที่จำเป็นในครัวเรือน">
+                        <span>การขาดทรัพย์สินที่จำเป็นในครัวเรือน</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="ครัวเรือนมีรายได้ต่ำกว่าเกณฑ์ความยากจน">
+                        <span>ครัวเรือนมีรายได้ต่ำกว่าเกณฑ์ความยากจน</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="ครัวเรือนไม่สามารถป้องกันตนเองจากค่าใช้จ่ายฉุกเฉิน">
+                        <span>ครัวเรือนไม่สามารถป้องกันตนเองจากค่าใช้จ่ายฉุกเฉิน</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="ครัวเรือนมีหนี้สินเกินความสามารถในการชำระ">
+                        <span>ครัวเรือนมีหนี้สินเกินความสามารถในการชำระ</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-graduation-cap"></i> <strong>ด้านการศึกษา</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="เด็กวัยเรียนขาดเรียนหรือมีความเสี่ยงที่จะออกกลางคัน">
+                        <span>เด็กวัยเรียนขาดเรียนหรือมีความเสี่ยงที่จะออกกลางคัน</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="เยาวชนไม่มีโอกาสเข้าถึงการศึกษาที่เหมาะสม">
+                        <span>เยาวชนไม่มีโอกาสเข้าถึงการศึกษาที่เหมาะสม</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="ครัวเรือนไม่สามารถเข้าถึงสวัสดิการสังคม">
+                        <span>ครัวเรือนไม่สามารถเข้าถึงสวัสดิการสังคม</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="ครัวเรือนไม่ได้รับความช่วยเหลือจากหน่วยงานที่เกี่ยวข้อง">
+                        <span>ครัวเรือนไม่ได้รับความช่วยเหลือจากหน่วยงานที่เกี่ยวข้อง</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-users"></i> <strong>ด้านพฤติกรรมและสังคม</strong> (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="สมาชิกในครัวเรือนมีพฤติกรรมเสี่ยง (สูบบุหรี่/ดื่มสุรา/ยาเสพติด)">
+                        <span>สมาชิกในครัวเรือนมีพฤติกรรมเสี่ยง (สูบบุหรี่/ดื่มสุรา/ยาเสพติด)</span>
+                        <span class="category-badge badge-social">พฤติกรรม</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="สมาชิกในครัวเรือนประสบเหตุความรุนแรงหรืออุบัติเหตุ">
+                        <span>สมาชิกในครัวเรือนประสบเหตุความรุนแรงหรืออุบัติเหตุ</span>
+                        <span class="category-badge badge-social">ความปลอดภัย</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="ครัวเรือนมีปัญหาความขัดแย้งภายในครอบครัว">
+                        <span>ครัวเรือนมีปัญหาความขัดแย้งภายในครอบครัว</span>
+                        <span class="category-badge badge-social">สังคม</span>
+                    </label>
                 </div>
             </div>
 
             <!-- ทัศนคติ -->
-            <div class="section-header">ทัศนคติ</div>
+            <div class="section-header"><i class="fas fa-smile"></i> ทัศนคติ</div>
             <div class="form-group">
                 <label for="attitude">เลือกทัศนคติ</label>
                 <select id="attitude" multiple size="5" style="height: auto;">
@@ -338,7 +613,7 @@
             </div>
 
             <!-- ทักษะ -->
-            <div class="section-header">ทักษะ</div>
+            <div class="section-header"><i class="fas fa-tools"></i> ทักษะ</div>
             <div class="form-group">
                 <label for="skill">เลือกทักษะ</label>
                 <select id="skill" multiple size="5" style="height: auto;">
@@ -360,7 +635,7 @@
             </div>
 
             <!-- ทรัพยากร -->
-            <div class="section-header">ทรัพยากร</div>
+            <div class="section-header"><i class="fas fa-warehouse"></i> ทรัพยากร</div>
             <div class="form-group">
                 <label for="resource">เลือกทรัพยากร</label>
                 <select id="resource" multiple size="5" style="height: auto;">
@@ -387,7 +662,7 @@
             </div>
 
             <!-- ทางออก/ความต้องการ -->
-            <div class="section-header">ทางออก (ความต้องการ)</div>
+            <div class="section-header"><i class="fas fa-lightbulb"></i> ทางออก (ความต้องการ)</div>
             <div class="form-group">
                 <label for="solution">เลือกทางออก/ความต้องการ</label>
                 <select id="solution" multiple size="5" style="height: auto;">
@@ -413,16 +688,23 @@
 
             <!-- ปุ่มต่างๆ -->
             <div class="button-group">
-                <button type="button" class="btn-generate" onclick="generateOutput()">📝 สร้างข้อความ</button>
-                <button type="button" class="btn-copy" onclick="copyToClipboard()">📋 คัดลอกข้อความ</button>
-                <button type="button" class="btn-reset" onclick="resetForm()">🔄 ล้างข้อมูล</button>
+                <button type="button" class="btn-generate" onclick="generateOutput()">
+                    <i class="fas fa-file-alt"></i> สร้างข้อความ
+                </button>
+                <button type="button" class="btn-copy" onclick="copyToClipboard()">
+                    <i class="fas fa-copy"></i> คัดลอกข้อความ
+                </button>
+                <button type="button" class="btn-reset" onclick="resetForm()">
+                    <i class="fas fa-redo"></i> ล้างข้อมูล
+                </button>
             </div>
         </form>
 
         <!-- แสดงผลลัพธ์ -->
         <div id="outputSection" class="output-section">
             <div class="output-title">
-                <span>✅ ผลลัพธ์</span>
+                <i class="fas fa-check-circle"></i>
+                <span>ผลลัพธ์</span>
             </div>
             <div id="outputContent" class="output-content"></div>
         </div>
@@ -430,7 +712,7 @@
 
     <!-- ข้อความแจ้งเตือน -->
     <div id="successMessage" class="success-message">
-        ✅ คัดลอกข้อความสำเร็จ!
+        <i class="fas fa-check-circle"></i> คัดลอกข้อความสำเร็จ!
     </div>
 
     <script>
