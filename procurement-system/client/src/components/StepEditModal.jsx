@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { stepsAPI, uploadAPI } from '../services/api';
+import FileThumbnail from './FileThumbnail';
 
 // ImagePreview component with error handling
 const ImagePreview = ({ src, alt, onRemove, isNew = false }) => {
@@ -139,25 +140,42 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
   const handleFileSelect = (e) => {
     const files = Array.from(e.target.files);
 
-    // Validate file types
-    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-    const invalidFiles = files.filter(file => !validTypes.includes(file.type));
+    // Validate file types - images and documents
+    const validTypes = [
+      // Images
+      'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
+      // PDF
+      'application/pdf',
+      // Word
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      // Excel
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+
+    const validExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.pdf', '.doc', '.docx', '.xls', '.xlsx'];
+
+    const invalidFiles = files.filter(file => {
+      const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+      return !validTypes.includes(file.type) && !validExtensions.includes(fileExtension);
+    });
 
     if (invalidFiles.length > 0) {
-      setError('กรุณาเลือกเฉพาะไฟล์รูปภาพ (.jpg, .jpeg, .png, .gif, .webp)');
+      setError('กรุณาเลือกเฉพาะไฟล์รูปภาพและเอกสาร (.jpg, .jpeg, .png, .gif, .webp, .pdf, .doc, .docx, .xls, .xlsx)');
       return;
     }
 
-    // Validate file sizes (5MB each)
-    const oversizedFiles = files.filter(file => file.size > 5 * 1024 * 1024);
+    // Validate file sizes (10MB each)
+    const oversizedFiles = files.filter(file => file.size > 10 * 1024 * 1024);
     if (oversizedFiles.length > 0) {
-      setError('ขนาดไฟล์รูปภาพต้องไม่เกิน 5MB');
+      setError('ขนาดไฟล์ต้องไม่เกิน 10MB');
       return;
     }
 
-    // Check total limit (10 images max including existing)
+    // Check total limit (10 files max including existing)
     if (existingImages.length + selectedFiles.length + files.length > 10) {
-      setError('สามารถอัพโหลดรูปภาพได้สูงสุด 10 รูป');
+      setError('สามารถอัพโหลดไฟล์ได้สูงสุด 10 ไฟล์');
       return;
     }
 
@@ -457,99 +475,27 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
             />
           </div>
 
-          {/* Image Upload */}
+          {/* File Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              รูปภาพประกอบ
-              <span className="text-gray-500 font-normal ml-2 text-xs">
-                (สูงสุด 10 รูป, ขนาดไม่เกิน 5MB/รูป)
-              </span>
-            </label>
-
-            {/* Existing Images */}
-            {existingImages.length > 0 && (
-              <div className="mb-3">
-                <p className="text-xs text-gray-600 mb-2">รูปภาพที่มีอยู่:</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {existingImages.map((imageUrl, index) => (
-                    <ImagePreview
-                      key={`existing-${index}`}
-                      src={imageUrl}
-                      alt={`รูปที่ ${index + 1}`}
-                      onRemove={() => handleRemoveExistingImage(index)}
-                      isNew={false}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Selected Files Preview */}
-            {selectedFiles.length > 0 && (
-              <div className="mb-3">
-                <p className="text-xs text-gray-600 mb-2">รูปภาพที่เลือกใหม่:</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {selectedFiles.map((file, index) => (
-                    <ImagePreview
-                      key={`new-${index}`}
-                      src={URL.createObjectURL(file)}
-                      alt={file.name}
-                      onRemove={() => handleRemoveSelectedFile(index)}
-                      isNew={true}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* File Input */}
-            <input
-              type="file"
-              accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
-              multiple
-              onChange={handleFileSelect}
-              disabled={loading || uploading}
-              className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50"
-            />
-            <p className="mt-1 text-xs text-gray-500">
-              รองรับไฟล์: JPG, JPEG, PNG, GIF, WEBP
-            </p>
-          </div>
-
-          {/* Document Upload */}
-          <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              เอกสารแนบ
+              ไฟล์แนบ (รูปภาพและเอกสาร)
               <span className="text-gray-500 font-normal ml-2 text-xs">
                 (สูงสุด 10 ไฟล์, ขนาดไม่เกิน 10MB/ไฟล์)
               </span>
             </label>
 
-            {/* Existing Documents */}
-            {existingDocuments.length > 0 && (
+            {/* Existing Files */}
+            {existingImages.length > 0 && (
               <div className="mb-3">
-                <p className="text-xs text-gray-600 mb-2">เอกสารที่มีอยู่:</p>
-                <div className="space-y-2">
-                  {existingDocuments.map((doc, index) => (
-                    <div key={`existing-doc-${index}`} className="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-300">
-                      <div className="flex items-center space-x-2">
-                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                        <span className="text-sm">{doc.name || 'เอกสาร'}</span>
-                        {doc.size && <span className="text-xs text-gray-500">({(doc.size / 1024).toFixed(1)} KB)</span>}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveExistingDocument(index)}
-                        className="text-red-500 hover:text-red-700"
-                        title="ลบเอกสาร"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
+                <p className="text-xs text-gray-600 mb-2">ไฟล์ที่มีอยู่:</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {existingImages.map((imageUrl, index) => (
+                    <FileThumbnail
+                      key={`existing-${index}`}
+                      fileUrl={imageUrl}
+                      fileName={`ไฟล์ที่ ${index + 1}`}
+                      onRemove={() => handleRemoveExistingImage(index)}
+                    />
                   ))}
                 </div>
               </div>
@@ -558,28 +504,16 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
             {/* Selected Documents Preview */}
             {selectedDocuments.length > 0 && (
               <div className="mb-3">
-                <p className="text-xs text-gray-600 mb-2">เอกสารที่เลือกใหม่:</p>
-                <div className="space-y-2">
-                  {selectedDocuments.map((file, index) => (
-                    <div key={`new-doc-${index}`} className="flex items-center justify-between p-2 bg-blue-50 rounded border border-blue-300">
-                      <div className="flex items-center space-x-2">
-                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                        <span className="text-sm font-medium">{file.name}</span>
-                        <span className="text-xs text-gray-500">({(file.size / 1024).toFixed(1)} KB)</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveSelectedDocument(index)}
-                        className="text-red-500 hover:text-red-700"
-                        title="ยกเลิกเอกสาร"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
+                <p className="text-xs text-gray-600 mb-2">ไฟล์ที่เลือกใหม่:</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {selectedFiles.map((file, index) => (
+                    <FileThumbnail
+                      key={`new-${index}`}
+                      fileUrl={URL.createObjectURL(file)}
+                      fileName={file.name}
+                      fileType={file.type}
+                      onRemove={() => handleRemoveSelectedFile(index)}
+                    />
                   ))}
                 </div>
               </div>
@@ -588,14 +522,14 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
             {/* File Input */}
             <input
               type="file"
-              accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.zip"
+              accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,image/jpeg,image/jpg,image/png,image/gif,image/webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               multiple
               onChange={handleDocumentSelect}
               disabled={loading || uploading}
               className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 disabled:opacity-50"
             />
             <p className="mt-1 text-xs text-gray-500">
-              รองรับไฟล์: PDF, Word, Excel, TXT, ZIP
+              รองรับไฟล์: รูปภาพ (JPG, PNG, GIF, WEBP), เอกสาร (PDF, DOC, DOCX, XLS, XLSX)
             </p>
           </div>
 
@@ -620,7 +554,7 @@ const StepEditModal = ({ isOpen, onClose, onSuccess, step }) => {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  <span>กำลังอัพโหลดรูปภาพ...</span>
+                  <span>กำลังอัพโหลดไฟล์...</span>
                 </>
               ) : loading ? (
                 <>

@@ -15,6 +15,9 @@ import {
 import { ValidationError, NotFoundError, ForbiddenError } from '../utils/errors.js';
 import { sanitizeInt, sanitizeEnum } from '../utils/sanitize.js';
 import logger from '../utils/logger.js';
+import XLSX from 'xlsx';
+import { Readable } from 'stream';
+import csvParser from 'csv-parser';
 
 /**
  * Get all users
@@ -224,10 +227,112 @@ export const deleteUser = asyncHandler(async (req, res) => {
   sendSuccess(res, null, result.message);
 });
 
+/**
+ * Bulk import users from Excel or CSV file
+ * POST /api/users/bulk-import
+ * Body: file (multipart/form-data)
+ */
+export const bulkImportUsers = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  // Only admins can bulk import users
+  if (user.role !== 'admin') {
+    throw new ForbiddenError('ไม่มีสิทธิ์นำเข้าผู้ใช้');
+  }
+
+  if (!req.file) {
+    throw new ValidationError('กรุณาอัปโหลดไฟล์');
+  }
+
+  const file = req.file;
+  const fileExtension = file.originalname.split('.').pop().toLowerCase();
+
+  let usersData = [];
+
+  try {
+    if (fileExtension === 'xlsx' || fileExtension === 'xls') {
+      // Parse Excel file
+      const workbook = XLSX.read(file.buffer, { type: 'buffer' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+      usersData = jsonData.map(row => ({
+        username: row.username || row['ชื่อผู้ใช้'],
+        password: row.password || row['รหัสผ่าน'],
+        fullName: row.fullName || row.full_name || row['ชื่อ-นามสกุล'],
+        email: row.email || row['อีเมล'] || null,
+        role: row.role || row['ตำแหน่ง'],
+        departmentId: row.departmentId || row.department_id || row['รหัสหน่วยงาน'] || null,
+        active: row.active !== undefined ? Boolean(row.active) : true
+      }));
+
+    } else if (fileExtension === 'csv') {
+      // Parse CSV file
+      await new Promise((resolve, reject) => {
+        const stream = Readable.from(file.buffer);
+        const results = [];
+
+        stream
+          .pipe(csvParser())
+          .on('data', (row) => {
+            results.push({
+              username: row.username || row['ชื่อผู้ใช้'],
+              password: row.password || row['รหัสผ่าน'],
+              fullName: row.fullName || row.full_name || row['ชื่อ-นามสกุล'],
+              email: row.email || row['อีเมล'] || null,
+              role: row.role || row['ตำแหน่ง'],
+              departmentId: row.departmentId || row.department_id || row['รหัสหน่วยงาน'] || null,
+              active: row.active !== undefined ? Boolean(row.active) : true
+            });
+          })
+          .on('end', () => {
+            usersData = results;
+            resolve();
+          })
+          .on('error', reject);
+      });
+
+    } else {
+      throw new ValidationError('รองรับเฉพาะไฟล์ .xlsx, .xls หรือ .csv เท่านั้น');
+    }
+
+    if (usersData.length === 0) {
+      throw new ValidationError('ไม่พบข้อมูลในไฟล์');
+    }
+
+    if (usersData.length > 1000) {
+      throw new ValidationError('จำนวนผู้ใช้เกินกำหนด (สูงสุด 1,000 รายการต่อครั้ง)');
+    }
+
+    // Import users
+    const result = await userService.bulkImportUsers(usersData, user.id);
+
+    logger.projectOperation('bulk_import_users', null, user.id, {
+      total: usersData.length,
+      success: result.success,
+      failed: result.failed
+    });
+
+    sendSuccess(res, result, `นำเข้าผู้ใช้สำเร็จ ${result.success} รายการ, ล้มเหลว ${result.failed} รายการ`);
+
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      throw error;
+    }
+    logger.error('Error in bulk import:', {
+      error: error.message,
+      stack: error.stack
+    });
+    throw new ValidationError('เกิดข้อผิดพลาดในการอ่านไฟล์: ' + error.message);
+  }
+});
+
 export default {
   getAllUsers,
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  bulkImportUsers
 };

@@ -664,21 +664,109 @@ export function getProjectStatistics(departmentId = null) {
       ${whereClause}
     `, params);
 
+    // Get statistics by procurement method
+    const byMethod = query(`
+      SELECT
+        procurement_method,
+        COUNT(*) as count,
+        SUM(budget) as total_budget
+      FROM projects p
+      ${whereClause}
+      GROUP BY procurement_method
+    `, params);
+
+    // Get statistics by department
+    const byDepartment = query(`
+      SELECT
+        d.id,
+        d.name as department_name,
+        COUNT(p.id) as count,
+        SUM(p.budget) as total_budget,
+        SUM(CASE WHEN p.status = 'completed' THEN 1 ELSE 0 END) as completed,
+        SUM(CASE WHEN p.status = 'in_progress' THEN 1 ELSE 0 END) as in_progress
+      FROM departments d
+      LEFT JOIN projects p ON d.id = p.department_id AND p.deleted_at IS NULL
+      ${departmentId ? 'WHERE d.id = ?' : ''}
+      GROUP BY d.id, d.name
+      ORDER BY count DESC
+    `, departmentId ? [departmentId] : []);
+
+    // Get budget ranges
+    const budgetRanges = query(`
+      SELECT
+        CASE
+          WHEN budget < 100000 THEN 'น้อยกว่า 100,000'
+          WHEN budget < 500000 THEN '100,000-500,000'
+          WHEN budget < 1000000 THEN '500,000-1,000,000'
+          WHEN budget < 5000000 THEN '1-5 ล้าน'
+          ELSE 'มากกว่า 5 ล้าน'
+        END as range,
+        COUNT(*) as count
+      FROM projects p
+      ${whereClause}
+      GROUP BY range
+      ORDER BY
+        CASE
+          WHEN budget < 100000 THEN 1
+          WHEN budget < 500000 THEN 2
+          WHEN budget < 1000000 THEN 3
+          WHEN budget < 5000000 THEN 4
+          ELSE 5
+        END
+    `, params);
+
+    // Get monthly trend (last 6 months)
+    const monthlyTrend = query(`
+      SELECT
+        strftime('%Y-%m', created_at) as month,
+        COUNT(*) as count,
+        SUM(budget) as total_budget
+      FROM projects p
+      ${whereClause}
+      AND created_at >= date('now', '-6 months')
+      GROUP BY month
+      ORDER BY month
+    `, params);
+
+    // Count delayed projects
+    const delayedCount = queryOne(`
+      SELECT COUNT(DISTINCT p.id) as count
+      FROM projects p
+      INNER JOIN project_steps ps ON p.id = ps.project_id
+      ${whereClause.replace('WHERE', 'WHERE')}
+      AND ps.status = 'delayed'
+    `, params);
+
     logger.dbOperation('getProjectStatistics', 'projects', {
       departmentId,
       totalProjects: stats ? stats.total_projects : 0
     });
 
     return {
-      data: stats || {
-        total_projects: 0,
-        draft_count: 0,
-        in_progress_count: 0,
-        completed_count: 0,
-        cancelled_count: 0,
-        on_hold_count: 0,
-        total_budget: 0,
-        average_budget: 0
+      data: {
+        ...(stats || {
+          total_projects: 0,
+          draft_count: 0,
+          in_progress_count: 0,
+          completed_count: 0,
+          cancelled_count: 0,
+          on_hold_count: 0,
+          total_budget: 0,
+          average_budget: 0
+        }),
+        delayed_count: delayedCount ? delayedCount.count : 0,
+        by_method: byMethod,
+        by_department: byDepartment,
+        budget_ranges: budgetRanges,
+        monthly_trend: monthlyTrend,
+        // Computed stats
+        totalProjects: stats?.total_projects || 0,
+        inProgressProjects: stats?.in_progress_count || 0,
+        completedProjects: stats?.completed_count || 0,
+        delayedProjects: delayedCount?.count || 0,
+        completionRate: stats && stats.total_projects > 0
+          ? ((stats.completed_count / stats.total_projects) * 100).toFixed(1)
+          : 0
       }
     };
   } catch (error) {
@@ -689,7 +777,7 @@ export function getProjectStatistics(departmentId = null) {
     });
     throw new DatabaseError('เกิดข้อผิดพลาดในการดึงสถิติโครงการ', error);
   }
-};
+}
 
 export default {
   getAllProjects,

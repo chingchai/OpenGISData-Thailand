@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { usersAPI, departmentsAPI } from '../services/api';
 import Layout from '../components/Layout';
 import UserFormModal from '../components/UserFormModal';
+import BulkImportModal from '../components/BulkImportModal';
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBulkImportModalOpen, setIsBulkImportModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [filters, setFilters] = useState({
     role: '',
@@ -119,13 +121,22 @@ const UsersPage = () => {
             </h1>
             <p className="text-gray-600 dark:text-gray-400 mt-1">จัดการบัญชีผู้ใช้และสิทธิ์</p>
           </div>
-          <button
-            onClick={handleAddUser}
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl transition-all font-medium"
-          >
-            <i className="fas fa-plus"></i>
-            เพิ่มผู้ใช้
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setIsBulkImportModalOpen(true)}
+              className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl transition-all font-medium"
+            >
+              <i className="fas fa-file-import"></i>
+              นำเข้าแบบ Bulk
+            </button>
+            <button
+              onClick={handleAddUser}
+              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl transition-all font-medium"
+            >
+              <i className="fas fa-plus"></i>
+              เพิ่มผู้ใช้
+            </button>
+          </div>
         </div>
 
         {/* Filters - iOS Clean */}
@@ -299,6 +310,13 @@ const UsersPage = () => {
         onSuccess={handleModalSuccess}
         user={editingUser}
         departments={departments}
+      />
+
+      {/* Bulk Import Modal */}
+      <BulkImportModal
+        isOpen={isBulkImportModalOpen}
+        onClose={() => setIsBulkImportModalOpen(false)}
+        onSuccess={handleModalSuccess}
       />
     </Layout>
   );

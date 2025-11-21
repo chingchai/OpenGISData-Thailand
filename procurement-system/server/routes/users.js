@@ -7,8 +7,32 @@ import express from 'express';
 import * as userController from '../controllers/user-controller.js';
 import { authenticate } from '../middleware/auth.js';
 import { body, param, query, validationResult } from 'express-validator';
+import multer from 'multer';
 
 const router = express.Router();
+
+// Configure multer for file upload
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedMimes = [
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+      'application/vnd.ms-excel', // .xls
+      'text/csv' // .csv
+    ];
+    const allowedExtensions = ['xlsx', 'xls', 'csv'];
+    const fileExtension = file.originalname.split('.').pop().toLowerCase();
+
+    if (allowedMimes.includes(file.mimetype) || allowedExtensions.includes(fileExtension)) {
+      cb(null, true);
+    } else {
+      cb(new Error('รองรับเฉพาะไฟล์ .xlsx, .xls หรือ .csv เท่านั้น'), false);
+    }
+  }
+});
 
 /**
  * Validation middleware to check for validation errors
@@ -154,6 +178,18 @@ router.put(
   validateUpdateUser,
   validate,
   userController.updateUser
+);
+
+/**
+ * POST /api/users/bulk-import
+ * Bulk import users from Excel or CSV file
+ * Accessible by: admin only
+ */
+router.post(
+  '/bulk-import',
+  authenticate,
+  upload.single('file'),
+  userController.bulkImportUsers
 );
 
 /**
