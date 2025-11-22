@@ -709,6 +709,146 @@
                 opacity: 1;
             }
         }
+
+        /* Button Group */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 32px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-generate {
+            background: var(--ios-blue);
+            color: white;
+            padding: 14px 32px;
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-generate:hover {
+            background: #0051D5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4);
+        }
+
+        .btn-generate:active {
+            transform: translateY(0);
+        }
+
+        .btn-copy {
+            background: var(--ios-green);
+            color: white;
+            padding: 14px 32px;
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+        }
+
+        .btn-copy:hover {
+            background: #248A3D;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(52, 199, 89, 0.4);
+        }
+
+        .btn-copy:active {
+            transform: translateY(0);
+        }
+
+        .btn-reset {
+            background: var(--ios-red);
+            color: white;
+            padding: 14px 32px;
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+        }
+
+        .btn-reset:hover {
+            background: #D70015;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 59, 48, 0.4);
+        }
+
+        .btn-reset:active {
+            transform: translateY(0);
+        }
+
+        /* Output Section */
+        .output-section {
+            margin: 32px 0;
+            padding: 24px;
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid var(--ios-blue);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .output-section.show {
+            display: block;
+        }
+
+        .output-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ios-blue);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .output-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            white-space: pre-wrap;
+            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            line-height: 1.7;
+            font-size: 16px;
+            border: 1px solid var(--ios-gray4);
+            color: #1C1C1E;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-generate,
+            .btn-copy,
+            .btn-reset {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1226,6 +1366,28 @@
                 </div>
             </div>
         </div>
+
+        <!-- Button Group -->
+        <div class="button-group">
+            <button type="button" class="btn-generate" onclick="generateOutput()">
+                <i class="fas fa-file-alt"></i> สร้างข้อความ
+            </button>
+            <button type="button" class="btn-copy" onclick="copyOutputToClipboard()">
+                <i class="fas fa-copy"></i> คัดลอกข้อความ
+            </button>
+            <button type="button" class="btn-reset" onclick="resetSelection()">
+                <i class="fas fa-redo"></i> ล้างข้อมูล
+            </button>
+        </div>
+
+        <!-- Output Section -->
+        <div id="outputSection" class="output-section">
+            <div class="output-title">
+                <i class="fas fa-check-circle"></i>
+                <span>ผลลัพธ์</span>
+            </div>
+            <div id="outputContent" class="output-content"></div>
+        </div>
     </div>
 
     <!-- Action Buttons -->
@@ -1648,6 +1810,107 @@
                 updateStats();
                 updateSelectionPanel();
                 showToast('ล้างการเลือกสำเร็จ');
+            }
+        }
+
+        // Generate output text (for display in output section)
+        function generateOutput() {
+            if (selectedIndicators.length === 0) {
+                showToast('กรุณาเลือกตัวชี้วัดอย่างน้อย 1 รายการ');
+                return;
+            }
+
+            const sortedItems = [...selectedIndicators].sort((a, b) => parseInt(a.id) - parseInt(b.id));
+
+            let output = `รายการตัวชี้วัดและปัญหาที่เลือก (${selectedIndicators.length} รายการ)\n`;
+            output += `${'='.repeat(80)}\n\n`;
+
+            sortedItems.forEach((item, idx) => {
+                output += `${idx + 1}. [${item.code}] ${item.title}\n`;
+                output += `   หมวดหมู่: ${item.category}\n`;
+
+                if (item.problems && item.problems.length > 0) {
+                    output += `   ปัญหาที่เกี่ยวข้อง:\n`;
+                    item.problems.forEach((problem, pIdx) => {
+                        output += `   ${pIdx + 1}. ${problem}\n`;
+                    });
+                }
+                output += `\n`;
+            });
+
+            output += `${'-'.repeat(80)}\n`;
+            output += `สร้างโดย: ระบบ TPMAP Indicators Selector\n`;
+            output += `วันที่: ${new Date().toLocaleDateString('th-TH', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            })}\n`;
+            output += `${'='.repeat(80)}\n`;
+
+            // Show output section
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+
+            outputContent.textContent = output;
+            outputSection.classList.add('show');
+
+            // Scroll to output
+            outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            showToast('สร้างข้อความสำเร็จ!');
+        }
+
+        // Copy output content to clipboard
+        function copyOutputToClipboard() {
+            const outputContent = document.getElementById('outputContent');
+            const text = outputContent.textContent;
+
+            if (!text || text.trim() === '') {
+                showToast('ยังไม่มีข้อความที่จะคัดลอก กรุณากดปุ่ม "สร้างข้อความ" ก่อน');
+                return;
+            }
+
+            // Try modern Clipboard API first (HTTPS)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showSuccessTooltip('คัดลอกข้อความสำเร็จ!');
+                }).catch(err => {
+                    console.error('Clipboard API failed:', err);
+                    fallbackCopyToClipboard(text);
+                });
+            } else {
+                // Fallback for HTTP
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        // Reset all selections and hide output
+        function resetSelection() {
+            if (selectedIndicators.length === 0) {
+                showToast('ไม่มีรายการที่จะลบ');
+                return;
+            }
+
+            if (confirm(`ต้องการล้างข้อมูลทั้งหมดหรือไม่?`)) {
+                // Clear selections
+                selectedIndicators = [];
+                document.querySelectorAll('.indicator-card.selected').forEach(card => {
+                    card.classList.remove('selected');
+                });
+
+                // Hide output section
+                const outputSection = document.getElementById('outputSection');
+                const outputContent = document.getElementById('outputContent');
+                outputSection.classList.remove('show');
+                outputContent.textContent = '';
+
+                // Update UI
+                updateStats();
+                updateSelectionPanel();
+
+                showToast('ล้างข้อมูลสำเร็จ');
             }
         }
 
