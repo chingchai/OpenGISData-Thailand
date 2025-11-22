@@ -1359,17 +1359,76 @@
                 return;
             }
 
-            navigator.clipboard.writeText(outputContent).then(() => {
-                // แสดงข้อความแจ้งเตือน
+            // ฟังก์ชันแสดง feedback
+            function showSuccessFeedback(button) {
                 const successMsg = document.getElementById('successMessage');
                 successMsg.style.display = 'block';
 
+                // เปลี่ยนข้อความปุ่มชั่วคราว
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ คัดลอกแล้ว!';
+                button.style.backgroundColor = '#28a745';
+
                 setTimeout(() => {
                     successMsg.style.display = 'none';
+                    button.innerHTML = originalText;
+                    button.style.backgroundColor = '';
                 }, 2000);
-            }).catch(err => {
-                alert('❌ เกิดข้อผิดพลาดในการคัดลอก: ' + err);
-            });
+            }
+
+            // หาปุ่มที่กด
+            const copyButton = event.target;
+
+            // พยายามใช้ modern Clipboard API ก่อน (สำหรับ HTTPS)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(outputContent).then(() => {
+                    showSuccessFeedback(copyButton);
+                }).catch(err => {
+                    console.error('Clipboard API failed:', err);
+                    // ถ้า Clipboard API ไม่ทำงาน ใช้ fallback method
+                    fallbackCopyToClipboard(outputContent, copyButton);
+                });
+            } else {
+                // ถ้า browser ไม่รองรับ Clipboard API ใช้ fallback method
+                fallbackCopyToClipboard(outputContent, copyButton);
+            }
+
+            // Fallback method สำหรับ HTTP หรือ browser เก่า
+            function fallbackCopyToClipboard(text, button) {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+
+                // ทำให้ไม่เห็น
+                textArea.style.position = 'fixed';
+                textArea.style.top = '0';
+                textArea.style.left = '0';
+                textArea.style.width = '2em';
+                textArea.style.height = '2em';
+                textArea.style.padding = '0';
+                textArea.style.border = 'none';
+                textArea.style.outline = 'none';
+                textArea.style.boxShadow = 'none';
+                textArea.style.background = 'transparent';
+                textArea.style.opacity = '0';
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        showSuccessFeedback(button);
+                    } else {
+                        alert('❌ ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยมือ (Ctrl+C)');
+                    }
+                } catch (err) {
+                    console.error('Fallback copy failed:', err);
+                    alert('❌ เกิดข้อผิดพลาดในการคัดลอก กรุณาคัดลอกข้อความด้วยมือ');
+                }
+
+                document.body.removeChild(textArea);
+            }
         }
 
         function resetForm() {
