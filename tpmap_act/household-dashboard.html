@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>ระบบจัดการข้อมูลครัวเรือน</title>
 
-    <!-- No external dependencies - using system fonts and inline SVG icons -->
+    <!-- Google Fonts: Inter + Noto Sans Thai -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6 Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         :root {
@@ -90,7 +96,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Thonburi', 'Sukhumvit Set', 'Leelawadee UI', sans-serif;
+            font-family: 'Inter', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-main);
             color: var(--text-primary);
             min-height: 100vh;
@@ -155,7 +161,7 @@
             border-radius: 12px;
             font-size: 17px;
             transition: all 0.2s ease;
-            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
             background: white;
             color: #1C1C1E;
         }
@@ -207,7 +213,7 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
-            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
             letter-spacing: -0.3px;
             box-shadow: var(--shadow-md);
         }
@@ -309,7 +315,7 @@
             padding: var(--space-md);
             border-radius: var(--radius-md);
             white-space: pre-wrap;
-            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
             line-height: 1.8;
             font-size: var(--font-size-sm);
             border: 1px solid var(--border-light);
@@ -657,216 +663,6 @@
             fill: currentColor;
         }
 
-        .icon-chart-pie::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M21.21 15.89A10 10 0 1 1 8 2.83'/%3E%3Cpath d='M22 12A10 10 0 0 0 12 2v10z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-home::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3Cpolyline points='9 22 9 12 15 12 15 22'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-briefcase::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='2' y='7' width='20' height='14' rx='2' ry='2'/%3E%3Cpath d='M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-tasks::before,
-        .icon-list-check::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-heartbeat::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-graduation-cap::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M22 10v6M2 10l10-5 10 5-10 5z'/%3E%3Cpath d='M6 12v5c3 3 9 3 12 0v-5'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-coins::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8'/%3E%3Cpath d='M12 18V6'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-hand-holding-heart::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-users::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-smile::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M8 14s1.5 2 4 2 4-2 4-2'/%3E%3Cline x1='9' y1='9' x2='9.01' y2='9'/%3E%3Cline x1='15' y1='9' x2='15.01' y2='9'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-tools::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-warehouse::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-lightbulb::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5'/%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-file-alt::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cpolyline points='10 9 9 9 8 9'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-copy::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-redo::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='23 4 23 10 17 10'/%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-check-circle::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-chevron-up::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='18 15 12 9 6 15'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
-        .icon-inbox::before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='22 12 16 12 14 15 10 15 8 12 2 12'/%3E%3Cpath d='M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            vertical-align: -0.125em;
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -902,12 +698,12 @@
 </head>
 <body>
     <div class="container">
-        <h1><i class="icon-chart-pie"></i> รายการวิเคราะห์ปัญหาตามมิติ TPMAP</h1>
+        <h1><i class="fa-solid fa-chart-pie"></i> รายการวิเคราะห์ปัญหาตามมิติ TPMAP</h1>
         <div class="subtitle">กรอกข้อมูลและเลือกรายการเพื่อสร้างข้อความสำหรับ Dashboard</div>
 
         <form id="householdForm">
             <!-- ข้อมูลพื้นฐานครัวเรือน -->
-            <div class="section-header"><i class="icon-home"></i> ข้อมูลพื้นฐานครัวเรือน</div>
+            <div class="section-header"><i class="fa-solid fa-home"></i> ข้อมูลพื้นฐานครัวเรือน</div>
             <div class="form-grid">
                 <div class="form-group">
                     <label for="members">มีสมาชิกในครัวเรือน (คน)</label>
@@ -928,7 +724,7 @@
             </div>
 
             <!-- อาชีพ -->
-            <div class="section-header"><i class="icon-briefcase"></i> อาชีพของสมาชิกในครัวเรือน</div>
+            <div class="section-header"><i class="fa-solid fa-briefcase"></i> อาชีพของสมาชิกในครัวเรือน</div>
             <div class="form-group">
                 <label>เลือกอาชีพ (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container" id="occupationContainer">
@@ -951,11 +747,11 @@
             </div>
 
             <!-- สภาพครัวเรือนตามตัวชี้วัด -->
-            <div class="section-header"><i class="icon-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม) - ทั้งหมด 38 ตัวชี้วัด</div>
+            <div class="section-header"><i class="fa-solid fa-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม) - ทั้งหมด 38 ตัวชี้วัด</div>
 
             <!-- ด้านสุขภาพ (12 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="icon-heartbeat"></i> <strong>ด้านสุขภาพ</strong> - 12 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fa-solid fa-heartbeat"></i> <strong>ด้านสุขภาพ</strong> - 12 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="1. [H01] การฝากครรภ์อย่างมีคุณภาพ">
@@ -1022,7 +818,7 @@
 
             <!-- ด้านที่อยู่อาศัยและสิ่งแวดล้อม (9 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="icon-home"></i> <strong>ด้านที่อยู่อาศัยและสิ่งแวดล้อม</strong> - 9 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fa-solid fa-home"></i> <strong>ด้านที่อยู่อาศัยและสิ่งแวดล้อม</strong> - 9 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="13. [HE01] ครัวเรือนมีความมั่นคงในที่อยู่อาศัย บ้านมีสภาพคงทนถาวร และอยู่ในสภาพแวดล้อมที่เหมาะสม">
@@ -1074,7 +870,7 @@
 
             <!-- ด้านการศึกษาและการเรียนรู้ (5 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="icon-graduation-cap"></i> <strong>ด้านการศึกษาและการเรียนรู้</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fa-solid fa-graduation-cap"></i> <strong>ด้านการศึกษาและการเรียนรู้</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="22. [ED01] เด็กอายุต่ำกว่า 6 ปี มีพัฒนาการด้านสุขภาพ การเรียนรู้ และพัฒนาการทางบุคลิกภาพตามวัย">
@@ -1106,7 +902,7 @@
 
             <!-- ด้านเศรษฐกิจและอาชีพ (4 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="icon-coins"></i> <strong>ด้านเศรษฐกิจและอาชีพ</strong> - 4 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fa-solid fa-coins"></i> <strong>ด้านเศรษฐกิจและอาชีพ</strong> - 4 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="27. [EC01] คนอายุ 15–59 ปี มีอาชีพและรายได้">
@@ -1133,7 +929,7 @@
 
             <!-- ด้านสวัสดิการสังคม (5 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="icon-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fa-solid fa-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="31. [W01] เด็กแรกเกิด–6 ปี ที่ครัวเรือนมีรายได้เฉลี่ยไม่เกิน 100,000 บาท/คน/ปี ได้รับเงินอุดหนุนจากภาครัฐ">
@@ -1165,7 +961,7 @@
 
             <!-- ด้านครอบครัวและชุมชน (2 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="icon-users"></i> <strong>ด้านครอบครัวและชุมชน</strong> - 2 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="fa-solid fa-users"></i> <strong>ด้านครอบครัวและชุมชน</strong> - 2 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="36. [FC01] ครอบครัวมีความอบอุ่น">
@@ -1181,7 +977,7 @@
             </div>
 
             <!-- ทัศนคติ -->
-            <div class="section-header"><i class="icon-smile"></i> ทัศนคติ</div>
+            <div class="section-header"><i class="fa-solid fa-smile"></i> ทัศนคติ</div>
             <div class="form-group">
                 <label for="attitude">เลือกทัศนคติ</label>
                 <select id="attitude" multiple size="5" style="height: auto;">
@@ -1202,7 +998,7 @@
             </div>
 
             <!-- ทักษะ -->
-            <div class="section-header"><i class="icon-tools"></i> ทักษะ</div>
+            <div class="section-header"><i class="fa-solid fa-tools"></i> ทักษะ</div>
             <div class="form-group">
                 <label for="skill">เลือกทักษะ</label>
                 <select id="skill" multiple size="5" style="height: auto;">
@@ -1224,7 +1020,7 @@
             </div>
 
             <!-- ทรัพยากร -->
-            <div class="section-header"><i class="icon-warehouse"></i> ทรัพยากร</div>
+            <div class="section-header"><i class="fa-solid fa-warehouse"></i> ทรัพยากร</div>
             <div class="form-group">
                 <label for="resource">เลือกทรัพยากร</label>
                 <select id="resource" multiple size="5" style="height: auto;">
@@ -1251,7 +1047,7 @@
             </div>
 
             <!-- ทางออก/ความต้องการ -->
-            <div class="section-header"><i class="icon-lightbulb"></i> ทางออก (ความต้องการ)</div>
+            <div class="section-header"><i class="fa-solid fa-lightbulb"></i> ทางออก (ความต้องการ)</div>
             <div class="form-group">
                 <label for="solution">เลือกทางออก/ความต้องการ</label>
                 <select id="solution" multiple size="5" style="height: auto;">
@@ -1278,16 +1074,16 @@
             <!-- ปุ่มต่างๆ -->
             <div class="button-group">
                 <button type="button" class="btn-generate" onclick="generateOutput()">
-                    <i class="icon-file-alt"></i> สร้างข้อความ
+                    <i class="fa-solid fa-file-alt"></i> สร้างข้อความ
                 </button>
                 <button type="button" class="btn-copy" onclick="copyToClipboard()">
-                    <i class="icon-copy"></i> คัดลอกข้อความ
+                    <i class="fa-solid fa-copy"></i> คัดลอกข้อความ
                 </button>
                 <button type="button" class="btn-download" onclick="downloadTextFile()">
-                    <i class="icon-download"></i> ดาวน์โหลดไฟล์
+                    <i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์
                 </button>
                 <button type="button" class="btn-reset" onclick="resetForm()">
-                    <i class="icon-redo"></i> ล้างข้อมูล
+                    <i class="fa-solid fa-redo"></i> ล้างข้อมูล
                 </button>
             </div>
         </form>
@@ -1295,7 +1091,7 @@
         <!-- แสดงผลลัพธ์ -->
         <div id="outputSection" class="output-section">
             <div class="output-title">
-                <i class="icon-check-circle"></i>
+                <i class="fa-solid fa-check-circle"></i>
                 <span>ผลลัพธ์</span>
             </div>
             <div id="outputContent" class="output-content"></div>
@@ -1304,46 +1100,46 @@
 
     <!-- ข้อความแจ้งเตือน -->
     <div id="successMessage" class="success-message">
-        <i class="icon-check-circle"></i> คัดลอกข้อความสำเร็จ!
+        <i class="fa-solid fa-check-circle"></i> คัดลอกข้อความสำเร็จ!
     </div>
 
     <!-- Selection Balloon Tip -->
     <div id="selectionBalloon" class="selection-balloon">
         <div class="balloon-header" onclick="toggleBalloon()">
             <div class="balloon-title">
-                <i class="icon-list-check"></i>
+                <i class="fa-solid fa-list-check"></i>
                 <span>รายการที่เลือก</span>
                 <span class="selection-count" id="selectionCount">0</span>
             </div>
-            <i class="icon-chevron-up balloon-toggle" id="balloonToggle"></i>
+            <i class="fa-solid fa-chevron-up balloon-toggle" id="balloonToggle"></i>
         </div>
         <div class="balloon-content" id="balloonContent">
             <div class="balloon-section" id="occupationSection" style="display: none;">
-                <div class="balloon-section-title"><i class="icon-briefcase"></i> อาชีพ</div>
+                <div class="balloon-section-title"><i class="fa-solid fa-briefcase"></i> อาชีพ</div>
                 <div class="balloon-items" id="occupationItems"></div>
             </div>
             <div class="balloon-section" id="conditionSection" style="display: none;">
-                <div class="balloon-section-title"><i class="icon-tasks"></i> ตัวชี้วัด</div>
+                <div class="balloon-section-title"><i class="fa-solid fa-tasks"></i> ตัวชี้วัด</div>
                 <div class="balloon-items" id="conditionItems"></div>
             </div>
             <div class="balloon-section" id="attitudeSection" style="display: none;">
-                <div class="balloon-section-title"><i class="icon-smile"></i> ทัศนคติ</div>
+                <div class="balloon-section-title"><i class="fa-solid fa-smile"></i> ทัศนคติ</div>
                 <div class="balloon-items" id="attitudeItems"></div>
             </div>
             <div class="balloon-section" id="skillSection" style="display: none;">
-                <div class="balloon-section-title"><i class="icon-tools"></i> ทักษะ</div>
+                <div class="balloon-section-title"><i class="fa-solid fa-tools"></i> ทักษะ</div>
                 <div class="balloon-items" id="skillItems"></div>
             </div>
             <div class="balloon-section" id="resourceSection" style="display: none;">
-                <div class="balloon-section-title"><i class="icon-warehouse"></i> ทรัพยากร</div>
+                <div class="balloon-section-title"><i class="fa-solid fa-warehouse"></i> ทรัพยากร</div>
                 <div class="balloon-items" id="resourceItems"></div>
             </div>
             <div class="balloon-section" id="solutionSection" style="display: none;">
-                <div class="balloon-section-title"><i class="icon-lightbulb"></i> ทางออก</div>
+                <div class="balloon-section-title"><i class="fa-solid fa-lightbulb"></i> ทางออก</div>
                 <div class="balloon-items" id="solutionItems"></div>
             </div>
             <div class="balloon-empty" id="balloonEmpty">
-                <i class="icon-inbox"></i>
+                <i class="fa-solid fa-inbox"></i>
                 <p>ยังไม่มีรายการที่เลือก</p>
             </div>
         </div>
@@ -1536,7 +1332,7 @@
             // แสดงข้อความสำเร็จ
             const successMsg = document.getElementById('successMessage');
             const originalText = successMsg.innerHTML;
-            successMsg.innerHTML = '<i class="icon-check-circle"></i> ดาวน์โหลดไฟล์สำเร็จ!';
+            successMsg.innerHTML = '<i class="fa-solid fa-check-circle"></i> ดาวน์โหลดไฟล์สำเร็จ!';
             successMsg.style.display = 'block';
 
             setTimeout(() => {
@@ -1626,7 +1422,7 @@
             if (items.length > 0) {
                 section.style.display = 'block';
                 itemsContainer.innerHTML = items.map(item =>
-                    `<div class="balloon-item"><i class="icon-check-circle"></i><span>${item}</span></div>`
+                    `<div class="balloon-item"><i class="fa-solid fa-check-circle"></i><span>${item}</span></div>`
                 ).join('');
             } else {
                 section.style.display = 'none';
