@@ -9,25 +9,71 @@
 
     <style>
         :root {
-            --ios-blue: #007AFF;
-            --ios-green: #34C759;
-            --ios-indigo: #5856D6;
-            --ios-orange: #FF9500;
-            --ios-pink: #FF2D55;
-            --ios-purple: #AF52DE;
-            --ios-red: #FF3B30;
-            --ios-teal: #5AC8FA;
-            --ios-yellow: #FFCC00;
-            --ios-gray: #8E8E93;
-            --ios-gray2: #AEAEB2;
-            --ios-gray3: #C7C7CC;
-            --ios-gray4: #D1D1D6;
-            --ios-gray5: #E5E5EA;
-            --ios-gray6: #F2F2F7;
-            --ios-background: #F2F2F7;
-            --ios-card-bg: rgba(255, 255, 255, 0.9);
-            --ios-border-radius: 16px;
-            --ios-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            /* Minimal Cozy Theme - Warm & Comfortable */
+            --primary: #8B7355;
+            --primary-light: #A8927D;
+            --primary-dark: #6B5842;
+            --secondary: #7FA284;
+            --accent: #D4A574;
+            --danger: #C9876E;
+
+            /* Backgrounds */
+            --bg-main: #FAF8F5;
+            --bg-card: #FFFFFF;
+            --bg-hover: #F5F2EE;
+            --bg-selected: #EFE9E3;
+
+            /* Text Colors */
+            --text-primary: #4A403A;
+            --text-secondary: #8B7F77;
+            --text-muted: #B8AEA6;
+            --text-white: #FFFFFF;
+
+            /* Border & Divider */
+            --border-color: #E8E3DD;
+            --border-light: #F0EBE5;
+            --divider: #D9D1C8;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(107, 88, 66, 0.08);
+            --shadow-md: 0 4px 16px rgba(107, 88, 66, 0.10);
+            --shadow-lg: 0 8px 32px rgba(107, 88, 66, 0.12);
+
+            /* Spacing (following 8px grid) */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+
+            /* Border Radius */
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --radius-full: 9999px;
+
+            /* Typography */
+            --font-size-xs: 14px;
+            --font-size-sm: 16px;
+            --font-size-md: 18px;
+            --font-size-lg: 24px;
+            --font-size-xl: 32px;
+
+            /* Legacy iOS compatibility (for existing code) */
+            --ios-blue: var(--primary);
+            --ios-green: var(--secondary);
+            --ios-orange: var(--accent);
+            --ios-red: var(--danger);
+            --ios-gray: var(--text-secondary);
+            --ios-gray2: var(--text-muted);
+            --ios-gray3: var(--border-color);
+            --ios-gray4: var(--border-light);
+            --ios-gray5: var(--bg-hover);
+            --ios-gray6: var(--bg-selected);
+            --ios-background: var(--bg-main);
+            --ios-card-bg: var(--bg-card);
+            --ios-border-radius: var(--radius-md);
+            --ios-shadow: var(--shadow-md);
         }
 
         * {
@@ -39,40 +85,40 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Thonburi', 'Sukhumvit Set', sans-serif;
-            background: linear-gradient(180deg, #F2F2F7 0%, #E5E5EA 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Thonburi', 'Sukhumvit Set', 'Leelawadee UI', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
             min-height: 100vh;
-            padding: 20px;
-            padding-top: max(20px, env(safe-area-inset-top));
-            padding-bottom: max(20px, env(safe-area-inset-bottom));
+            padding: var(--space-md);
+            padding-top: max(var(--space-md), env(safe-area-inset-top));
+            padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: var(--ios-card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            box-shadow: var(--ios-shadow);
-            padding: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--space-xl);
+            border: 1px solid var(--border-light);
         }
 
         h1 {
             text-align: center;
-            color: var(--ios-blue);
-            margin-bottom: 8px;
-            font-size: 2.2em;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-xl);
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
         .subtitle {
             text-align: center;
-            color: var(--ios-gray);
-            margin-bottom: 32px;
-            font-size: 1.05em;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            font-size: var(--font-size-md);
             font-weight: 400;
         }
 
@@ -142,94 +188,98 @@
 
         .button-group {
             display: flex;
-            gap: 12px;
+            gap: var(--space-sm);
             justify-content: center;
-            margin-top: 32px;
+            margin: var(--space-lg) 0;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 14px 32px;
-            font-size: 17px;
+            padding: 16px 40px;
+            font-size: var(--font-size-sm);
             border: none;
-            border-radius: 14px;
+            border-radius: var(--radius-lg);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
             font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
             letter-spacing: -0.3px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-md);
         }
 
         .btn-generate {
-            background: var(--ios-blue);
-            color: white;
+            background: var(--primary);
+            color: var(--text-white);
             flex: 1;
             min-width: 200px;
         }
 
         .btn-generate:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-generate:active {
-            transform: scale(0.98);
+            transform: translateY(0);
         }
 
         .btn-copy {
-            background: var(--ios-green);
-            color: white;
+            background: var(--secondary);
+            color: var(--text-white);
             flex: 1;
             min-width: 200px;
         }
 
         .btn-copy:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 16px rgba(52, 199, 89, 0.3);
+            background: #6A8E6F;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-copy:active {
-            transform: scale(0.98);
+            transform: translateY(0);
         }
 
         .btn-reset {
-            background: var(--ios-gray6);
-            color: var(--ios-gray);
+            background: var(--bg-selected);
+            color: var(--text-secondary);
             flex: 1;
             min-width: 150px;
         }
 
         .btn-reset:hover {
-            background: var(--ios-gray5);
+            background: var(--bg-hover);
+            transform: translateY(-3px);
         }
 
         .btn-reset:active {
-            transform: scale(0.98);
+            transform: translateY(0);
         }
 
         .btn-download {
-            background: var(--ios-orange);
-            color: white;
+            background: var(--accent);
+            color: var(--text-white);
             flex: 1;
             min-width: 200px;
         }
 
         .btn-download:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 16px rgba(255, 149, 0, 0.3);
+            background: #C59763;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-download:active {
-            transform: scale(0.98);
+            transform: translateY(0);
         }
 
         .output-section {
-            margin-top: 32px;
-            padding: 24px;
-            background: rgba(0, 122, 255, 0.05);
-            border-radius: 16px;
-            border: 1px solid var(--ios-blue);
+            margin: var(--space-lg) 0;
+            padding: var(--space-lg);
+            background: var(--bg-hover);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
             display: none;
             animation: fadeIn 0.3s ease;
         }
@@ -239,26 +289,26 @@
         }
 
         .output-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--ios-blue);
-            margin-bottom: 16px;
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--space-md);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--space-sm);
             letter-spacing: -0.3px;
         }
 
         .output-content {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
+            background: var(--bg-card);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
             white-space: pre-wrap;
             font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
-            line-height: 1.7;
-            font-size: 16px;
-            border: 1px solid var(--ios-gray4);
-            color: #1C1C1E;
+            line-height: 1.8;
+            font-size: var(--font-size-sm);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
         }
 
         .success-message {
