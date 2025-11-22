@@ -208,6 +208,22 @@
             transform: scale(0.98);
         }
 
+        .btn-download {
+            background: var(--ios-orange);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(255, 149, 0, 0.3);
+        }
+
+        .btn-download:active {
+            transform: scale(0.98);
+        }
+
         .output-section {
             margin-top: 32px;
             padding: 24px;
@@ -1212,6 +1228,9 @@
                 <button type="button" class="btn-copy" onclick="copyToClipboard()">
                     <i class="icon-copy"></i> คัดลอกข้อความ
                 </button>
+                <button type="button" class="btn-download" onclick="downloadTextFile()">
+                    <i class="icon-download"></i> ดาวน์โหลดไฟล์
+                </button>
                 <button type="button" class="btn-reset" onclick="resetForm()">
                     <i class="icon-redo"></i> ล้างข้อมูล
                 </button>
@@ -1429,6 +1448,46 @@
 
                 document.body.removeChild(textArea);
             }
+        }
+
+        function downloadTextFile() {
+            const outputContent = document.getElementById('outputContent').textContent;
+
+            if (!outputContent || outputContent.trim() === '') {
+                alert('⚠️ กรุณาสร้างข้อความก่อนดาวน์โหลด');
+                return;
+            }
+
+            // สร้าง Blob จากข้อความ
+            const blob = new Blob([outputContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+
+            // สร้าง element สำหรับดาวน์โหลด
+            const a = document.createElement('a');
+            a.href = url;
+
+            // ตั้งชื่อไฟล์ด้วย timestamp
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+            a.download = `TPMAP_Household_Dashboard_${timestamp}.txt`;
+
+            // เพิ่มลงใน DOM, คลิก, แล้วลบออก
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            // ลบ URL object
+            URL.revokeObjectURL(url);
+
+            // แสดงข้อความสำเร็จ
+            const successMsg = document.getElementById('successMessage');
+            const originalText = successMsg.innerHTML;
+            successMsg.innerHTML = '<i class="icon-check-circle"></i> ดาวน์โหลดไฟล์สำเร็จ!';
+            successMsg.style.display = 'block';
+
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+                successMsg.innerHTML = originalText;
+            }, 2000);
         }
 
         function resetForm() {
