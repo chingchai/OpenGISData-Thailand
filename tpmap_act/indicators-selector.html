@@ -1510,6 +1510,7 @@
         }
 
         function openProblemModal(id, code, title, category) {
+            console.log('openProblemModal called with id:', id);
             const modal = document.getElementById('problemModal');
             const modalTitle = document.getElementById('modalIndicatorTitle');
             const problemsContainer = document.getElementById('modalProblemsContainer');
@@ -1519,12 +1520,14 @@
 
             // Get problems for this indicator
             const problems = indicatorProblems[id] || [];
+            console.log('Problems for indicator', id, ':', problems);
+            console.log('Number of problems:', problems.length);
 
             // Reset temp selection
             tempSelectedProblems = [];
 
             // Populate problems
-            problemsContainer.innerHTML = problems.map((problem, index) => `
+            const problemsHTML = problems.map((problem, index) => `
                 <div class="problem-option" onclick="toggleProblemSelection(${index})">
                     <div class="problem-checkbox">
                         <i class="fas fa-check"></i>
@@ -1533,8 +1536,12 @@
                 </div>
             `).join('');
 
+            console.log('Generated HTML length:', problemsHTML.length);
+            problemsContainer.innerHTML = problemsHTML;
+
             // Show modal
             modal.classList.add('show');
+            console.log('Modal should now be visible');
         }
 
         function closeProblemModal() {
