@@ -472,6 +472,228 @@
                 opacity: 1;
             }
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--ios-gray5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 1.3em;
+            color: var(--ios-blue);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: var(--ios-gray6);
+            border: none;
+            color: var(--ios-gray);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--ios-gray5);
+        }
+
+        .modal-body {
+            padding: 20px 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .problem-option {
+            background: white;
+            border: 2px solid var(--ios-gray5);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .problem-option:hover {
+            border-color: var(--ios-blue);
+            background: var(--ios-gray6);
+        }
+
+        .problem-option.selected {
+            border-color: var(--ios-blue);
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .problem-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--ios-gray3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .problem-option.selected .problem-checkbox {
+            background: var(--ios-blue);
+            border-color: var(--ios-blue);
+        }
+
+        .problem-checkbox i {
+            color: white;
+            font-size: 12px;
+            display: none;
+        }
+
+        .problem-option.selected .problem-checkbox i {
+            display: block;
+        }
+
+        .problem-text {
+            flex: 1;
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--ios-gray5);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--ios-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0051d5;
+        }
+
+        .btn-secondary {
+            background: var(--ios-gray6);
+            color: var(--ios-gray);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ios-gray5);
+        }
+
+        /* Success Tooltip (bottom-right) */
+        .success-tooltip {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--ios-green);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 2000;
+            animation: slideInUp 0.3s ease;
+        }
+
+        .success-tooltip.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1020,10 +1242,40 @@
         </div>
     </div>
 
+    <!-- Problem Selection Modal -->
+    <div class="modal" id="problemModal">
+        <div class="modal-overlay" onclick="closeProblemModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalIndicatorTitle">เลือกปัญหาที่เกี่ยวข้อง</h3>
+                <button class="modal-close" onclick="closeProblemModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalProblemsContainer">
+                <!-- Problems will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeProblemModal()">
+                    <i class="fas fa-times"></i> ยกเลิก
+                </button>
+                <button class="btn-primary" onclick="confirmProblemSelection()">
+                    <i class="fas fa-check"></i> ยืนยันการเลือก
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toastMessage">สำเร็จ!</span>
+    </div>
+
+    <!-- Success Message (for copy action) -->
+    <div class="success-tooltip" id="successTooltip">
+        <i class="fas fa-check-circle"></i>
+        <span>คัดลอกสำเร็จ!</span>
     </div>
 
     <script>
@@ -1218,6 +1470,9 @@
             ]
         };
 
+        let currentIndicatorId = null;
+        let tempSelectedProblems = [];
+
         function toggleIndicator(card) {
             const id = card.dataset.id;
             const code = card.dataset.code;
@@ -1227,17 +1482,103 @@
             const index = selectedIndicators.findIndex(item => item.id === id);
 
             if (index > -1) {
-                // Remove
+                // Remove indicator
                 selectedIndicators.splice(index, 1);
                 card.classList.remove('selected');
+                updateStats();
+                updateSelectionPanel();
             } else {
-                // Add
-                selectedIndicators.push({ id, code, title, category });
-                card.classList.add('selected');
+                // Open modal to select problems
+                currentIndicatorId = id;
+                openProblemModal(id, code, title, category);
+            }
+        }
+
+        function openProblemModal(id, code, title, category) {
+            const modal = document.getElementById('problemModal');
+            const modalTitle = document.getElementById('modalIndicatorTitle');
+            const problemsContainer = document.getElementById('modalProblemsContainer');
+
+            // Set modal title
+            modalTitle.textContent = `${id}. [${code}] ${title}`;
+
+            // Get problems for this indicator
+            const problems = indicatorProblems[id] || [];
+
+            // Reset temp selection
+            tempSelectedProblems = [];
+
+            // Populate problems
+            problemsContainer.innerHTML = problems.map((problem, index) => `
+                <div class="problem-option" onclick="toggleProblemSelection(${index})">
+                    <div class="problem-checkbox">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="problem-text">${index + 1}. ${problem}</div>
+                </div>
+            `).join('');
+
+            // Show modal
+            modal.classList.add('show');
+        }
+
+        function closeProblemModal() {
+            const modal = document.getElementById('problemModal');
+            modal.classList.remove('show');
+            currentIndicatorId = null;
+            tempSelectedProblems = [];
+        }
+
+        function toggleProblemSelection(index) {
+            const problemOptions = document.querySelectorAll('.problem-option');
+            const option = problemOptions[index];
+
+            if (option.classList.contains('selected')) {
+                option.classList.remove('selected');
+                tempSelectedProblems = tempSelectedProblems.filter(i => i !== index);
+            } else {
+                option.classList.add('selected');
+                tempSelectedProblems.push(index);
+            }
+        }
+
+        function confirmProblemSelection() {
+            if (tempSelectedProblems.length === 0) {
+                showToast('กรุณาเลือกปัญหาอย่างน้อย 1 รายการ');
+                return;
             }
 
+            // Find the indicator card
+            const card = document.querySelector(`.indicator-card[data-id="${currentIndicatorId}"]`);
+            const code = card.dataset.code;
+            const title = card.querySelector('.indicator-title').textContent;
+            const category = card.dataset.category;
+
+            // Get selected problem texts
+            const problems = indicatorProblems[currentIndicatorId];
+            const selectedProblemTexts = tempSelectedProblems
+                .sort((a, b) => a - b)
+                .map(index => problems[index]);
+
+            // Add to selected indicators with problems
+            selectedIndicators.push({
+                id: currentIndicatorId,
+                code,
+                title,
+                category,
+                problems: selectedProblemTexts
+            });
+
+            // Update UI
+            card.classList.add('selected');
             updateStats();
             updateSelectionPanel();
+
+            // Close modal
+            closeProblemModal();
+
+            // Show success message
+            showToast(`เลือกตัวชี้วัด #${currentIndicatorId} พร้อมปัญหา ${tempSelectedProblems.length} รายการ`);
         }
 
         function updateStats() {
@@ -1296,15 +1637,23 @@
 
             const sortedItems = [...selectedIndicators].sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
-            let output = `รายการตัวชี้วัดที่เลือก (${selectedIndicators.length} รายการ)\n`;
-            output += `${'='.repeat(60)}\n\n`;
+            let output = `รายการตัวชี้วัดและปัญหาที่เลือก (${selectedIndicators.length} รายการ)\n`;
+            output += `${'='.repeat(80)}\n\n`;
 
-            sortedItems.forEach(item => {
-                output += `${item.id}. [${item.code}] ${item.title}\n`;
-                output += `   หมวดหมู่: ${item.category}\n\n`;
+            sortedItems.forEach((item, idx) => {
+                output += `${idx + 1}. [${item.code}] ${item.title}\n`;
+                output += `   หมวดหมู่: ${item.category}\n`;
+
+                if (item.problems && item.problems.length > 0) {
+                    output += `   ปัญหาที่เกี่ยวข้อง:\n`;
+                    item.problems.forEach((problem, pIdx) => {
+                        output += `   ${pIdx + 1}. ${problem}\n`;
+                    });
+                }
+                output += `\n`;
             });
 
-            output += `\n${'='.repeat(60)}\n`;
+            output += `${'-'.repeat(80)}\n`;
             output += `สร้างโดย: ระบบ TPMAP Indicators Selector\n`;
             output += `วันที่: ${new Date().toLocaleDateString('th-TH', {
                 year: 'numeric',
@@ -1313,25 +1662,81 @@
                 hour: '2-digit',
                 minute: '2-digit'
             })}\n`;
+            output += `${'='.repeat(80)}\n`;
 
-            // Copy to clipboard
-            navigator.clipboard.writeText(output).then(() => {
-                showToast(`คัดลอก ${selectedIndicators.length} รายการสำเร็จ!`);
-            }).catch(err => {
-                console.error('Copy failed:', err);
-                showToast('เกิดข้อผิดพลาดในการคัดลอก');
-            });
+            // Copy to clipboard with fallback for HTTP
+            copyToClipboard(output);
 
             // Also download as file
             const blob = new Blob([output], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `TPMAP_Indicators_${new Date().getTime()}.txt`;
+            a.download = `TPMAP_Indicators_Problems_${new Date().getTime()}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        // Clipboard helper with HTTP/HTTPS fallback
+        function copyToClipboard(text) {
+            // Try modern Clipboard API first (HTTPS)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showSuccessTooltip(`คัดลอก ${selectedIndicators.length} รายการสำเร็จ!`);
+                }).catch(err => {
+                    console.error('Clipboard API failed:', err);
+                    fallbackCopyToClipboard(text);
+                });
+            } else {
+                // Fallback for HTTP or older browsers
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.top = '0';
+            textArea.style.left = '0';
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            textArea.style.padding = '0';
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            textArea.style.background = 'transparent';
+            textArea.style.opacity = '0';
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showSuccessTooltip(`คัดลอก ${selectedIndicators.length} รายการสำเร็จ!`);
+                } else {
+                    showToast('❌ ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยมือ (Ctrl+C)');
+                }
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                showToast('❌ เกิดข้อผิดพลาดในการคัดลอก');
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        function showSuccessTooltip(message) {
+            const tooltip = document.getElementById('successTooltip');
+            const span = tooltip.querySelector('span');
+            span.textContent = message;
+            tooltip.classList.add('show');
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 3000);
         }
 
         function showToast(message) {
