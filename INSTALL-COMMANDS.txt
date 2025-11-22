@@ -1,0 +1,110 @@
+# คำสั่งสำหรับติดตั้ง TPMAP Dashboard
+# คัดลอกคำสั่งเหล่านี้ทีละบรรทัดแล้วรันบนเซิร์ฟเวอร์
+
+# ============================================================
+# วิธีที่ 1: ใช้สคริปต์อัตโนมัติ (แนะนำ)
+# ============================================================
+
+cd /var/www/OpenGISData-Thailand
+chmod +x install-tpmap.sh
+./install-tpmap.sh
+
+
+# ============================================================
+# วิธีที่ 2: ติดตั้งแบบ Manual (ทีละขั้นตอน)
+# ============================================================
+
+# ขั้นตอนที่ 1: ไปที่ directory
+cd /var/www/OpenGISData-Thailand
+
+# ขั้นตอนที่ 2: ดึงไฟล์ tpmap (ถ้ายังไม่มี)
+git remote add upstream https://github.com/chingchai/OpenGISData-Thailand.git
+git fetch upstream
+git checkout upstream/master -- tpmap_act/
+
+# ขั้นตอนที่ 3: ตรวจสอบว่ามีไฟล์
+ls -la tpmap_act/
+
+# ขั้นตอนที่ 4: ตั้งค่าสิทธิ์
+sudo chown -R www-data:www-data /var/www/OpenGISData-Thailand/tpmap_act
+sudo chmod -R 755 /var/www/OpenGISData-Thailand/tpmap_act
+
+# ขั้นตอนที่ 5: สำรอง nginx config เดิม
+sudo cp /etc/nginx/sites-available/procurement-system /etc/nginx/sites-available/procurement-system.backup
+
+# ขั้นตอนที่ 6: แก้ไข nginx config
+sudo nano /etc/nginx/sites-available/procurement-system
+
+# เพิ่มโค้ดนี้ก่อน closing brace } ของ server block:
+#
+#     location /tpmap/ {
+#         alias /var/www/OpenGISData-Thailand/tpmap_act/;
+#         index household-dashboard.html indicators-selector.html;
+#         try_files $uri $uri/ =404;
+#     }
+#
+# บันทึกด้วย: Ctrl+X, จากนั้น Y, แล้ว Enter
+
+# ขั้นตอนที่ 7: ทดสอบ config
+sudo nginx -t
+
+# ขั้นตอนที่ 8: Reload nginx
+sudo systemctl reload nginx
+
+# ขั้นตอนที่ 9: ทดสอบ
+curl -I http://localhost/tpmap/household-dashboard.html
+
+
+# ============================================================
+# คำสั่งตรวจสอบ
+# ============================================================
+
+# ดูสถานะ nginx
+sudo systemctl status nginx
+
+# ดู error log
+sudo tail -f /var/log/nginx/error.log
+
+# ดู access log
+sudo tail -f /var/log/nginx/access.log
+
+# ทดสอบ nginx config
+sudo nginx -t
+
+# ดูไฟล์ที่มี
+ls -lh /var/www/OpenGISData-Thailand/tpmap_act/
+
+
+# ============================================================
+# URL ที่เข้าถึงได้
+# ============================================================
+
+# TPMAP Dashboard:
+#   http://49.231.27.66/tpmap/household-dashboard.html
+#   http://49.231.27.66/tpmap/indicators-selector.html
+#   http://49.231.27.66/tpmap/indicators-38-snippet.html
+
+# Procurement System:
+#   http://49.231.27.66/
+#   http://49.231.27.66/api/
+
+
+# ============================================================
+# การแก้ปัญหา
+# ============================================================
+
+# ถ้าได้ 404 Not Found:
+ls -la /var/www/OpenGISData-Thailand/tpmap_act/household-dashboard.html
+sudo tail -f /var/log/nginx/error.log
+
+# ถ้าได้ 403 Forbidden:
+sudo chown -R www-data:www-data /var/www/OpenGISData-Thailand/tpmap_act
+sudo chmod -R 755 /var/www/OpenGISData-Thailand/tpmap_act
+
+# ถ้า nginx config ผิด:
+sudo nginx -t
+sudo nano /etc/nginx/sites-available/procurement-system
+
+# คืนค่า config เดิม:
+sudo cp /etc/nginx/sites-available/procurement-system.backup /etc/nginx/sites-available/procurement-system
+sudo systemctl reload nginx
