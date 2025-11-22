@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ระบบจัดการข้อมูลครัวเรือน</title>
+
+    <!-- No external dependencies - using system fonts and inline SVG icons -->
+
+    <style>
+        :root {
+            --ios-blue: #007AFF;
+            --ios-green: #34C759;
+            --ios-indigo: #5856D6;
+            --ios-orange: #FF9500;
+            --ios-pink: #FF2D55;
+            --ios-purple: #AF52DE;
+            --ios-red: #FF3B30;
+            --ios-teal: #5AC8FA;
+            --ios-yellow: #FFCC00;
+            --ios-gray: #8E8E93;
+            --ios-gray2: #AEAEB2;
+            --ios-gray3: #C7C7CC;
+            --ios-gray4: #D1D1D6;
+            --ios-gray5: #E5E5EA;
+            --ios-gray6: #F2F2F7;
+            --ios-background: #F2F2F7;
+            --ios-card-bg: rgba(255, 255, 255, 0.9);
+            --ios-border-radius: 16px;
+            --ios-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Thonburi', 'Sukhumvit Set', sans-serif;
+            background: linear-gradient(180deg, #F2F2F7 0%, #E5E5EA 100%);
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: max(20px, env(safe-area-inset-top));
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--ios-shadow);
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--ios-blue);
+            margin-bottom: 8px;
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--ios-gray);
+            margin-bottom: 32px;
+            font-size: 1.05em;
+            font-weight: 400;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #1C1C1E;
+            font-size: 15px;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select,
+        textarea {
+            padding: 12px 16px;
+            border: 1px solid var(--ios-gray4);
+            border-radius: 12px;
+            font-size: 17px;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            background: white;
+            color: #1C1C1E;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--ios-blue);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+            background: white;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23007AFF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        select option {
+            padding: 12px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 14px 32px;
+            font-size: 17px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            letter-spacing: -0.3px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-generate {
+            background: var(--ios-blue);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-generate:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-generate:active {
+            transform: scale(0.98);
+        }
+
+        .btn-copy {
+            background: var(--ios-green);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-copy:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(52, 199, 89, 0.3);
+        }
+
+        .btn-copy:active {
+            transform: scale(0.98);
+        }
+
+        .btn-reset {
+            background: var(--ios-gray6);
+            color: var(--ios-gray);
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-reset:hover {
+            background: var(--ios-gray5);
+        }
+
+        .btn-reset:active {
+            transform: scale(0.98);
+        }
+
+        .output-section {
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid var(--ios-blue);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .output-section.show {
+            display: block;
+        }
+
+        .output-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ios-blue);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .output-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            white-space: pre-wrap;
+            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            line-height: 1.7;
+            font-size: 16px;
+            border: 1px solid var(--ios-gray4);
+            color: #1C1C1E;
+        }
+
+        .success-message {
+            position: fixed;
+            top: max(20px, env(safe-area-inset-top));
+            right: 20px;
+            background: var(--ios-green);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            font-weight: 500;
+            font-size: 17px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-indigo) 100%);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 14px;
+            margin: 32px 0 20px 0;
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.15);
+        }
+
+        .multi-select-container {
+            border: 1px solid var(--ios-gray4);
+            border-radius: 12px;
+            padding: 8px;
+            max-height: 280px;
+            overflow-y: auto;
+            background: white;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .multi-select-container label {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin: 4px 0;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.15s ease;
+            font-size: 16px;
+        }
+
+        .multi-select-container label:hover {
+            background: var(--ios-gray6);
+        }
+
+        .multi-select-container label:active {
+            background: var(--ios-gray5);
+            transform: scale(0.98);
+        }
+
+        .multi-select-container input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--ios-blue);
+            border-radius: 6px;
+        }
+
+        /* iOS Category Badge */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .badge-health {
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--ios-green);
+        }
+
+        .badge-economy {
+            background: rgba(255, 149, 0, 0.15);
+            color: var(--ios-orange);
+        }
+
+        .badge-social {
+            background: rgba(175, 82, 222, 0.15);
+            color: var(--ios-purple);
+        }
+
+        .badge-welfare {
+            background: rgba(0, 122, 255, 0.15);
+            color: var(--ios-blue);
+        }
+
+        /* iOS List Group Style */
+        .ios-list-group {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--ios-gray4);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .ios-list-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--ios-gray5);
+            transition: background 0.15s ease;
+            cursor: pointer;
+        }
+
+        .ios-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .ios-list-item:hover {
+            background: var(--ios-gray6);
+        }
+
+        .ios-list-item:active {
+            background: var(--ios-gray5);
+        }
+
+        /* Selection Balloon Tip */
+        .selection-balloon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            z-index: 999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .selection-balloon.collapsed .balloon-content {
+            display: none;
+        }
+
+        .selection-balloon.collapsed {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .balloon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .balloon-header:hover {
+            background: rgba(0, 122, 255, 0.05);
+        }
+
+        .balloon-header:active {
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .balloon-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 17px;
+            color: #1C1C1E;
+        }
+
+        .balloon-title i {
+            color: var(--ios-blue);
+            font-size: 18px;
+        }
+
+        .selection-count {
+            background: var(--ios-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .balloon-toggle {
+            color: var(--ios-gray);
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .selection-balloon.collapsed .balloon-toggle {
+            transform: rotate(180deg);
+        }
+
+        .balloon-content {
+            padding: 0 20px 20px 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+        }
+
+        .balloon-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .balloon-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .balloon-content::-webkit-scrollbar-thumb {
+            background: var(--ios-gray3);
+            border-radius: 3px;
+        }
+
+        .balloon-content::-webkit-scrollbar-thumb:hover {
+            background: var(--ios-gray2);
+        }
+
+        .balloon-section {
+            margin-bottom: 16px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .balloon-section-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--ios-gray);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .balloon-section-title i {
+            font-size: 14px;
+        }
+
+        .balloon-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .balloon-item {
+            background: white;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #1C1C1E;
+            border: 1px solid var(--ios-gray5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInUp 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .balloon-item i {
+            color: var(--ios-green);
+            font-size: 12px;
+        }
+
+        .balloon-empty {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--ios-gray);
+        }
+
+        .balloon-empty i {
+            font-size: 48px;
+            color: var(--ios-gray4);
+            margin-bottom: 12px;
+        }
+
+        .balloon-empty p {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Icon System - Inline SVG Icons */
+        .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.125em;
+            fill: currentColor;
+        }
+
+        .icon-chart-pie::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M21.21 15.89A10 10 0 1 1 8 2.83'/%3E%3Cpath d='M22 12A10 10 0 0 0 12 2v10z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-home::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3Cpolyline points='9 22 9 12 15 12 15 22'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-briefcase::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='2' y='7' width='20' height='14' rx='2' ry='2'/%3E%3Cpath d='M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-tasks::before,
+        .icon-list-check::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-heartbeat::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-graduation-cap::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M22 10v6M2 10l10-5 10 5-10 5z'/%3E%3Cpath d='M6 12v5c3 3 9 3 12 0v-5'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-coins::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8'/%3E%3Cpath d='M12 18V6'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-hand-holding-heart::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-users::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-smile::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M8 14s1.5 2 4 2 4-2 4-2'/%3E%3Cline x1='9' y1='9' x2='9.01' y2='9'/%3E%3Cline x1='15' y1='9' x2='15.01' y2='9'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-tools::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-warehouse::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-lightbulb::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5'/%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-file-alt::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cpolyline points='10 9 9 9 8 9'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-copy::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-redo::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='23 4 23 10 17 10'/%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-check-circle::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-chevron-up::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='18 15 12 9 6 15'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-inbox::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='22 12 16 12 14 15 10 15 8 12 2 12'/%3E%3Cpath d='M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 20px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .selection-balloon {
+                width: calc(100vw - 40px);
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="icon-chart-pie"></i> รายการวิเคราะห์ปัญหาตามมิติ TPMAP</h1>
+        <div class="subtitle">กรอกข้อมูลและเลือกรายการเพื่อสร้างข้อความสำหรับ Dashboard</div>
+
+        <form id="householdForm">
+            <!-- ข้อมูลพื้นฐานครัวเรือน -->
+            <div class="section-header"><i class="icon-home"></i> ข้อมูลพื้นฐานครัวเรือน</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="members">มีสมาชิกในครัวเรือน (คน)</label>
+                    <input type="number" id="members" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="elderly">ผู้สูงอายุ (คน)</label>
+                    <input type="number" id="elderly" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="disabled">ผู้พิการ (คน)</label>
+                    <input type="number" id="disabled" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="workers">วัยแรงงาน (คน)</label>
+                    <input type="number" id="workers" min="0" value="0">
+                </div>
+            </div>
+
+            <!-- อาชีพ -->
+            <div class="section-header"><i class="icon-briefcase"></i> อาชีพของสมาชิกในครัวเรือน</div>
+            <div class="form-group">
+                <label>เลือกอาชีพ (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container" id="occupationContainer">
+                    <label><input type="checkbox" name="occupation" value="ทำนา/ทำสวน/ทำไร่/ปลูกพืช"> ทำนา/ทำสวน/ทำไร่/ปลูกพืช</label>
+                    <label><input type="checkbox" name="occupation" value="เลี้ยงสัตว์"> เลี้ยงสัตว์</label>
+                    <label><input type="checkbox" name="occupation" value="รับจ้างทั่วไป"> รับจ้างทั่วไป</label>
+                    <label><input type="checkbox" name="occupation" value="ค้าขาย"> ค้าขาย</label>
+                    <label><input type="checkbox" name="occupation" value="รับราชการ/พนักงานรัฐวิสาหกิจ"> รับราชการ/พนักงานรัฐวิสาหกิจ</label>
+                    <label><input type="checkbox" name="occupation" value="พนักงานบริษัท"> พนักงานบริษัท</label>
+                    <label><input type="checkbox" name="occupation" value="ธุรกิจส่วนตัว"> ธุรกิจส่วนตัว</label>
+                    <label><input type="checkbox" name="occupation" value="รับเหมา"> รับเหมา</label>
+                    <label><input type="checkbox" name="occupation" value="งานฝีมือ/หัตถกรรม"> งานฝีมือ/หัตถกรรม</label>
+                    <label><input type="checkbox" name="occupation" value="ว่างงาน"> ว่างงาน</label>
+                    <label><input type="checkbox" name="occupation" value="อื่นๆ"> อื่นๆ</label>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <label for="occupationOther">ระบุอาชีพอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="occupationOther" placeholder="ระบุอาชีพอื่นๆ">
+            </div>
+
+            <!-- สภาพครัวเรือนตามตัวชี้วัด -->
+            <div class="section-header"><i class="icon-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม) - ทั้งหมด 38 ตัวชี้วัด</div>
+
+            <!-- ด้านสุขภาพ (12 ตัวชี้วัด) -->
+            <div class="form-group">
+                <label><i class="icon-heartbeat"></i> <strong>ด้านสุขภาพ</strong> - 12 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="1. [H01] การฝากครรภ์อย่างมีคุณภาพ">
+                        <span><strong>1. [H01]</strong> การฝากครรภ์อย่างมีคุณภาพ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="2. [H02] เด็กแรกเกิดมีน้ำหนัก 2,500 กรัมขึ้นไป">
+                        <span><strong>2. [H02]</strong> เด็กแรกเกิดมีน้ำหนัก 2,500 กรัมขึ้นไป</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="3. [H03] เด็กแรกเกิดได้กินนมแม่อย่างเดียวอย่างน้อย 6 เดือน">
+                        <span><strong>3. [H03]</strong> เด็กแรกเกิดได้กินนมแม่อย่างเดียวอย่างน้อย 6 เดือน</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="4. [H04] เด็กแรกเกิดถึง 12 ปี ได้รับวัคซีนครบตามตาราง">
+                        <span><strong>4. [H04]</strong> เด็กแรกเกิดถึง 12 ปี ได้รับวัคซีนครบตามตาราง</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="5. [H05] เด็กได้รับการดูแลและมีพัฒนาการเหมาะสม">
+                        <span><strong>5. [H05]</strong> เด็กได้รับการดูแลและมีพัฒนาการเหมาะสม</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="6. [H06] ครัวเรือนกินอาหารถูกสุขลักษณะ ปลอดภัย ได้มาตรฐาน">
+                        <span><strong>6. [H06]</strong> ครัวเรือนกินอาหารถูกสุขลักษณะ ปลอดภัย ได้มาตรฐาน</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="7. [H07] ครัวเรือนมีความรู้และป้องกันตนเองจากปัจจัยเสี่ยงสุขภาวะ">
+                        <span><strong>7. [H07]</strong> ครัวเรือนมีความรู้และป้องกันตนเองจากปัจจัยเสี่ยงสุขภาวะ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="8. [H08] ครัวเรือนสามารถดูแลตนเอง/สมาชิกเมื่อเจ็บป่วยเบื้องต้น">
+                        <span><strong>8. [H08]</strong> ครัวเรือนสามารถดูแลตนเอง/สมาชิกเมื่อเจ็บป่วยเบื้องต้น</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="9. [H09] คนอายุ 6 ปีขึ้นไป ออกกำลังกายสม่ำเสมอ">
+                        <span><strong>9. [H09]</strong> คนอายุ 6 ปีขึ้นไป ออกกำลังกายสม่ำเสมอ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="10. [H10] ผู้ป่วยติดเตียงได้รับการดูแลจากครอบครัว/ชุมชน/ภาครัฐ">
+                        <span><strong>10. [H10]</strong> ผู้ป่วยติดเตียงได้รับการดูแลจากครอบครัว/ชุมชน/ภาครัฐ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="11. [H11] คนในครัวเรือนมีประกันสุขภาพ/สิทธิรักษาพยาบาล และทราบสถานที่ใช้สิทธิ">
+                        <span><strong>11. [H11]</strong> คนในครัวเรือนมีประกันสุขภาพ/สิทธิรักษาพยาบาล และทราบสถานที่ใช้สิทธิ</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="12. [H12] คนอายุ 35 ปีขึ้นไป ได้รับการตรวจสุขภาพประจำปี">
+                        <span><strong>12. [H12]</strong> คนอายุ 35 ปีขึ้นไป ได้รับการตรวจสุขภาพประจำปี</span>
+                        <span class="category-badge badge-health">สุขภาพ</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ด้านที่อยู่อาศัยและสิ่งแวดล้อม (9 ตัวชี้วัด) -->
+            <div class="form-group">
+                <label><i class="icon-home"></i> <strong>ด้านที่อยู่อาศัยและสิ่งแวดล้อม</strong> - 9 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="13. [HE01] ครัวเรือนมีความมั่นคงในที่อยู่อาศัย บ้านมีสภาพคงทนถาวร และอยู่ในสภาพแวดล้อมที่เหมาะสม">
+                        <span><strong>13. [HE01]</strong> ครัวเรือนมีความมั่นคงในที่อยู่อาศัย บ้านมีสภาพคงทนถาวร</span>
+                        <span class="category-badge badge-economy">ที่อยู่อาศัย</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="14. [HE02] ครัวเรือนมีการจัดบ้านเรือนและได้รับบริการจัดเก็บขยะมูลฝอยที่ถูกสุขลักษณะ">
+                        <span><strong>14. [HE02]</strong> ครัวเรือนมีการจัดบ้านเรือนและได้รับบริการจัดเก็บขยะมูลฝอยที่ถูกสุขลักษณะ</span>
+                        <span class="category-badge badge-economy">สิ่งแวดล้อม</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="15. [HE03] ครัวเรือนไม่ถูกรบกวนจากมลพิษ">
+                        <span><strong>15. [HE03]</strong> ครัวเรือนไม่ถูกรบกวนจากมลพิษ</span>
+                        <span class="category-badge badge-economy">สิ่งแวดล้อม</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="16. [HE04] ครัวเรือนมีการป้องกันอุบัติภัยอย่างถูกวิธี และมีการเตรียมความพร้อมรับมือกับภัยพิบัติ">
+                        <span><strong>16. [HE04]</strong> ครัวเรือนมีการป้องกันอุบัติภัยอย่างถูกวิธี และเตรียมความพร้อมรับมือภัยพิบัติ</span>
+                        <span class="category-badge badge-economy">ความปลอดภัย</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="17. [HE05] ครัวเรือนมีความปลอดภัยในชีวิตและทรัพย์สิน">
+                        <span><strong>17. [HE05]</strong> ครัวเรือนมีความปลอดภัยในชีวิตและทรัพย์สิน</span>
+                        <span class="category-badge badge-economy">ความปลอดภัย</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="18. [HE06] ครัวเรือนมีน้ำสำหรับบริโภคและอุปโภคเพียงพอตลอดปี">
+                        <span><strong>18. [HE06]</strong> ครัวเรือนมีน้ำสำหรับบริโภคและอุปโภคเพียงพอตลอดปี</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="19. [HE07] ครัวเรือนเข้าถึงไฟฟ้าและใช้บริการไฟฟ้า">
+                        <span><strong>19. [HE07]</strong> ครัวเรือนเข้าถึงไฟฟ้าและใช้บริการไฟฟ้า</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="20. [HE08] ครัวเรือนเข้าถึงและใช้บริการโทรศัพท์เคลื่อนที่และอินเทอร์เน็ต">
+                        <span><strong>20. [HE08]</strong> ครัวเรือนเข้าถึงและใช้บริการโทรศัพท์เคลื่อนที่และอินเทอร์เน็ต</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="21. [HE09] ครัวเรือนเข้าถึงบริการขนส่งสาธารณะ">
+                        <span><strong>21. [HE09]</strong> ครัวเรือนเข้าถึงบริการขนส่งสาธารณะ</span>
+                        <span class="category-badge badge-economy">สาธารณูปโภค</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ด้านการศึกษาและการเรียนรู้ (5 ตัวชี้วัด) -->
+            <div class="form-group">
+                <label><i class="icon-graduation-cap"></i> <strong>ด้านการศึกษาและการเรียนรู้</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="22. [ED01] เด็กอายุต่ำกว่า 6 ปี มีพัฒนาการด้านสุขภาพ การเรียนรู้ และพัฒนาการทางบุคลิกภาพตามวัย">
+                        <span><strong>22. [ED01]</strong> เด็กอายุต่ำกว่า 6 ปี มีพัฒนาการด้านสุขภาพ การเรียนรู้ และพัฒนาการทางบุคลิกภาพตามวัย</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="23. [ED02] เด็กอายุ 6–15 ปี ได้รับการศึกษาภาคบังคับ 9 ปี">
+                        <span><strong>23. [ED02]</strong> เด็กอายุ 6–15 ปี ได้รับการศึกษาภาคบังคับ 9 ปี</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="24. [ED03] เด็กจบชั้น ม.3 ได้เรียนต่อชั้น ม.4 หรือเทียบเท่า">
+                        <span><strong>24. [ED03]</strong> เด็กจบชั้น ม.3 ได้เรียนต่อชั้น ม.4 หรือเทียบเท่า</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="25. [ED04] คนอายุ 15–59 ปี อ่าน เขียนภาษาไทย ภาษาอังกฤษ หรือภาษาที่สาม และคิดเลขอย่างง่ายได้">
+                        <span><strong>25. [ED04]</strong> คนอายุ 15–59 ปี อ่าน เขียนภาษาไทย ภาษาอังกฤษ และคิดเลขอย่างง่ายได้</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="26. [ED05] เด็ก เยาวชน/ผู้ใหญ่ มีทักษะการเรียนรู้ที่จำเป็นในศตวรรษที่ 21">
+                        <span><strong>26. [ED05]</strong> เด็ก เยาวชน/ผู้ใหญ่ มีทักษะการเรียนรู้ที่จำเป็นในศตวรรษที่ 21</span>
+                        <span class="category-badge badge-social">การศึกษา</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ด้านเศรษฐกิจและอาชีพ (4 ตัวชี้วัด) -->
+            <div class="form-group">
+                <label><i class="icon-coins"></i> <strong>ด้านเศรษฐกิจและอาชีพ</strong> - 4 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="27. [EC01] คนอายุ 15–59 ปี มีอาชีพและรายได้">
+                        <span><strong>27. [EC01]</strong> คนอายุ 15–59 ปี มีอาชีพและรายได้</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="28. [EC02] คนอายุ 60 ปีขึ้นไป มีอาชีพและรายได้">
+                        <span><strong>28. [EC02]</strong> คนอายุ 60 ปีขึ้นไป มีอาชีพและรายได้</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="29. [EC03] รายได้เฉลี่ยของคนในครัวเรือนต่อปี">
+                        <span><strong>29. [EC03]</strong> รายได้เฉลี่ยของคนในครัวเรือนต่อปี</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="30. [EC04] ครัวเรือนมีการเก็บออมเงิน">
+                        <span><strong>30. [EC04]</strong> ครัวเรือนมีการเก็บออมเงิน</span>
+                        <span class="category-badge badge-economy">เศรษฐกิจ</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ด้านสวัสดิการสังคม (5 ตัวชี้วัด) -->
+            <div class="form-group">
+                <label><i class="icon-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="31. [W01] เด็กแรกเกิด–6 ปี ที่ครัวเรือนมีรายได้เฉลี่ยไม่เกิน 100,000 บาท/คน/ปี ได้รับเงินอุดหนุนจากภาครัฐ">
+                        <span><strong>31. [W01]</strong> เด็กแรกเกิด–6 ปี ที่ครัวเรือนมีรายได้ไม่เกิน 100,000 บาท/คน/ปี ได้รับเงินอุดหนุน</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="32. [W02] ครัวเรือนที่มีรายได้ไม่เกิน 100,000 บาท/ปี และมีคุณสมบัติครบตามเกณฑ์บัตรสวัสดิการแห่งรัฐ">
+                        <span><strong>32. [W02]</strong> ครัวเรือนที่มีรายได้ไม่เกิน 100,000 บาท/ปี ได้รับเงินสวัสดิการแห่งรัฐ</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="33. [W03] ครัวเรือนได้รับการคุ้มครองตามระบบและมาตรการคุ้มครองทางสังคมจากภาครัฐ และ/หรือชุมชน ภาคเอกชน">
+                        <span><strong>33. [W03]</strong> ครัวเรือนได้รับการคุ้มครองตามระบบและมาตรการคุ้มครองทางสังคม</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="34. [W04] ผู้สูงอายุได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน">
+                        <span><strong>34. [W04]</strong> ผู้สูงอายุได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="35. [W05] ผู้พิการได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน">
+                        <span><strong>35. [W05]</strong> ผู้พิการได้รับการดูแลจากครอบครัว ชุมชน ภาครัฐ หรือภาคเอกชน</span>
+                        <span class="category-badge badge-welfare">สวัสดิการ</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ด้านครอบครัวและชุมชน (2 ตัวชี้วัด) -->
+            <div class="form-group">
+                <label><i class="icon-users"></i> <strong>ด้านครอบครัวและชุมชน</strong> - 2 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <div class="multi-select-container">
+                    <label>
+                        <input type="checkbox" name="condition" value="36. [FC01] ครอบครัวมีความอบอุ่น">
+                        <span><strong>36. [FC01]</strong> ครอบครัวมีความอบอุ่น</span>
+                        <span class="category-badge badge-social">ครอบครัว</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="condition" value="38. [FC02] ครัวเรือนมีส่วนร่วมทำกิจกรรมสาธารณะเพื่อประโยชน์ของชุมชนหรือท้องถิ่น">
+                        <span><strong>38. [FC02]</strong> ครัวเรือนมีส่วนร่วมทำกิจกรรมสาธารณะเพื่อประโยชน์ของชุมชน</span>
+                        <span class="category-badge badge-social">ชุมชน</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ทัศนคติ -->
+            <div class="section-header"><i class="icon-smile"></i> ทัศนคติ</div>
+            <div class="form-group">
+                <label for="attitude">เลือกทัศนคติ</label>
+                <select id="attitude" multiple size="5" style="height: auto;">
+                    <option value="เชื่อมั่นในตนเอง มีความมั่นใจ">เชื่อมั่นในตนเอง มีความมั่นใจ</option>
+                    <option value="ไม่มั่นใจ ขาดความเชื่อมั่นในตัวเอง">ไม่มั่นใจ ขาดความเชื่อมั่นในตัวเอง</option>
+                    <option value="มองโลกในแง่ดี">มองโลกในแง่ดี</option>
+                    <option value="มองโลกในแง่ร้าย">มองโลกในแง่ร้าย</option>
+                    <option value="มีความคิดสร้างสรรค์">มีความคิดสร้างสรรค์</option>
+                    <option value="ขาดความคิดริเริ่ม">ขาดความคิดริเริ่ม</option>
+                    <option value="มีใจรักในการทำงาน">มีใจรักในการทำงาน</option>
+                    <option value="ท้อแท้ ไม่มีกำลังใจ">ท้อแท้ ไม่มีกำลังใจ</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="attitudeOther">ระบุทัศนคติอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="attitudeOther" placeholder="ระบุทัศนคติอื่นๆ">
+            </div>
+
+            <!-- ทักษะ -->
+            <div class="section-header"><i class="icon-tools"></i> ทักษะ</div>
+            <div class="form-group">
+                <label for="skill">เลือกทักษะ</label>
+                <select id="skill" multiple size="5" style="height: auto;">
+                    <option value="ทักษะการทำเกษตร">ทักษะการทำเกษตร</option>
+                    <option value="ทักษะการเลี้ยงสัตว์">ทักษะการเลี้ยงสัตว์</option>
+                    <option value="ทักษะงานฝีมือ/หัตถกรรม">ทักษะงานฝีมือ/หัตถกรรม</option>
+                    <option value="ทักษะการค้าขาย">ทักษะการค้าขาย</option>
+                    <option value="ทักษะการจัดการเงิน">ทักษะการจัดการเงิน</option>
+                    <option value="ทักษะการใช้เทคโนโลยี">ทักษะการใช้เทคโนโลยี</option>
+                    <option value="ทักษะด้านสุขภาพและการดูแลตนเอง">ทักษะด้านสุขภาพและการดูแลตนเอง</option>
+                    <option value="ทักษะการสื่อสารและการทำงานร่วมกับผู้อื่น">ทักษะการสื่อสารและการทำงานร่วมกับผู้อื่น</option>
+                    <option value="ขาดทักษะ/ไม่มีความชำนาญเฉพาะด้าน">ขาดทักษะ/ไม่มีความชำนาญเฉพาะด้าน</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="skillOther">ระบุทักษะอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="skillOther" placeholder="ระบุทักษะอื่นๆ">
+            </div>
+
+            <!-- ทรัพยากร -->
+            <div class="section-header"><i class="icon-warehouse"></i> ทรัพยากร</div>
+            <div class="form-group">
+                <label for="resource">เลือกทรัพยากร</label>
+                <select id="resource" multiple size="5" style="height: auto;">
+                    <option value="มีที่ดินทำกิน">มีที่ดินทำกิน</option>
+                    <option value="ไม่มีที่ดินทำกิน">ไม่มีที่ดินทำกิน</option>
+                    <option value="มีบ้านที่อยู่อาศัยเป็นของตนเอง">มีบ้านที่อยู่อาศัยเป็นของตนเอง</option>
+                    <option value="เช่าบ้าน/อาศัยบ้านผู้อื่น">เช่าบ้าน/อาศัยบ้านผู้อื่น</option>
+                    <option value="มีเครื่องมือทำการเกษตร">มีเครื่องมือทำการเกษตร</option>
+                    <option value="ขาดแคลนเครื่องมือทำการเกษตร">ขาดแคลนเครื่องมือทำการเกษตร</option>
+                    <option value="มีพาหนะ (รถยนต์/รถจักรยานยนต์)">มีพาหนะ (รถยนต์/รถจักรยานยนต์)</option>
+                    <option value="ไม่มีพาหนะ">ไม่มีพาหนะ</option>
+                    <option value="มีแหล่งน้ำใช้ในการเกษตร">มีแหล่งน้ำใช้ในการเกษตร</option>
+                    <option value="ขาดแคลนน้ำเพื่อการเกษตร">ขาดแคลนน้ำเพื่อการเกษตร</option>
+                    <option value="มีทุนในการประกอบอาชีพ">มีทุนในการประกอบอาชีพ</option>
+                    <option value="ขาดแคลนทุนทรัพย์">ขาดแคลนทุนทรัพย์</option>
+                    <option value="มีสัตว์เลี้ยง">มีสัตว์เลี้ยง</option>
+                    <option value="ไม่มีสัตว์เลี้ยง">ไม่มีสัตว์เลี้ยง</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="resourceOther">ระบุทรัพยากรอื่นๆ (ถ้ามี)</label>
+                <input type="text" id="resourceOther" placeholder="ระบุทรัพยากรอื่นๆ">
+            </div>
+
+            <!-- ทางออก/ความต้องการ -->
+            <div class="section-header"><i class="icon-lightbulb"></i> ทางออก (ความต้องการ)</div>
+            <div class="form-group">
+                <label for="solution">เลือกทางออก/ความต้องการ</label>
+                <select id="solution" multiple size="5" style="height: auto;">
+                    <option value="ต้องการทุนประกอบอาชีพ">ต้องการทุนประกอบอาชีพ</option>
+                    <option value="ต้องการความรู้และทักษะในการประกอบอาชีพ">ต้องการความรู้และทักษะในการประกอบอาชีพ</option>
+                    <option value="ต้องการตลาดรองรับผลผลิต">ต้องการตลาดรองรับผลผลิต</option>
+                    <option value="ต้องการสวัสดิการจากภาครัฐ">ต้องการสวัสดิการจากภาครัฐ</option>
+                    <option value="ต้องการแหล่งน้ำเพื่อการเกษตร">ต้องการแหล่งน้ำเพื่อการเกษตร</option>
+                    <option value="ต้องการเครื่องมือทำการเกษตร">ต้องการเครื่องมือทำการเกษตร</option>
+                    <option value="ต้องการที่ดินทำกิน">ต้องการที่ดินทำกิน</option>
+                    <option value="ต้องการคำปรึกษาและให้กำลังใจ">ต้องการคำปรึกษาและให้กำลังใจ</option>
+                    <option value="ต้องการการรักษาพยาบาล">ต้องการการรักษาพยาบาล</option>
+                    <option value="ต้องการความช่วยเหลือด้านการศึกษาบุตร">ต้องการความช่วยเหลือด้านการศึกษาบุตร</option>
+                    <option value="ต้องการที่อยู่อาศัยที่มั่นคง">ต้องการที่อยู่อาศัยที่มั่นคง</option>
+                    <option value="ต้องการพัฒนาทักษะด้านเทคโนโลยี">ต้องการพัฒนาทักษะด้านเทคโนโลยี</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="solutionOther">ระบุทางออกอื่นๆ (ถ้ามี)</label>
+                <textarea id="solutionOther" placeholder="ระบุทางออก/ความต้องการอื่นๆ"></textarea>
+            </div>
+
+            <!-- ปุ่มต่างๆ -->
+            <div class="button-group">
+                <button type="button" class="btn-generate" onclick="generateOutput()">
+                    <i class="icon-file-alt"></i> สร้างข้อความ
+                </button>
+                <button type="button" class="btn-copy" onclick="copyToClipboard()">
+                    <i class="icon-copy"></i> คัดลอกข้อความ
+                </button>
+                <button type="button" class="btn-reset" onclick="resetForm()">
+                    <i class="icon-redo"></i> ล้างข้อมูล
+                </button>
+            </div>
+        </form>
+
+        <!-- แสดงผลลัพธ์ -->
+        <div id="outputSection" class="output-section">
+            <div class="output-title">
+                <i class="icon-check-circle"></i>
+                <span>ผลลัพธ์</span>
+            </div>
+            <div id="outputContent" class="output-content"></div>
+        </div>
+    </div>
+
+    <!-- ข้อความแจ้งเตือน -->
+    <div id="successMessage" class="success-message">
+        <i class="icon-check-circle"></i> คัดลอกข้อความสำเร็จ!
+    </div>
+
+    <!-- Selection Balloon Tip -->
+    <div id="selectionBalloon" class="selection-balloon">
+        <div class="balloon-header" onclick="toggleBalloon()">
+            <div class="balloon-title">
+                <i class="icon-list-check"></i>
+                <span>รายการที่เลือก</span>
+                <span class="selection-count" id="selectionCount">0</span>
+            </div>
+            <i class="icon-chevron-up balloon-toggle" id="balloonToggle"></i>
+        </div>
+        <div class="balloon-content" id="balloonContent">
+            <div class="balloon-section" id="occupationSection" style="display: none;">
+                <div class="balloon-section-title"><i class="icon-briefcase"></i> อาชีพ</div>
+                <div class="balloon-items" id="occupationItems"></div>
+            </div>
+            <div class="balloon-section" id="conditionSection" style="display: none;">
+                <div class="balloon-section-title"><i class="icon-tasks"></i> ตัวชี้วัด</div>
+                <div class="balloon-items" id="conditionItems"></div>
+            </div>
+            <div class="balloon-section" id="attitudeSection" style="display: none;">
+                <div class="balloon-section-title"><i class="icon-smile"></i> ทัศนคติ</div>
+                <div class="balloon-items" id="attitudeItems"></div>
+            </div>
+            <div class="balloon-section" id="skillSection" style="display: none;">
+                <div class="balloon-section-title"><i class="icon-tools"></i> ทักษะ</div>
+                <div class="balloon-items" id="skillItems"></div>
+            </div>
+            <div class="balloon-section" id="resourceSection" style="display: none;">
+                <div class="balloon-section-title"><i class="icon-warehouse"></i> ทรัพยากร</div>
+                <div class="balloon-items" id="resourceItems"></div>
+            </div>
+            <div class="balloon-section" id="solutionSection" style="display: none;">
+                <div class="balloon-section-title"><i class="icon-lightbulb"></i> ทางออก</div>
+                <div class="balloon-items" id="solutionItems"></div>
+            </div>
+            <div class="balloon-empty" id="balloonEmpty">
+                <i class="icon-inbox"></i>
+                <p>ยังไม่มีรายการที่เลือก</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateOutput() {
+            // ดึงค่าจากฟอร์ม
+            const members = document.getElementById('members').value || '........';
+            const elderly = document.getElementById('elderly').value || '........';
+            const disabled = document.getElementById('disabled').value || '........';
+            const workers = document.getElementById('workers').value || '........';
+
+            // รวมอาชีพที่เลือก
+            const occupations = Array.from(document.querySelectorAll('input[name="occupation"]:checked'))
+                .map(cb => cb.value);
+            const occupationOther = document.getElementById('occupationOther').value;
+            if (occupationOther) {
+                occupations.push(occupationOther);
+            }
+            const occupationText = occupations.length > 0 ? occupations.join(', ') : '................................';
+
+            // รวมสภาพครัวเรือนที่เลือก
+            const conditions = Array.from(document.querySelectorAll('input[name="condition"]:checked'))
+                .map(cb => cb.value);
+            const conditionText = conditions.length > 0 ? conditions.join(', ') : '.........................................................................';
+
+            // ทัศนคติ
+            const attitudes = Array.from(document.getElementById('attitude').selectedOptions)
+                .map(option => option.value);
+            const attitudeOther = document.getElementById('attitudeOther').value;
+            if (attitudeOther) {
+                attitudes.push(attitudeOther);
+            }
+            const attitudeText = attitudes.length > 0 ? attitudes.join(', ') : '...............................................';
+
+            // ทักษะ
+            const skills = Array.from(document.getElementById('skill').selectedOptions)
+                .map(option => option.value);
+            const skillOther = document.getElementById('skillOther').value;
+            if (skillOther) {
+                skills.push(skillOther);
+            }
+            const skillText = skills.length > 0 ? skills.join(', ') : '..................................................';
+
+            // ทรัพยากร
+            const resources = Array.from(document.getElementById('resource').selectedOptions)
+                .map(option => option.value);
+            const resourceOther = document.getElementById('resourceOther').value;
+            if (resourceOther) {
+                resources.push(resourceOther);
+            }
+            const resourceText = resources.length > 0 ? resources.join(', ') : '..........................................';
+
+            // ทางออก
+            const solutions = Array.from(document.getElementById('solution').selectedOptions)
+                .map(option => option.value);
+            const solutionOther = document.getElementById('solutionOther').value;
+            if (solutionOther) {
+                solutions.push(solutionOther);
+            }
+            const solutionText = solutions.length > 0 ? solutions.join(', ') : '............................................';
+
+            // สร้างข้อความผลลัพธ์
+            const output = `มีสมาชิกในครัวเรือน ${members} คน
+ผู้สูงอายุ ${elderly} คน ผู้พิการ ${disabled} คน
+วัยแรงงาน ${workers} คน อาชีพ(ของสมาชิกในครัวเรือน) ${occupationText}
+สภาพครัวเรือน ${conditionText}
+ทัศนคติ ${attitudeText}
+ทักษะ ${skillText}
+ทรัพยากร ${resourceText}
+ทางออก(ความต้องการ) ${solutionText}`;
+
+            // แสดงผลลัพธ์
+            document.getElementById('outputContent').textContent = output;
+            document.getElementById('outputSection').classList.add('show');
+
+            // เลื่อนลงไปที่ผลลัพธ์
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyToClipboard() {
+            const outputContent = document.getElementById('outputContent').textContent;
+
+            if (!outputContent || outputContent.trim() === '') {
+                alert('⚠️ กรุณาสร้างข้อความก่อนคัดลอก');
+                return;
+            }
+
+            navigator.clipboard.writeText(outputContent).then(() => {
+                // แสดงข้อความแจ้งเตือน
+                const successMsg = document.getElementById('successMessage');
+                successMsg.style.display = 'block';
+
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 2000);
+            }).catch(err => {
+                alert('❌ เกิดข้อผิดพลาดในการคัดลอก: ' + err);
+            });
+        }
+
+        function resetForm() {
+            if (confirm('🔄 ต้องการล้างข้อมูลทั้งหมดหรือไม่?')) {
+                document.getElementById('householdForm').reset();
+                document.getElementById('outputSection').classList.remove('show');
+                document.getElementById('outputContent').textContent = '';
+                // Update balloon after reset
+                updateBalloon();
+            }
+        }
+
+        // เพิ่ม Enter เพื่อสร้างข้อความ
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                generateOutput();
+            }
+        });
+
+        // ===== Selection Balloon Functions =====
+
+        // Toggle balloon expand/collapse
+        function toggleBalloon() {
+            const balloon = document.getElementById('selectionBalloon');
+            balloon.classList.toggle('collapsed');
+        }
+
+        // Update balloon content
+        function updateBalloon() {
+            // Get selected occupations
+            const occupations = Array.from(document.querySelectorAll('input[name="occupation"]:checked'))
+                .map(cb => cb.value);
+
+            // Get selected conditions
+            const conditions = Array.from(document.querySelectorAll('input[name="condition"]:checked'))
+                .map(cb => cb.value);
+
+            // Get selected attitudes
+            const attitudes = Array.from(document.getElementById('attitude').selectedOptions)
+                .map(option => option.value);
+
+            // Get selected skills
+            const skills = Array.from(document.getElementById('skill').selectedOptions)
+                .map(option => option.value);
+
+            // Get selected resources
+            const resources = Array.from(document.getElementById('resource').selectedOptions)
+                .map(option => option.value);
+
+            // Get selected solutions
+            const solutions = Array.from(document.getElementById('solution').selectedOptions)
+                .map(option => option.value);
+
+            // Update count
+            const totalCount = occupations.length + conditions.length + attitudes.length +
+                             skills.length + resources.length + solutions.length;
+            document.getElementById('selectionCount').textContent = totalCount;
+
+            // Update sections
+            updateBalloonSection('occupationSection', 'occupationItems', occupations);
+            updateBalloonSection('conditionSection', 'conditionItems', conditions);
+            updateBalloonSection('attitudeSection', 'attitudeItems', attitudes);
+            updateBalloonSection('skillSection', 'skillItems', skills);
+            updateBalloonSection('resourceSection', 'resourceItems', resources);
+            updateBalloonSection('solutionSection', 'solutionItems', solutions);
+
+            // Show/hide empty state
+            const balloonEmpty = document.getElementById('balloonEmpty');
+            if (totalCount === 0) {
+                balloonEmpty.style.display = 'block';
+            } else {
+                balloonEmpty.style.display = 'none';
+            }
+        }
+
+        // Update individual balloon section
+        function updateBalloonSection(sectionId, itemsId, items) {
+            const section = document.getElementById(sectionId);
+            const itemsContainer = document.getElementById(itemsId);
+
+            if (items.length > 0) {
+                section.style.display = 'block';
+                itemsContainer.innerHTML = items.map(item =>
+                    `<div class="balloon-item"><i class="icon-check-circle"></i><span>${item}</span></div>`
+                ).join('');
+            } else {
+                section.style.display = 'none';
+                itemsContainer.innerHTML = '';
+            }
+        }
+
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add listeners to occupation checkboxes
+            document.querySelectorAll('input[name="occupation"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateBalloon);
+            });
+
+            // Add listeners to condition checkboxes
+            document.querySelectorAll('input[name="condition"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateBalloon);
+            });
+
+            // Add listeners to select elements
+            document.getElementById('attitude').addEventListener('change', updateBalloon);
+            document.getElementById('skill').addEventListener('change', updateBalloon);
+            document.getElementById('resource').addEventListener('change', updateBalloon);
+            document.getElementById('solution').addEventListener('change', updateBalloon);
+
+            // Initial update
+            updateBalloon();
+        });
+    </script>
+</body>
+</html>
