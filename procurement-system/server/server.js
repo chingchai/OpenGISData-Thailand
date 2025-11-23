@@ -106,14 +106,14 @@ app.use('/api', routes);
 // SERVE STATIC FILES (Production)
 // ========================================
 
-// Serve static files from the client's dist directory
-const clientDistPath = path.join(__dirname, '../client/dist');
-app.use(express.static(clientDistPath));
+// Static files are served by Nginx - commented out for reverse proxy setup
+// const clientDistPath = path.join(__dirname, '../client/dist');
+// app.use(express.static(clientDistPath));
 
 // Handle client-side routing - send all non-API requests to index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(clientDistPath, 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(clientDistPath, 'index.html'));
+// });
 
 // ========================================
 // ERROR HANDLING
