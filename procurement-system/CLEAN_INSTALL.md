@@ -32,14 +32,14 @@ git checkout claude/pull-opengis-thailand-setup-018ToN3x1p5eZ6HTy1q4VAAi
 ### ขั้นตอนที่ 2: รัน installation script
 
 ```bash
-sudo node procurement-system/clean-install.js
+sudo node procurement-system/clean-install.cjs
 ```
 
 **หรือ** ถ้าต้องการทำให้ executable:
 
 ```bash
-chmod +x procurement-system/clean-install.js
-sudo ./procurement-system/clean-install.js
+chmod +x procurement-system/clean-install.cjs
+sudo ./procurement-system/clean-install.cjs
 ```
 
 ## สิ่งที่ Script ทำ
