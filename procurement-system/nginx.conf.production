@@ -28,9 +28,9 @@ server {
     # Serve frontend static files
     location /procurement/ {
         alias /var/www/OpenGISData-Thailand/procurement-system/client/dist/;
-        try_files $uri $uri/ /procurement/index.html;
+        try_files $uri $uri/ /index.html;
 
-        # Cache control for all files
+        # Cache control for static assets
         add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
