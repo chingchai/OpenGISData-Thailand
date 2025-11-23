@@ -160,10 +160,12 @@ function step5_setPermissions() {
 
   log('Setting frontend permissions for www-data...', colors.blue);
   exec(`chown -R www-data:www-data ${config.installPath}/procurement-system/client/dist`);
+  exec(`chmod -R 755 ${config.installPath}/procurement-system/client/dist`);
 
   log('Setting backend permissions...', colors.blue);
   const actualUser = process.env.SUDO_USER || 'root';
   exec(`chown -R ${actualUser}:${actualUser} ${config.installPath}/procurement-system/server`);
+  exec(`chmod -R 755 ${config.installPath}/procurement-system/server`);
 
   log('✓ Permissions set successfully', colors.green);
 }
