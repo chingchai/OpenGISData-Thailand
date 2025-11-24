@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "code": "TREASURY",
+    "name": "กองคลัง",
+    "nameEn": "Treasury Department",
+    "description": "รับผิดชอบด้านการเงิน บัญชี งบประมาณ และพัสดุ",
+    "active": true
+  },
+  {
+    "id": 2,
+    "code": "ENGINEERING",
+    "name": "กองช่าง",
+    "nameEn": "Engineering Department",
+    "description": "รับผิดชอบด้านโครงสร้างพื้นฐาน การก่อสร้าง และซ่อมบำรุง",
+    "active": true
+  },
+  {
+    "id": 3,
+    "code": "EDUCATION",
+    "name": "กองการศึกษา",
+    "nameEn": "Education Department",
+    "description": "รับผิดชอบด้านการศึกษา กีฬา และนันทนาการ",
+    "active": true
+  },
+  {
+    "id": 4,
+    "code": "HEALTH",
+    "name": "กองสาธารณสุขและสิ่งแวดล้อม",
+    "nameEn": "Health and Environment Department",
+    "description": "รับผิดชอบด้านสาธารณสุข สุขาภิบาล และสิ่งแวดล้อม",
+    "active": true
+  },
+  {
+    "id": 5,
+    "code": "MUNICIPAL",
+    "name": "สำนักปลัด",
+    "nameEn": "Municipal Office",
+    "description": "รับผิดชอบด้านบริหารทั่วไป กฎหมาย และประชาสัมพันธ์",
+    "active": true
+  },
+  {
+    "id": 6,
+    "code": "STRATEGY",
+    "name": "กองวิชาการและแผนงาน",
+    "nameEn": "Strategy and Planning Department",
+    "description": "รับผิดชอบด้านวิชาการ วางแผน และติดตามประเมินผล",
+    "active": true
+  },
+  {
+    "id": 7,
+    "code": "CLERK",
+    "name": "กองคลัง",
+    "nameEn": "Clerk Department",
+    "description": "รับผิดชอบด้านธุรการ สารบรรณ และบริหารงานบุคคล",
+    "active": true
+  }
+]

@@ -5,86 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>ระบบจัดการข้อมูลครัวเรือน</title>
 
-    <!-- Google Fonts: Inter + Noto Sans Thai -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome 6 Free -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- No external dependencies - using system fonts and inline SVG icons -->
 
     <style>
         :root {
-            /* iOS 18 Modern Theme - Vibrant & Clean */
-            --primary: #007AFF;
-            --primary-light: #5EACFF;
-            --primary-dark: #0051D5;
-            --secondary: #34C759;
-            --accent: #FF9500;
-            --danger: #FF3B30;
-            --purple: #AF52DE;
-            --pink: #FF2D55;
-            --teal: #5AC8FA;
-            --indigo: #5856D6;
-            --yellow: #FFCC00;
-
-            /* Backgrounds - iOS Light Mode */
-            --bg-main: #F2F2F7;
-            --bg-card: #FFFFFF;
-            --bg-hover: #F9F9FB;
-            --bg-selected: #E8F0FE;
-
-            /* Text Colors */
-            --text-primary: #000000;
-            --text-secondary: #8E8E93;
-            --text-muted: #AEAEB2;
-            --text-white: #FFFFFF;
-
-            /* Border & Divider */
-            --border-color: #C7C7CC;
-            --border-light: #E5E5EA;
-            --divider: #D1D1D6;
-
-            /* Shadows - iOS Style */
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
-
-            /* Spacing (following 8px grid) */
-            --space-xs: 8px;
-            --space-sm: 16px;
-            --space-md: 24px;
-            --space-lg: 32px;
-            --space-xl: 48px;
-
-            /* Border Radius - iOS Style */
-            --radius-sm: 10px;
-            --radius-md: 16px;
-            --radius-lg: 20px;
-            --radius-full: 9999px;
-
-            /* Typography */
-            --font-size-xs: 13px;
-            --font-size-sm: 15px;
-            --font-size-md: 17px;
-            --font-size-lg: 22px;
-            --font-size-xl: 28px;
-
-            /* Legacy iOS compatibility (for existing code) */
-            --ios-blue: var(--primary);
-            --ios-green: var(--secondary);
-            --ios-orange: var(--accent);
-            --ios-red: var(--danger);
-            --ios-gray: var(--text-secondary);
-            --ios-gray2: var(--text-muted);
-            --ios-gray3: var(--border-color);
-            --ios-gray4: var(--border-light);
-            --ios-gray5: var(--bg-hover);
-            --ios-gray6: var(--bg-selected);
-            --ios-background: var(--bg-main);
-            --ios-card-bg: var(--bg-card);
-            --ios-border-radius: var(--radius-md);
-            --ios-shadow: var(--shadow-md);
+            --ios-blue: #007AFF;
+            --ios-green: #34C759;
+            --ios-indigo: #5856D6;
+            --ios-orange: #FF9500;
+            --ios-pink: #FF2D55;
+            --ios-purple: #AF52DE;
+            --ios-red: #FF3B30;
+            --ios-teal: #5AC8FA;
+            --ios-yellow: #FFCC00;
+            --ios-gray: #8E8E93;
+            --ios-gray2: #AEAEB2;
+            --ios-gray3: #C7C7CC;
+            --ios-gray4: #D1D1D6;
+            --ios-gray5: #E5E5EA;
+            --ios-gray6: #F2F2F7;
+            --ios-background: #F2F2F7;
+            --ios-card-bg: rgba(255, 255, 255, 0.9);
+            --ios-border-radius: 16px;
+            --ios-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -96,40 +39,40 @@
         }
 
         body {
-            font-family: 'Inter', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-main);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Thonburi', 'Sukhumvit Set', sans-serif;
+            background: linear-gradient(180deg, #F2F2F7 0%, #E5E5EA 100%);
             min-height: 100vh;
-            padding: var(--space-md);
-            padding-top: max(var(--space-md), env(safe-area-inset-top));
-            padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
-            line-height: 1.6;
+            padding: 20px;
+            padding-top: max(20px, env(safe-area-inset-top));
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: var(--space-xl);
-            border: 1px solid var(--border-light);
+            background: var(--ios-card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--ios-shadow);
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         h1 {
             text-align: center;
-            color: var(--primary);
-            margin-bottom: var(--space-sm);
-            font-size: var(--font-size-xl);
+            color: var(--ios-blue);
+            margin-bottom: 8px;
+            font-size: 2.2em;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
         .subtitle {
             text-align: center;
-            color: var(--text-secondary);
-            margin-bottom: var(--space-lg);
-            font-size: var(--font-size-md);
+            color: var(--ios-gray);
+            margin-bottom: 32px;
+            font-size: 1.05em;
             font-weight: 400;
         }
 
@@ -161,7 +104,7 @@
             border-radius: 12px;
             font-size: 17px;
             transition: all 0.2s ease;
-            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
             background: white;
             color: #1C1C1E;
         }
@@ -199,98 +142,78 @@
 
         .button-group {
             display: flex;
-            gap: var(--space-sm);
+            gap: 12px;
             justify-content: center;
-            margin: var(--space-lg) 0;
+            margin-top: 32px;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 16px 40px;
-            font-size: var(--font-size-sm);
+            padding: 14px 32px;
+            font-size: 17px;
             border: none;
-            border-radius: var(--radius-lg);
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             font-weight: 600;
-            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
             letter-spacing: -0.3px;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .btn-generate {
-            background: var(--primary);
-            color: var(--text-white);
+            background: var(--ios-blue);
+            color: white;
             flex: 1;
             min-width: 200px;
         }
 
         .btn-generate:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
         }
 
         .btn-generate:active {
-            transform: translateY(0);
+            transform: scale(0.98);
         }
 
         .btn-copy {
-            background: var(--secondary);
-            color: var(--text-white);
+            background: var(--ios-green);
+            color: white;
             flex: 1;
             min-width: 200px;
         }
 
         .btn-copy:hover {
-            background: #6A8E6F;
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(52, 199, 89, 0.3);
         }
 
         .btn-copy:active {
-            transform: translateY(0);
+            transform: scale(0.98);
         }
 
         .btn-reset {
-            background: var(--bg-selected);
-            color: var(--text-secondary);
+            background: var(--ios-gray6);
+            color: var(--ios-gray);
             flex: 1;
             min-width: 150px;
         }
 
         .btn-reset:hover {
-            background: var(--bg-hover);
-            transform: translateY(-3px);
+            background: var(--ios-gray5);
         }
 
         .btn-reset:active {
-            transform: translateY(0);
-        }
-
-        .btn-download {
-            background: var(--accent);
-            color: var(--text-white);
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .btn-download:hover {
-            background: #C59763;
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-download:active {
-            transform: translateY(0);
+            transform: scale(0.98);
         }
 
         .output-section {
-            margin: var(--space-lg) 0;
-            padding: var(--space-lg);
-            background: var(--bg-hover);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
+            margin-top: 32px;
+            padding: 24px;
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid var(--ios-blue);
             display: none;
             animation: fadeIn 0.3s ease;
         }
@@ -300,26 +223,26 @@
         }
 
         .output-title {
-            font-size: var(--font-size-lg);
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: var(--space-md);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--ios-blue);
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
+            gap: 8px;
             letter-spacing: -0.3px;
         }
 
         .output-content {
-            background: var(--bg-card);
-            padding: var(--space-md);
-            border-radius: var(--radius-md);
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
             white-space: pre-wrap;
-            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
-            line-height: 1.8;
-            font-size: var(--font-size-sm);
-            border: 1px solid var(--border-light);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Thonburi', 'Sukhumvit Set', sans-serif;
+            line-height: 1.7;
+            font-size: 16px;
+            border: 1px solid var(--ios-gray4);
+            color: #1C1C1E;
         }
 
         .success-message {
@@ -663,6 +586,216 @@
             fill: currentColor;
         }
 
+        .icon-chart-pie::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M21.21 15.89A10 10 0 1 1 8 2.83'/%3E%3Cpath d='M22 12A10 10 0 0 0 12 2v10z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-home::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3Cpolyline points='9 22 9 12 15 12 15 22'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-briefcase::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='2' y='7' width='20' height='14' rx='2' ry='2'/%3E%3Cpath d='M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-tasks::before,
+        .icon-list-check::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-heartbeat::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-graduation-cap::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M22 10v6M2 10l10-5 10 5-10 5z'/%3E%3Cpath d='M6 12v5c3 3 9 3 12 0v-5'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-coins::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8'/%3E%3Cpath d='M12 18V6'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-hand-holding-heart::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-users::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-smile::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M8 14s1.5 2 4 2 4-2 4-2'/%3E%3Cline x1='9' y1='9' x2='9.01' y2='9'/%3E%3Cline x1='15' y1='9' x2='15.01' y2='9'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-tools::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-warehouse::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z'/%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-lightbulb::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5'/%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-file-alt::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cpolyline points='10 9 9 9 8 9'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-copy::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-redo::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='23 4 23 10 17 10'/%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-check-circle::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-chevron-up::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='18 15 12 9 6 15'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
+        .icon-inbox::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='22 12 16 12 14 15 10 15 8 12 2 12'/%3E%3Cpath d='M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            vertical-align: -0.125em;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -698,12 +831,12 @@
 </head>
 <body>
     <div class="container">
-        <h1><i class="fa-solid fa-chart-pie"></i> รายการวิเคราะห์ปัญหาตามมิติ TPMAP</h1>
+        <h1><i class="icon-chart-pie"></i> รายการวิเคราะห์ปัญหาตามมิติ TPMAP</h1>
         <div class="subtitle">กรอกข้อมูลและเลือกรายการเพื่อสร้างข้อความสำหรับ Dashboard</div>
 
         <form id="householdForm">
             <!-- ข้อมูลพื้นฐานครัวเรือน -->
-            <div class="section-header"><i class="fa-solid fa-home"></i> ข้อมูลพื้นฐานครัวเรือน</div>
+            <div class="section-header"><i class="icon-home"></i> ข้อมูลพื้นฐานครัวเรือน</div>
             <div class="form-grid">
                 <div class="form-group">
                     <label for="members">มีสมาชิกในครัวเรือน (คน)</label>
@@ -724,7 +857,7 @@
             </div>
 
             <!-- อาชีพ -->
-            <div class="section-header"><i class="fa-solid fa-briefcase"></i> อาชีพของสมาชิกในครัวเรือน</div>
+            <div class="section-header"><i class="icon-briefcase"></i> อาชีพของสมาชิกในครัวเรือน</div>
             <div class="form-group">
                 <label>เลือกอาชีพ (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container" id="occupationContainer">
@@ -747,11 +880,11 @@
             </div>
 
             <!-- สภาพครัวเรือนตามตัวชี้วัด -->
-            <div class="section-header"><i class="fa-solid fa-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม) - ทั้งหมด 38 ตัวชี้วัด</div>
+            <div class="section-header"><i class="icon-tasks"></i> ตัวชี้วัดสภาพครัวเรือน (จำแนกตามกลุ่ม) - ทั้งหมด 38 ตัวชี้วัด</div>
 
             <!-- ด้านสุขภาพ (12 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fa-solid fa-heartbeat"></i> <strong>ด้านสุขภาพ</strong> - 12 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="icon-heartbeat"></i> <strong>ด้านสุขภาพ</strong> - 12 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="1. [H01] การฝากครรภ์อย่างมีคุณภาพ">
@@ -818,7 +951,7 @@
 
             <!-- ด้านที่อยู่อาศัยและสิ่งแวดล้อม (9 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fa-solid fa-home"></i> <strong>ด้านที่อยู่อาศัยและสิ่งแวดล้อม</strong> - 9 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="icon-home"></i> <strong>ด้านที่อยู่อาศัยและสิ่งแวดล้อม</strong> - 9 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="13. [HE01] ครัวเรือนมีความมั่นคงในที่อยู่อาศัย บ้านมีสภาพคงทนถาวร และอยู่ในสภาพแวดล้อมที่เหมาะสม">
@@ -870,7 +1003,7 @@
 
             <!-- ด้านการศึกษาและการเรียนรู้ (5 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fa-solid fa-graduation-cap"></i> <strong>ด้านการศึกษาและการเรียนรู้</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="icon-graduation-cap"></i> <strong>ด้านการศึกษาและการเรียนรู้</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="22. [ED01] เด็กอายุต่ำกว่า 6 ปี มีพัฒนาการด้านสุขภาพ การเรียนรู้ และพัฒนาการทางบุคลิกภาพตามวัย">
@@ -902,7 +1035,7 @@
 
             <!-- ด้านเศรษฐกิจและอาชีพ (4 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fa-solid fa-coins"></i> <strong>ด้านเศรษฐกิจและอาชีพ</strong> - 4 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="icon-coins"></i> <strong>ด้านเศรษฐกิจและอาชีพ</strong> - 4 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="27. [EC01] คนอายุ 15–59 ปี มีอาชีพและรายได้">
@@ -929,7 +1062,7 @@
 
             <!-- ด้านสวัสดิการสังคม (5 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fa-solid fa-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="icon-hand-holding-heart"></i> <strong>ด้านสวัสดิการสังคม</strong> - 5 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="31. [W01] เด็กแรกเกิด–6 ปี ที่ครัวเรือนมีรายได้เฉลี่ยไม่เกิน 100,000 บาท/คน/ปี ได้รับเงินอุดหนุนจากภาครัฐ">
@@ -961,7 +1094,7 @@
 
             <!-- ด้านครอบครัวและชุมชน (2 ตัวชี้วัด) -->
             <div class="form-group">
-                <label><i class="fa-solid fa-users"></i> <strong>ด้านครอบครัวและชุมชน</strong> - 2 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
+                <label><i class="icon-users"></i> <strong>ด้านครอบครัวและชุมชน</strong> - 2 ตัวชี้วัด (เลือกได้มากกว่า 1 รายการ)</label>
                 <div class="multi-select-container">
                     <label>
                         <input type="checkbox" name="condition" value="36. [FC01] ครอบครัวมีความอบอุ่น">
@@ -977,7 +1110,7 @@
             </div>
 
             <!-- ทัศนคติ -->
-            <div class="section-header"><i class="fa-solid fa-smile"></i> ทัศนคติ</div>
+            <div class="section-header"><i class="icon-smile"></i> ทัศนคติ</div>
             <div class="form-group">
                 <label for="attitude">เลือกทัศนคติ</label>
                 <select id="attitude" multiple size="5" style="height: auto;">
@@ -998,7 +1131,7 @@
             </div>
 
             <!-- ทักษะ -->
-            <div class="section-header"><i class="fa-solid fa-tools"></i> ทักษะ</div>
+            <div class="section-header"><i class="icon-tools"></i> ทักษะ</div>
             <div class="form-group">
                 <label for="skill">เลือกทักษะ</label>
                 <select id="skill" multiple size="5" style="height: auto;">
@@ -1020,7 +1153,7 @@
             </div>
 
             <!-- ทรัพยากร -->
-            <div class="section-header"><i class="fa-solid fa-warehouse"></i> ทรัพยากร</div>
+            <div class="section-header"><i class="icon-warehouse"></i> ทรัพยากร</div>
             <div class="form-group">
                 <label for="resource">เลือกทรัพยากร</label>
                 <select id="resource" multiple size="5" style="height: auto;">
@@ -1047,7 +1180,7 @@
             </div>
 
             <!-- ทางออก/ความต้องการ -->
-            <div class="section-header"><i class="fa-solid fa-lightbulb"></i> ทางออก (ความต้องการ)</div>
+            <div class="section-header"><i class="icon-lightbulb"></i> ทางออก (ความต้องการ)</div>
             <div class="form-group">
                 <label for="solution">เลือกทางออก/ความต้องการ</label>
                 <select id="solution" multiple size="5" style="height: auto;">
@@ -1074,16 +1207,13 @@
             <!-- ปุ่มต่างๆ -->
             <div class="button-group">
                 <button type="button" class="btn-generate" onclick="generateOutput()">
-                    <i class="fa-solid fa-file-alt"></i> สร้างข้อความ
+                    <i class="icon-file-alt"></i> สร้างข้อความ
                 </button>
                 <button type="button" class="btn-copy" onclick="copyToClipboard()">
-                    <i class="fa-solid fa-copy"></i> คัดลอกข้อความ
-                </button>
-                <button type="button" class="btn-download" onclick="downloadTextFile()">
-                    <i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์
+                    <i class="icon-copy"></i> คัดลอกข้อความ
                 </button>
                 <button type="button" class="btn-reset" onclick="resetForm()">
-                    <i class="fa-solid fa-redo"></i> ล้างข้อมูล
+                    <i class="icon-redo"></i> ล้างข้อมูล
                 </button>
             </div>
         </form>
@@ -1091,7 +1221,7 @@
         <!-- แสดงผลลัพธ์ -->
         <div id="outputSection" class="output-section">
             <div class="output-title">
-                <i class="fa-solid fa-check-circle"></i>
+                <i class="icon-check-circle"></i>
                 <span>ผลลัพธ์</span>
             </div>
             <div id="outputContent" class="output-content"></div>
@@ -1100,46 +1230,46 @@
 
     <!-- ข้อความแจ้งเตือน -->
     <div id="successMessage" class="success-message">
-        <i class="fa-solid fa-check-circle"></i> คัดลอกข้อความสำเร็จ!
+        <i class="icon-check-circle"></i> คัดลอกข้อความสำเร็จ!
     </div>
 
     <!-- Selection Balloon Tip -->
     <div id="selectionBalloon" class="selection-balloon">
         <div class="balloon-header" onclick="toggleBalloon()">
             <div class="balloon-title">
-                <i class="fa-solid fa-list-check"></i>
+                <i class="icon-list-check"></i>
                 <span>รายการที่เลือก</span>
                 <span class="selection-count" id="selectionCount">0</span>
             </div>
-            <i class="fa-solid fa-chevron-up balloon-toggle" id="balloonToggle"></i>
+            <i class="icon-chevron-up balloon-toggle" id="balloonToggle"></i>
         </div>
         <div class="balloon-content" id="balloonContent">
             <div class="balloon-section" id="occupationSection" style="display: none;">
-                <div class="balloon-section-title"><i class="fa-solid fa-briefcase"></i> อาชีพ</div>
+                <div class="balloon-section-title"><i class="icon-briefcase"></i> อาชีพ</div>
                 <div class="balloon-items" id="occupationItems"></div>
             </div>
             <div class="balloon-section" id="conditionSection" style="display: none;">
-                <div class="balloon-section-title"><i class="fa-solid fa-tasks"></i> ตัวชี้วัด</div>
+                <div class="balloon-section-title"><i class="icon-tasks"></i> ตัวชี้วัด</div>
                 <div class="balloon-items" id="conditionItems"></div>
             </div>
             <div class="balloon-section" id="attitudeSection" style="display: none;">
-                <div class="balloon-section-title"><i class="fa-solid fa-smile"></i> ทัศนคติ</div>
+                <div class="balloon-section-title"><i class="icon-smile"></i> ทัศนคติ</div>
                 <div class="balloon-items" id="attitudeItems"></div>
             </div>
             <div class="balloon-section" id="skillSection" style="display: none;">
-                <div class="balloon-section-title"><i class="fa-solid fa-tools"></i> ทักษะ</div>
+                <div class="balloon-section-title"><i class="icon-tools"></i> ทักษะ</div>
                 <div class="balloon-items" id="skillItems"></div>
             </div>
             <div class="balloon-section" id="resourceSection" style="display: none;">
-                <div class="balloon-section-title"><i class="fa-solid fa-warehouse"></i> ทรัพยากร</div>
+                <div class="balloon-section-title"><i class="icon-warehouse"></i> ทรัพยากร</div>
                 <div class="balloon-items" id="resourceItems"></div>
             </div>
             <div class="balloon-section" id="solutionSection" style="display: none;">
-                <div class="balloon-section-title"><i class="fa-solid fa-lightbulb"></i> ทางออก</div>
+                <div class="balloon-section-title"><i class="icon-lightbulb"></i> ทางออก</div>
                 <div class="balloon-items" id="solutionItems"></div>
             </div>
             <div class="balloon-empty" id="balloonEmpty">
-                <i class="fa-solid fa-inbox"></i>
+                <i class="icon-inbox"></i>
                 <p>ยังไม่มีรายการที่เลือก</p>
             </div>
         </div>
@@ -1229,116 +1359,17 @@
                 return;
             }
 
-            // ฟังก์ชันแสดง feedback
-            function showSuccessFeedback(button) {
+            navigator.clipboard.writeText(outputContent).then(() => {
+                // แสดงข้อความแจ้งเตือน
                 const successMsg = document.getElementById('successMessage');
                 successMsg.style.display = 'block';
 
-                // เปลี่ยนข้อความปุ่มชั่วคราว
-                const originalText = button.innerHTML;
-                button.innerHTML = '✅ คัดลอกแล้ว!';
-                button.style.backgroundColor = '#28a745';
-
                 setTimeout(() => {
                     successMsg.style.display = 'none';
-                    button.innerHTML = originalText;
-                    button.style.backgroundColor = '';
                 }, 2000);
-            }
-
-            // หาปุ่มที่กด
-            const copyButton = event.target;
-
-            // พยายามใช้ modern Clipboard API ก่อน (สำหรับ HTTPS)
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(outputContent).then(() => {
-                    showSuccessFeedback(copyButton);
-                }).catch(err => {
-                    console.error('Clipboard API failed:', err);
-                    // ถ้า Clipboard API ไม่ทำงาน ใช้ fallback method
-                    fallbackCopyToClipboard(outputContent, copyButton);
-                });
-            } else {
-                // ถ้า browser ไม่รองรับ Clipboard API ใช้ fallback method
-                fallbackCopyToClipboard(outputContent, copyButton);
-            }
-
-            // Fallback method สำหรับ HTTP หรือ browser เก่า
-            function fallbackCopyToClipboard(text, button) {
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-
-                // ทำให้ไม่เห็น
-                textArea.style.position = 'fixed';
-                textArea.style.top = '0';
-                textArea.style.left = '0';
-                textArea.style.width = '2em';
-                textArea.style.height = '2em';
-                textArea.style.padding = '0';
-                textArea.style.border = 'none';
-                textArea.style.outline = 'none';
-                textArea.style.boxShadow = 'none';
-                textArea.style.background = 'transparent';
-                textArea.style.opacity = '0';
-
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-
-                try {
-                    const successful = document.execCommand('copy');
-                    if (successful) {
-                        showSuccessFeedback(button);
-                    } else {
-                        alert('❌ ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยมือ (Ctrl+C)');
-                    }
-                } catch (err) {
-                    console.error('Fallback copy failed:', err);
-                    alert('❌ เกิดข้อผิดพลาดในการคัดลอก กรุณาคัดลอกข้อความด้วยมือ');
-                }
-
-                document.body.removeChild(textArea);
-            }
-        }
-
-        function downloadTextFile() {
-            const outputContent = document.getElementById('outputContent').textContent;
-
-            if (!outputContent || outputContent.trim() === '') {
-                alert('⚠️ กรุณาสร้างข้อความก่อนดาวน์โหลด');
-                return;
-            }
-
-            // สร้าง Blob จากข้อความ
-            const blob = new Blob([outputContent], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-
-            // สร้าง element สำหรับดาวน์โหลด
-            const a = document.createElement('a');
-            a.href = url;
-
-            // ตั้งชื่อไฟล์ด้วย timestamp
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-            a.download = `TPMAP_Household_Dashboard_${timestamp}.txt`;
-
-            // เพิ่มลงใน DOM, คลิก, แล้วลบออก
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-            // ลบ URL object
-            URL.revokeObjectURL(url);
-
-            // แสดงข้อความสำเร็จ
-            const successMsg = document.getElementById('successMessage');
-            const originalText = successMsg.innerHTML;
-            successMsg.innerHTML = '<i class="fa-solid fa-check-circle"></i> ดาวน์โหลดไฟล์สำเร็จ!';
-            successMsg.style.display = 'block';
-
-            setTimeout(() => {
-                successMsg.style.display = 'none';
-                successMsg.innerHTML = originalText;
-            }, 2000);
+            }).catch(err => {
+                alert('❌ เกิดข้อผิดพลาดในการคัดลอก: ' + err);
+            });
         }
 
         function resetForm() {
@@ -1422,7 +1453,7 @@
             if (items.length > 0) {
                 section.style.display = 'block';
                 itemsContainer.innerHTML = items.map(item =>
-                    `<div class="balloon-item"><i class="fa-solid fa-check-circle"></i><span>${item}</span></div>`
+                    `<div class="balloon-item"><i class="icon-check-circle"></i><span>${item}</span></div>`
                 ).join('');
             } else {
                 section.style.display = 'none';
