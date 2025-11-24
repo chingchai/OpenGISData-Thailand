@@ -1,0 +1,199 @@
+# ตัวอย่าง nginx configuration สำหรับ Procurement System + TPMAP Dashboard
+#
+# วิธีใช้:
+# 1. คัดลอกไฟล์นี้ไปที่ /etc/nginx/sites-available/
+# 2. แก้ไข server_name, paths ตามที่ต้องการ
+# 3. สร้าง symbolic link ไปที่ sites-enabled
+# 4. ทดสอบและ reload nginx
+#
+# คำสั่ง:
+# sudo cp nginx-procurement-tpmap.conf.example /etc/nginx/sites-available/procurement-system
+# sudo ln -s /etc/nginx/sites-available/procurement-system /etc/nginx/sites-enabled/
+# sudo nginx -t
+# sudo systemctl reload nginx
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    # เปลี่ยนเป็น IP หรือ domain ของคุณ
+    server_name 49.231.27.66;
+    # server_name your-domain.com www.your-domain.com;
+
+    # Logging
+    access_log /var/log/nginx/procurement_access.log;
+    error_log /var/log/nginx/procurement_error.log;
+
+    # Character set
+    charset utf-8;
+
+    # ============================================================
+    # Procurement System - Main Application
+    # ============================================================
+
+    # Frontend (React/Vue/Angular static files)
+    location / {
+        root /root/OpenGISData-Thailand/procurement-system/client/dist;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+
+        # Cache control for static assets
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+    }
+
+    # Backend API (Node.js/Express)
+    location /api {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+
+        # Timeouts
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
+    # ============================================================
+    # TPMAP Dashboard - Subdirectory
+    # URL: http://49.231.27.66/tpmap/
+    # ============================================================
+
+    location /tpmap/ {
+        alias /var/www/OpenGISData-Thailand/tpmap_act/;
+        index household-dashboard.html indicators-selector.html;
+        try_files $uri $uri/ =404;
+
+        # Security headers
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+
+        # Cache HTML files for short time
+        location ~* \.html$ {
+            expires 1h;
+            add_header Cache-Control "public, must-revalidate";
+        }
+    }
+
+    # ============================================================
+    # GeoJSON Data (Optional)
+    # ถ้าต้องการเสิร์ฟไฟล์ GeoJSON ให้เอาคอมเมนต์ออก
+    # ============================================================
+
+    # location /geojson/ {
+    #     alias /var/www/OpenGISData-Thailand/;
+    #
+    #     # CORS headers for GeoJSON
+    #     add_header Access-Control-Allow-Origin * always;
+    #     add_header Access-Control-Allow-Methods 'GET, HEAD, OPTIONS' always;
+    #
+    #     # Cache GeoJSON files
+    #     location ~* \.geojson$ {
+    #         expires 7d;
+    #         add_header Cache-Control "public, immutable";
+    #     }
+    # }
+
+    # ============================================================
+    # Security & Performance
+    # ============================================================
+
+    # Compression
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/json
+        application/javascript
+        application/xml+rss
+        application/rss+xml
+        application/atom+xml
+        image/svg+xml;
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Deny access to git files
+    location ~ /\.git {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Security headers (global)
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "no-referrer-when-downgrade" always;
+}
+
+# ============================================================
+# HTTPS Configuration (สำหรับใช้ SSL/TLS)
+# ใช้ certbot เพื่อติดตั้ง Let's Encrypt certificate
+# คำสั่ง: sudo certbot --nginx -d your-domain.com
+# ============================================================
+
+# server {
+#     listen 443 ssl http2;
+#     listen [::]:443 ssl http2;
+#
+#     server_name your-domain.com www.your-domain.com;
+#
+#     # SSL certificates (certbot จะเพิ่มให้อัตโนมัติ)
+#     ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+#     ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+#
+#     # SSL configuration
+#     ssl_protocols TLSv1.2 TLSv1.3;
+#     ssl_prefer_server_ciphers on;
+#     ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+#     ssl_session_cache shared:SSL:10m;
+#     ssl_session_timeout 10m;
+#
+#     # ... rest of the configuration same as above
+# }
+
+# Redirect HTTP to HTTPS
+# server {
+#     listen 80;
+#     listen [::]:80;
+#     server_name your-domain.com www.your-domain.com;
+#     return 301 https://$server_name$request_uri;
+# }
+
+# ============================================================
+# การเข้าถึง URLs
+# ============================================================
+#
+# Procurement System:
+#   http://49.231.27.66/                    - Frontend
+#   http://49.231.27.66/api/...             - Backend API
+#
+# TPMAP Dashboard:
+#   http://49.231.27.66/tpmap/household-dashboard.html
+#   http://49.231.27.66/tpmap/indicators-selector.html
+#   http://49.231.27.66/tpmap/indicators-38-snippet.html
+#
+# GeoJSON (ถ้าเปิดใช้):
+#   http://49.231.27.66/geojson/provinces.geojson
+#   http://49.231.27.66/geojson/districts.geojson
+#
+# ============================================================
