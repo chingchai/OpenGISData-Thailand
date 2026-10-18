@@ -63,10 +63,14 @@ def update_properties(text, postcodes):
     values = iter(postcodes)
 
     def replace(match):
-        body = re.sub(r',\s*"postcode"\s*:\s*\[[^\]]*\]', "", match[2])
+        body = match[2]
+        addition = json.dumps(next(values), ensure_ascii=False)
+        existing = re.search(r'("postcode"\s*:\s*)\[[^\]]*\]', body)
+        if existing:
+            body = body[:existing.start()] + existing[1] + addition + body[existing.end():]
+            return match[1] + "{" + body + "}"
         content = body.rstrip()
         suffix = body[len(content):]
-        addition = json.dumps(next(values), ensure_ascii=False)
         if "\n" in body:
             indent = re.search(r'\n([ \t]*)"', body)[1]
             content += f',\n{indent}"postcode": {addition}'

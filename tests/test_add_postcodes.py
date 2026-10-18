@@ -54,6 +54,13 @@ class PostcodeTests(unittest.TestCase):
                 empty = update_properties(updated, [[]])
                 self.assertEqual(json.loads(empty)["features"][0]["properties"]["postcode"], [])
 
+    def test_existing_postcode_keeps_position_and_later_fields(self):
+        text = ('{"type":"Feature","properties":{"postcode": ["10100"], '
+                '"lat": 13.123456, "lon": 101.123456},"geometry":null}')
+        expected = text.replace('["10100"]', '["10200"]')
+        self.assertEqual(update_properties(text, [["10200"]]), expected)
+        self.assertEqual(update_properties(expected, [["10200"]]), expected)
+
 
 if __name__ == "__main__":
     unittest.main()

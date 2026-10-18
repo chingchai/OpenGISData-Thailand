@@ -1,0 +1,682 @@
+{
+  "input_crs": "OGC:CRS84 (longitude, latitude; WGS84)",
+  "projection": "+proj=laea +lat_0=13 +lon_0=101 +datum=WGS84 +units=m +no_defs",
+  "output_crs": "EPSG:4326 (lat and lon properties; WGS84)",
+  "always_xy": true,
+  "method": "Area-weighted centroid of each feature's own projected geometry; holes subtract area",
+  "rounding": {
+    "decimal_places": 6,
+    "rule": "Python round (nearest, ties to even)",
+    "storage": "JSON number"
+  },
+  "versions": {
+    "shapely": "2.1.2",
+    "geos": "3.13.1",
+    "pyproj": "3.7.2",
+    "proj": "9.5.1"
+  },
+  "containment": "Projected geometry covers centroid (boundary included). Unrounded uses original projected centroid; rounded projects the stored WGS84 point back to LAEA.",
+  "invalid_geometry_policy": "Report input/projected invalidity; compute finite positive-area geometry without repair. Invalid inputs may have unreliable centroids.",
+  "outside_centroid_policy": "Preserve computed centroid even outside geometry; never relocate",
+  "datasets": {
+    "subdistricts": {
+      "features": 7367,
+      "invalid_input": [],
+      "invalid_projected": [],
+      "outside_unrounded": [
+        {
+          "feature_index": 55,
+          "id": "101302"
+        },
+        {
+          "feature_index": 72,
+          "id": "101901"
+        },
+        {
+          "feature_index": 553,
+          "id": "150307"
+        },
+        {
+          "feature_index": 670,
+          "id": "160601"
+        },
+        {
+          "feature_index": 816,
+          "id": "190106"
+        },
+        {
+          "feature_index": 961,
+          "id": "200408"
+        },
+        {
+          "feature_index": 1006,
+          "id": "200905"
+        },
+        {
+          "feature_index": 1245,
+          "id": "240512"
+        },
+        {
+          "feature_index": 1336,
+          "id": "250810"
+        },
+        {
+          "feature_index": 1429,
+          "id": "270613"
+        },
+        {
+          "feature_index": 1568,
+          "id": "301208"
+        },
+        {
+          "feature_index": 1649,
+          "id": "302002"
+        },
+        {
+          "feature_index": 1717,
+          "id": "303102"
+        },
+        {
+          "feature_index": 1728,
+          "id": "310103"
+        },
+        {
+          "feature_index": 1784,
+          "id": "310507"
+        },
+        {
+          "feature_index": 1827,
+          "id": "311002"
+        },
+        {
+          "feature_index": 1839,
+          "id": "311014"
+        },
+        {
+          "feature_index": 2247,
+          "id": "331607"
+        },
+        {
+          "feature_index": 2714,
+          "id": "370115"
+        },
+        {
+          "feature_index": 3006,
+          "id": "401601"
+        },
+        {
+          "feature_index": 3043,
+          "id": "402101"
+        },
+        {
+          "feature_index": 3096,
+          "id": "410303"
+        },
+        {
+          "feature_index": 3288,
+          "id": "420911"
+        },
+        {
+          "feature_index": 3844,
+          "id": "470116"
+        },
+        {
+          "feature_index": 3877,
+          "id": "470701"
+        },
+        {
+          "feature_index": 4211,
+          "id": "501205"
+        },
+        {
+          "feature_index": 4301,
+          "id": "502404"
+        },
+        {
+          "feature_index": 4390,
+          "id": "520501"
+        },
+        {
+          "feature_index": 4396,
+          "id": "520507"
+        },
+        {
+          "feature_index": 4466,
+          "id": "530114"
+        },
+        {
+          "feature_index": 4525,
+          "id": "540106"
+        },
+        {
+          "feature_index": 4583,
+          "id": "540607"
+        },
+        {
+          "feature_index": 4657,
+          "id": "550711"
+        },
+        {
+          "feature_index": 4711,
+          "id": "560118"
+        },
+        {
+          "feature_index": 4751,
+          "id": "560701"
+        },
+        {
+          "feature_index": 4766,
+          "id": "570102"
+        },
+        {
+          "feature_index": 5075,
+          "id": "610114"
+        },
+        {
+          "feature_index": 5119,
+          "id": "610612"
+        },
+        {
+          "feature_index": 5135,
+          "id": "620105"
+        },
+        {
+          "feature_index": 5187,
+          "id": "620609"
+        },
+        {
+          "feature_index": 5206,
+          "id": "621101"
+        },
+        {
+          "feature_index": 5227,
+          "id": "630301"
+        },
+        {
+          "feature_index": 5247,
+          "id": "630603"
+        },
+        {
+          "feature_index": 5415,
+          "id": "650604"
+        },
+        {
+          "feature_index": 5539,
+          "id": "670104"
+        },
+        {
+          "feature_index": 5760,
+          "id": "710107"
+        },
+        {
+          "feature_index": 5780,
+          "id": "710402"
+        },
+        {
+          "feature_index": 5930,
+          "id": "720712"
+        },
+        {
+          "feature_index": 6242,
+          "id": "770203"
+        },
+        {
+          "feature_index": 6269,
+          "id": "770609"
+        },
+        {
+          "feature_index": 6279,
+          "id": "770803"
+        },
+        {
+          "feature_index": 6280,
+          "id": "770804"
+        },
+        {
+          "feature_index": 6457,
+          "id": "810116"
+        },
+        {
+          "feature_index": 6496,
+          "id": "810802"
+        },
+        {
+          "feature_index": 6505,
+          "id": "820103"
+        },
+        {
+          "feature_index": 6537,
+          "id": "820603"
+        },
+        {
+          "feature_index": 6554,
+          "id": "830105"
+        },
+        {
+          "feature_index": 6556,
+          "id": "830107"
+        },
+        {
+          "feature_index": 6567,
+          "id": "840101"
+        },
+        {
+          "feature_index": 6595,
+          "id": "840401"
+        },
+        {
+          "feature_index": 6672,
+          "id": "841605"
+        },
+        {
+          "feature_index": 6701,
+          "id": "850105"
+        },
+        {
+          "feature_index": 6705,
+          "id": "850109"
+        },
+        {
+          "feature_index": 6764,
+          "id": "860404"
+        },
+        {
+          "feature_index": 6774,
+          "id": "860501"
+        },
+        {
+          "feature_index": 6928,
+          "id": "910106"
+        },
+        {
+          "feature_index": 6986,
+          "id": "920213"
+        },
+        {
+          "feature_index": 7107,
+          "id": "931002"
+        },
+        {
+          "feature_index": 7246,
+          "id": "950204"
+        },
+        {
+          "feature_index": 7253,
+          "id": "950306"
+        }
+      ],
+      "outside_rounded": [
+        {
+          "feature_index": 55,
+          "id": "101302"
+        },
+        {
+          "feature_index": 72,
+          "id": "101901"
+        },
+        {
+          "feature_index": 553,
+          "id": "150307"
+        },
+        {
+          "feature_index": 670,
+          "id": "160601"
+        },
+        {
+          "feature_index": 816,
+          "id": "190106"
+        },
+        {
+          "feature_index": 961,
+          "id": "200408"
+        },
+        {
+          "feature_index": 1006,
+          "id": "200905"
+        },
+        {
+          "feature_index": 1245,
+          "id": "240512"
+        },
+        {
+          "feature_index": 1336,
+          "id": "250810"
+        },
+        {
+          "feature_index": 1429,
+          "id": "270613"
+        },
+        {
+          "feature_index": 1568,
+          "id": "301208"
+        },
+        {
+          "feature_index": 1649,
+          "id": "302002"
+        },
+        {
+          "feature_index": 1717,
+          "id": "303102"
+        },
+        {
+          "feature_index": 1728,
+          "id": "310103"
+        },
+        {
+          "feature_index": 1784,
+          "id": "310507"
+        },
+        {
+          "feature_index": 1827,
+          "id": "311002"
+        },
+        {
+          "feature_index": 1839,
+          "id": "311014"
+        },
+        {
+          "feature_index": 2247,
+          "id": "331607"
+        },
+        {
+          "feature_index": 2714,
+          "id": "370115"
+        },
+        {
+          "feature_index": 3006,
+          "id": "401601"
+        },
+        {
+          "feature_index": 3043,
+          "id": "402101"
+        },
+        {
+          "feature_index": 3096,
+          "id": "410303"
+        },
+        {
+          "feature_index": 3288,
+          "id": "420911"
+        },
+        {
+          "feature_index": 3844,
+          "id": "470116"
+        },
+        {
+          "feature_index": 3877,
+          "id": "470701"
+        },
+        {
+          "feature_index": 4211,
+          "id": "501205"
+        },
+        {
+          "feature_index": 4301,
+          "id": "502404"
+        },
+        {
+          "feature_index": 4390,
+          "id": "520501"
+        },
+        {
+          "feature_index": 4396,
+          "id": "520507"
+        },
+        {
+          "feature_index": 4466,
+          "id": "530114"
+        },
+        {
+          "feature_index": 4525,
+          "id": "540106"
+        },
+        {
+          "feature_index": 4583,
+          "id": "540607"
+        },
+        {
+          "feature_index": 4657,
+          "id": "550711"
+        },
+        {
+          "feature_index": 4711,
+          "id": "560118"
+        },
+        {
+          "feature_index": 4751,
+          "id": "560701"
+        },
+        {
+          "feature_index": 4766,
+          "id": "570102"
+        },
+        {
+          "feature_index": 5075,
+          "id": "610114"
+        },
+        {
+          "feature_index": 5119,
+          "id": "610612"
+        },
+        {
+          "feature_index": 5135,
+          "id": "620105"
+        },
+        {
+          "feature_index": 5187,
+          "id": "620609"
+        },
+        {
+          "feature_index": 5206,
+          "id": "621101"
+        },
+        {
+          "feature_index": 5227,
+          "id": "630301"
+        },
+        {
+          "feature_index": 5247,
+          "id": "630603"
+        },
+        {
+          "feature_index": 5415,
+          "id": "650604"
+        },
+        {
+          "feature_index": 5539,
+          "id": "670104"
+        },
+        {
+          "feature_index": 5760,
+          "id": "710107"
+        },
+        {
+          "feature_index": 5780,
+          "id": "710402"
+        },
+        {
+          "feature_index": 5930,
+          "id": "720712"
+        },
+        {
+          "feature_index": 6242,
+          "id": "770203"
+        },
+        {
+          "feature_index": 6269,
+          "id": "770609"
+        },
+        {
+          "feature_index": 6279,
+          "id": "770803"
+        },
+        {
+          "feature_index": 6280,
+          "id": "770804"
+        },
+        {
+          "feature_index": 6457,
+          "id": "810116"
+        },
+        {
+          "feature_index": 6496,
+          "id": "810802"
+        },
+        {
+          "feature_index": 6505,
+          "id": "820103"
+        },
+        {
+          "feature_index": 6537,
+          "id": "820603"
+        },
+        {
+          "feature_index": 6554,
+          "id": "830105"
+        },
+        {
+          "feature_index": 6556,
+          "id": "830107"
+        },
+        {
+          "feature_index": 6567,
+          "id": "840101"
+        },
+        {
+          "feature_index": 6595,
+          "id": "840401"
+        },
+        {
+          "feature_index": 6672,
+          "id": "841605"
+        },
+        {
+          "feature_index": 6701,
+          "id": "850105"
+        },
+        {
+          "feature_index": 6705,
+          "id": "850109"
+        },
+        {
+          "feature_index": 6764,
+          "id": "860404"
+        },
+        {
+          "feature_index": 6774,
+          "id": "860501"
+        },
+        {
+          "feature_index": 6928,
+          "id": "910106"
+        },
+        {
+          "feature_index": 6986,
+          "id": "920213"
+        },
+        {
+          "feature_index": 7107,
+          "id": "931002"
+        },
+        {
+          "feature_index": 7246,
+          "id": "950204"
+        },
+        {
+          "feature_index": 7253,
+          "id": "950306"
+        }
+      ],
+      "invalid_input_count": 0,
+      "invalid_projected_count": 0,
+      "outside_unrounded_count": 70,
+      "outside_rounded_count": 70
+    },
+    "districts": {
+      "features": 928,
+      "invalid_input": [],
+      "invalid_projected": [],
+      "outside_unrounded": [
+        {
+          "feature_index": 562,
+          "id": "4801"
+        },
+        {
+          "feature_index": 631,
+          "id": "5708"
+        },
+        {
+          "feature_index": 768,
+          "id": "4515"
+        },
+        {
+          "feature_index": 780,
+          "id": "6607"
+        },
+        {
+          "feature_index": 886,
+          "id": "3102"
+        }
+      ],
+      "outside_rounded": [
+        {
+          "feature_index": 562,
+          "id": "4801"
+        },
+        {
+          "feature_index": 631,
+          "id": "5708"
+        },
+        {
+          "feature_index": 768,
+          "id": "4515"
+        },
+        {
+          "feature_index": 780,
+          "id": "6607"
+        },
+        {
+          "feature_index": 886,
+          "id": "3102"
+        }
+      ],
+      "invalid_input_count": 0,
+      "invalid_projected_count": 0,
+      "outside_unrounded_count": 5,
+      "outside_rounded_count": 5
+    },
+    "provinces": {
+      "features": 77,
+      "invalid_input": [],
+      "invalid_projected": [],
+      "outside_unrounded": [],
+      "outside_rounded": [],
+      "invalid_input_count": 0,
+      "invalid_projected_count": 0,
+      "outside_unrounded_count": 0,
+      "outside_rounded_count": 0
+    },
+    "reg_royin": {
+      "features": 6,
+      "invalid_input": [],
+      "invalid_projected": [],
+      "outside_unrounded": [],
+      "outside_rounded": [],
+      "invalid_input_count": 0,
+      "invalid_projected_count": 0,
+      "outside_unrounded_count": 0,
+      "outside_rounded_count": 0
+    },
+    "reg_nesdb": {
+      "features": 7,
+      "invalid_input": [],
+      "invalid_projected": [],
+      "outside_unrounded": [],
+      "outside_rounded": [],
+      "invalid_input_count": 0,
+      "invalid_projected_count": 0,
+      "outside_unrounded_count": 0,
+      "outside_rounded_count": 0
+    }
+  }
+}

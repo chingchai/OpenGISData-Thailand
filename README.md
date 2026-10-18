@@ -32,6 +32,8 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `tam_code` | String(6) | PK | รหัสตำบล |
+| `lat` | Real | | ละติจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
+| `lon` | Real | | ลองจิจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
 | `postcode` | Array<String(5)> | | รายการรหัสไปรษณีย์ที่จับคู่ได้; `[]` เมื่อจับคู่ไม่ได้ |
 | `tam_th` | String(254) | | ชื่อตำบลภาษาไทย |
 | `tam_en` | String(254) | | ชื่อตำบลภาษาอังกฤษ |
@@ -53,6 +55,8 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `amp_code` | String(4) | PK | รหัสอำเภอ |
+| `lat` | Real | | ละติจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
+| `lon` | Real | | ลองจิจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
 | `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในอำเภอ |
 | `amp_th` | String(254) | | ชื่ออำเภอภาษาไทย |
 | `amp_en` | String(254) | | ชื่ออำเภอภาษาอังกฤษ |
@@ -71,6 +75,8 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `pro_code` | String(2) | PK | รหัสจังหวัด |
+| `lat` | Real | | ละติจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
+| `lon` | Real | | ลองจิจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
 | `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในจังหวัด |
 | `pro_th` | String(254) | | ชื่อจังหวัดภาษาไทย |
 | `pro_en` | String(254) | | ชื่อจังหวัดภาษาอังกฤษ |
@@ -86,6 +92,8 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `reg_royin` | String(254) | PK | เขตภูมิภาค (ราชบัณฑิตยสภา) |
+| `lat` | Real | | ละติจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
+| `lon` | Real | | ลองจิจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
 | `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในภูมิภาค |
 | `perimeter` | Real(18,11) | | เส้นรอบรูป (กิโลเมตร) |
 | `area_sqkm` | Real(18,11) | | เนื้อที่ (ตารางกิโลเมตร) |
@@ -97,6 +105,8 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `reg_nesdb` | String(254) | PK | เขตภูมิภาค (สภาพัฒน์) |
+| `lat` | Real | | ละติจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
+| `lon` | Real | | ลองจิจูดของ centroid ใน WGS84 หน่วยองศา ทศนิยมไม่เกิน 6 ตำแหน่ง |
 | `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในภูมิภาค |
 | `perimeter` | Real(18,11) | | เส้นรอบรูป (กิโลเมตร) |
 | `area_sqkm` | Real(18,11) | | เนื้อที่ (ตารางกิโลเมตร) |
@@ -130,10 +140,36 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 curl -fsSL https://raw.githubusercontent.com/thailand-geography-data/thailand-geography-json/b8b3fb91c7df1129ff5b43cb46f7fcffadd2156b/src/geography.json -o /tmp/thailand-geography.json
 python3 scripts/add_postcodes.py /tmp/thailand-geography.json
 python3 scripts/add_postcodes.py /tmp/thailand-geography.json --check
-python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s tests -p 'test_add_postcodes.py' -v
 ```
 
 สคริปต์ตรวจ SHA-256 ของไฟล์ต้นทางก่อนประมวลผล และตรวจว่าการเปลี่ยน GeoJSON จำกัดอยู่ที่ `postcode` เท่านั้น โหมด `--check` ตรวจข้อมูลและรายงานที่สร้างไว้โดยไม่เขียนไฟล์
+
+### จุดศูนย์กลางพื้นที่ (`lat`, `lon`)
+
+ทุก Feature ใน GeoJSON ทั้ง 5 ไฟล์มี `properties.lat` และ `properties.lon` เป็นตัวเลขหน่วยองศาใน WGS84 โดยปัดเป็นทศนิยม 6 ตำแหน่ง ตัวเลขอาจแสดงทศนิยมน้อยกว่า 6 ตำแหน่งหากลงท้ายด้วยศูนย์ จำนวนทศนิยมเป็นรูปแบบการจัดเก็บ ไม่ใช่การรับรองความแม่นยำของขอบเขตต้นทาง
+
+คำนวณจาก geometry ของแต่ละ Feature โดยตรงตามขั้นตอนนี้
+
+1. แปลงพิกัดเดิมจาก CRS84 ซึ่งเรียงเป็น longitude, latitude ไปเป็น Lambert Azimuthal Equal Area (LAEA) บน WGS84 เพื่อคำนวณในระนาบหน่วยเมตร ใช้จุดศูนย์กลางที่ 13°N, 101°E และพารามิเตอร์ `+proj=laea +lat_0=13 +lon_0=101 +datum=WGS84 +units=m +no_defs`
+2. คำนวณ centroid ของ MultiPolygon แบบถ่วงน้ำหนักตามพื้นที่ โดยรวมทุกส่วนและหักพื้นที่ช่องว่างภายใน ไม่ใช้ค่าเฉลี่ยของจุดยอดหรือ centroid ของพื้นที่ย่อยในไฟล์อื่น
+3. แปลง centroid กลับเป็น WGS84 แล้วเก็บ latitude ใน `lat` และ longitude ใน `lon` โดยกำหนดลำดับแกนในการแปลงให้เป็น x=longitude, y=latitude ก่อนปัดค่า
+
+centroid อาจอยู่นอกขอบเขตหรืออยู่ในทะเลสำหรับพื้นที่เว้าหรือหมู่เกาะ ค่าที่จัดเก็บเป็น centroid ตามการคำนวณ ไม่ได้ย้ายจุดเข้าไปใน polygon และไม่ใช่ตำแหน่งที่ว่าการหรือศูนย์กลางชุมชน การเพิ่มฟิลด์นี้คง geometry, `postcode` และฟิลด์เดิมไว้
+
+วิธีคำนวณอ้างอิงเอกสาร [Shapely centroid](https://shapely.readthedocs.io/en/2.1.2/reference/shapely.centroid.html), [PROJ Lambert Azimuthal Equal Area](https://proj.org/en/stable/operations/projections/laea.html) และ [pyproj Transformer](https://pyproj4.github.io/pyproj/stable/api/transformer.html) โดยบันทึกพารามิเตอร์ เวอร์ชันเครื่องมือ และสถิติผลลัพธ์ไว้ใน [รายงาน centroid](docs/data/centroid-report.json)
+
+**สร้างและตรวจสอบ centroid ซ้ำ**
+
+```bash
+python3 -m venv .venv-centroids
+.venv-centroids/bin/python -m pip install -r requirements-centroids.txt
+.venv-centroids/bin/python scripts/add_centroids.py
+.venv-centroids/bin/python scripts/add_centroids.py --check
+PYTHONDONTWRITEBYTECODE=1 .venv-centroids/bin/python -m unittest discover -s tests -v
+```
+
+สคริปต์คำนวณใหม่ได้จาก geometry ใน repo โดยไม่ต้องดาวน์โหลดข้อมูลรหัสไปรษณีย์ โหมด `--check` ตรวจฟิลด์และรายงานโดยไม่เขียนไฟล์
 
 ---
 
@@ -164,6 +200,7 @@ python3 -m unittest discover -s tests -v
 - ข้อมูลขอบเขตการปกครอง: กรมการปกครอง กระทรวงมหาดไทย (DOPA)
 - ข้อมูลการแบ่งภูมิภาค: สำนักงานสภาพัฒนาการเศรษฐกิจและสังคมแห่งชาติ (สศช. / NESDC) และ ราชบัณฑิตยสภา (ORST)
 - ข้อมูลรหัสไปรษณีย์: [Thailand Geography JSON — Joe Takara](https://github.com/thailand-geography-data/thailand-geography-json) (MIT License; ดูเวอร์ชัน วิธีจับคู่ และข้อจำกัดในหัวข้อ `postcode` ด้านบน)
+- พิกัด centroid: คำนวณจาก geometry ในชุดข้อมูลนี้ด้วย [Shapely](https://shapely.readthedocs.io/en/2.1.2/reference/shapely.centroid.html) และ [pyproj/PROJ](https://proj.org/en/stable/operations/projections/laea.html) ตามวิธีที่ระบุในหัวข้อ `lat`, `lon` ด้านบน
 - ข้อมูลตัวชี้วัดทางสังคม: ระบบบริหารจัดการข้อมูลพัฒนาคนแบบชี้เป้า (TPMAP)
 
 ---
