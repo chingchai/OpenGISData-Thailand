@@ -1,0 +1,4176 @@
+{
+  "source_url": "https://raw.githubusercontent.com/thailand-geography-data/thailand-geography-json/b8b3fb91c7df1129ff5b43cb46f7fcffadd2156b/src/geography.json",
+  "source_sha256": "04169f87d7b7a21b0a5e14f05b7fe16bab22e7bd9ee5340a7517c6170156f113",
+  "retrieved_date": "2026-10-18",
+  "source_records": 7436,
+  "match_methods": {
+    "code_and_names": 7218,
+    "code_name_conflict": 136,
+    "no_unique_match": 11,
+    "unique_names_and_parent_codes": 2
+  },
+  "datasets": {
+    "subdistricts": {
+      "features": 7367,
+      "with_postcode": 7220,
+      "empty_postcode": 147,
+      "empty_features": [
+        {
+          "tam_code": "100801",
+          "tam_th": "ป้อมปราบ",
+          "amp_th": "ป้อมปราบศัตรูพ่า",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "tam_code": "100802",
+          "tam_th": "วัดเทพศิรินทร์",
+          "amp_th": "ป้อมปราบศัตรูพ่า",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "tam_code": "100803",
+          "tam_th": "คลองมหานาค",
+          "amp_th": "ป้อมปราบศัตรูพ่า",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "tam_code": "100804",
+          "tam_th": "บ้านบาตร",
+          "amp_th": "ป้อมปราบศัตรูพ่า",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "tam_code": "100805",
+          "tam_th": "วัดโสมนัส",
+          "amp_th": "ป้อมปราบศัตรูพ่า",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "tam_code": "104701",
+          "tam_th": "บางนา",
+          "amp_th": "บางนา",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "tam_code": "105001",
+          "tam_th": "บางบอน",
+          "amp_th": "บางบอน",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "tam_code": "110101",
+          "tam_th": "เทศบาลนครสมุทรปร",
+          "amp_th": "เมืองสมุทรปราการ",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "110112",
+          "tam_th": "เทศบาลบางปู",
+          "amp_th": "เมืองสมุทรปราการ",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "110114",
+          "tam_th": "เทศบาลบางเมือง",
+          "amp_th": "เมืองสมุทรปราการ",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "110401",
+          "tam_th": "เทศบาลเมืองพระปร",
+          "amp_th": "พระประแดง",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "110402",
+          "tam_th": "ตลาด",
+          "amp_th": "พระประแดง",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "110407",
+          "tam_th": "เทศบาลสำโรงใต้",
+          "amp_th": "พระประแดง",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "110602",
+          "tam_th": "ศรีษะจรเข้น้อย",
+          "amp_th": "บางเสาธง",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "110603",
+          "tam_th": "ศรีษะจรเข้ใหญ่",
+          "amp_th": "บางเสาธง",
+          "pro_th": "สมุทรปราการ"
+        },
+        {
+          "tam_code": "140121",
+          "tam_th": "บ้านรุม",
+          "amp_th": "พระนครศรีอยุธยา",
+          "pro_th": "พระนครศรีอยุธยา"
+        },
+        {
+          "tam_code": "140411",
+          "tam_th": "บ้างกลึง",
+          "amp_th": "บางไทร",
+          "pro_th": "พระนครศรีอยุธยา"
+        },
+        {
+          "tam_code": "141109",
+          "tam_th": "วังจุฬา",
+          "amp_th": "วังน้อย",
+          "pro_th": "พระนครศรีอยุธยา"
+        },
+        {
+          "tam_code": "141108",
+          "tam_th": "ข้าวงาม",
+          "amp_th": "วังน้อย",
+          "pro_th": "พระนครศรีอยุธยา"
+        },
+        {
+          "tam_code": "150410",
+          "tam_th": "ยางซ้าย",
+          "amp_th": "โพธิ์ทอง",
+          "pro_th": "อ่างทอง"
+        },
+        {
+          "tam_code": "150601",
+          "tam_th": "ไผ่จำศีล",
+          "amp_th": "วิเศษชัยชาญ",
+          "pro_th": "อ่างทอง"
+        },
+        {
+          "tam_code": "160107",
+          "tam_th": "โคกกระเทียม",
+          "amp_th": "เมืองลพบุรี",
+          "pro_th": "ลพบุรี"
+        },
+        {
+          "tam_code": "160509",
+          "tam_th": "ลาดสาลี",
+          "amp_th": "ท่าวุ้ง",
+          "pro_th": "ลพบุรี"
+        },
+        {
+          "tam_code": "190603",
+          "tam_th": "สร้างโศก",
+          "amp_th": "บ้านหมอ",
+          "pro_th": "สระบุรี"
+        },
+        {
+          "tam_code": "200109",
+          "tam_th": "ดอนหัวฬอ",
+          "amp_th": "เมืองชลบุรี",
+          "pro_th": "ชลบุรี"
+        },
+        {
+          "tam_code": "200409",
+          "tam_th": "เขตการปกคองพิเศษ",
+          "amp_th": "บางละมุง",
+          "pro_th": "ชลบุรี"
+        },
+        {
+          "tam_code": "200604",
+          "tam_th": "บ้านเชิด",
+          "amp_th": "พนัสนิคม",
+          "pro_th": "ชลบุรี"
+        },
+        {
+          "tam_code": "210110",
+          "tam_th": "กระเฉด",
+          "amp_th": "เมืองระยอง",
+          "pro_th": "ระยอง"
+        },
+        {
+          "tam_code": "221001",
+          "tam_th": "ซากไทย",
+          "amp_th": "เขาคิชฌกูฏ",
+          "pro_th": "จันทบุรี"
+        },
+        {
+          "tam_code": "240114",
+          "tam_th": "บางกระไห",
+          "amp_th": "เมืองฉะเชิงเทรา",
+          "pro_th": "ฉะเชิงเทรา"
+        },
+        {
+          "tam_code": "260403",
+          "tam_th": "ศรีษะกระบือ",
+          "amp_th": "องครักษ์",
+          "pro_th": "นครนายก"
+        },
+        {
+          "tam_code": "310106",
+          "tam_th": "สวายจึก",
+          "amp_th": "เมืองบุรีรัมย์",
+          "pro_th": "บุรีรัมย์"
+        },
+        {
+          "tam_code": "310610",
+          "tam_th": "หนองตระครอง",
+          "amp_th": "ละหานทราย",
+          "pro_th": "บุรีรัมย์"
+        },
+        {
+          "tam_code": "311006",
+          "tam_th": "หนองกระทิง",
+          "amp_th": "ลำปลายมาศ",
+          "pro_th": "บุรีรัมย์"
+        },
+        {
+          "tam_code": "320516",
+          "tam_th": "กันตรวจระมวล",
+          "amp_th": "ปราสาท",
+          "pro_th": "สุรินทร์"
+        },
+        {
+          "tam_code": "331405",
+          "tam_th": "เสืองข้าว",
+          "amp_th": "ศรีรัตนะ",
+          "pro_th": "ศรีสะเกษ"
+        },
+        {
+          "tam_code": "342504",
+          "tam_th": "นิคมลำโดมน้อย",
+          "amp_th": "สิรินธร",
+          "pro_th": "อุบลราชธานี"
+        },
+        {
+          "tam_code": "380101",
+          "tam_th": "บึงกาฬ",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380102",
+          "tam_th": "โนนสมบูรณ์",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380103",
+          "tam_th": "หนองเข็ง",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380104",
+          "tam_th": "หอคำ",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380105",
+          "tam_th": "หนองเลิง",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380106",
+          "tam_th": "โคกก่อง",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380107",
+          "tam_th": "นาสวรรค์",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380108",
+          "tam_th": "ไคสี",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380109",
+          "tam_th": "ชัยพร",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380110",
+          "tam_th": "วิศิษฐ์",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380111",
+          "tam_th": "คำนาดี",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "380112",
+          "tam_th": "โป่งเปือย",
+          "amp_th": "บึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "tam_code": "402602",
+          "tam_th": "ในเมือง",
+          "amp_th": "เวียงเก่า",
+          "pro_th": "ขอนแก่น"
+        },
+        {
+          "tam_code": "402608",
+          "tam_th": "เขาน้อย",
+          "amp_th": "เวียงเก่า",
+          "pro_th": "ขอนแก่น"
+        },
+        {
+          "tam_code": "402615",
+          "tam_th": "เมืองเก่าพัฒนา",
+          "amp_th": "เวียงเก่า",
+          "pro_th": "ขอนแก่น"
+        },
+        {
+          "tam_code": "410111",
+          "tam_th": "นาข่า",
+          "amp_th": "เมืองอุดรธานี",
+          "pro_th": "อุดรธานี"
+        },
+        {
+          "tam_code": "430111",
+          "tam_th": "สองห้อง",
+          "amp_th": "เมืองหนองคาย",
+          "pro_th": "หนองคาย"
+        },
+        {
+          "tam_code": "441106",
+          "tam_th": "ขามเรียน",
+          "amp_th": "ยางสีสุราช",
+          "pro_th": "มหาสารคาม"
+        },
+        {
+          "tam_code": "451504",
+          "tam_th": "บ้านดู่",
+          "amp_th": "อาจสามารถ",
+          "pro_th": "ร้อยเอ็ด"
+        },
+        {
+          "tam_code": "451014",
+          "tam_th": "ศรีวิสัย",
+          "amp_th": "เสลภูมิ",
+          "pro_th": "ร้อยเอ็ด"
+        },
+        {
+          "tam_code": "460708",
+          "tam_th": "หนองอีเฒ่า",
+          "amp_th": "ยางตลาด",
+          "pro_th": "กาฬสินธุ์"
+        },
+        {
+          "tam_code": "461703",
+          "tam_th": "พยุง",
+          "amp_th": "ดอนจาน",
+          "pro_th": "กาฬสินธุ์"
+        },
+        {
+          "tam_code": "490501",
+          "tam_th": "บ้านช่ง",
+          "amp_th": "คำชะอี",
+          "pro_th": "มุกดาหาร"
+        },
+        {
+          "tam_code": "490601",
+          "tam_th": "หว้านใหญ่",
+          "amp_th": "ว่านใหญ่",
+          "pro_th": "มุกดาหาร"
+        },
+        {
+          "tam_code": "490602",
+          "tam_th": "ป่งขาม",
+          "amp_th": "ว่านใหญ่",
+          "pro_th": "มุกดาหาร"
+        },
+        {
+          "tam_code": "490603",
+          "tam_th": "บางทรายน้อย",
+          "amp_th": "ว่านใหญ่",
+          "pro_th": "มุกดาหาร"
+        },
+        {
+          "tam_code": "490604",
+          "tam_th": "ชะโนด",
+          "amp_th": "ว่านใหญ่",
+          "pro_th": "มุกดาหาร"
+        },
+        {
+          "tam_code": "490605",
+          "tam_th": "ดงหมู",
+          "amp_th": "ว่านใหญ่",
+          "pro_th": "มุกดาหาร"
+        },
+        {
+          "tam_code": "500109",
+          "tam_th": "สุเทพ",
+          "amp_th": "เมืองเชียงใหม่",
+          "pro_th": "เชียงใหม่"
+        },
+        {
+          "tam_code": "501805",
+          "tam_th": "สบโขง",
+          "amp_th": "อมก๋อย",
+          "pro_th": "เชียงใหม่"
+        },
+        {
+          "tam_code": "502202",
+          "tam_th": "ทุ่งปี้",
+          "amp_th": "แม่วาง",
+          "pro_th": "เชียงใหม่"
+        },
+        {
+          "tam_code": "520205",
+          "tam_th": "สบป้าน",
+          "amp_th": "แม่เมาะ",
+          "pro_th": "ลำปาง"
+        },
+        {
+          "tam_code": "530306",
+          "tam_th": "ท่าแฝก",
+          "amp_th": "ท่าปลา",
+          "pro_th": "อุตรดิตถ์"
+        },
+        {
+          "tam_code": "530405",
+          "tam_th": "น้ำไฝ",
+          "amp_th": "น้ำปาด",
+          "pro_th": "อุตรดิตถ์"
+        },
+        {
+          "tam_code": "540103",
+          "tam_th": "นาชำ",
+          "amp_th": "เมืองแพร่",
+          "pro_th": "แพร่"
+        },
+        {
+          "tam_code": "540113",
+          "tam_th": "วังหงษ์",
+          "amp_th": "เมืองแพร่",
+          "pro_th": "แพร่"
+        },
+        {
+          "tam_code": "550107",
+          "tam_th": "นาชาว",
+          "amp_th": "เมืองน่าน",
+          "pro_th": "น่าน"
+        },
+        {
+          "tam_code": "550116",
+          "tam_th": "สวก",
+          "amp_th": "เมืองน่าน",
+          "pro_th": "น่าน"
+        },
+        {
+          "tam_code": "551003",
+          "tam_th": "เมืองลี่",
+          "amp_th": "นาหมื่น",
+          "pro_th": "น่าน"
+        },
+        {
+          "tam_code": "560108",
+          "tam_th": "แม่ปีม",
+          "amp_th": "เมืองพะเยา",
+          "pro_th": "พะเยา"
+        },
+        {
+          "tam_code": "601303",
+          "tam_th": "แม่เลย์",
+          "amp_th": "แม่วงก์",
+          "pro_th": "นครสวรรค์"
+        },
+        {
+          "tam_code": "610612",
+          "tam_th": "บ้านใหม่คลองเคีย",
+          "amp_th": "บ้านไร่",
+          "pro_th": "อุทัยธานี"
+        },
+        {
+          "tam_code": "620112",
+          "tam_th": "นิคมทุ่งโพธิ์ทะเ",
+          "amp_th": "เมืองกำแพงเพชร",
+          "pro_th": "กำแพงเพชร"
+        },
+        {
+          "tam_code": "630206",
+          "tam_th": "ทุ่งกระเซาะ",
+          "amp_th": "บ้านตาก",
+          "pro_th": "ตาก"
+        },
+        {
+          "tam_code": "640905",
+          "tam_th": "เขาแก้วศรีสมบูรณ",
+          "amp_th": "ทุ่งเสลี่ยม",
+          "pro_th": "สุโขทัย"
+        },
+        {
+          "tam_code": "650905",
+          "tam_th": "บ้านน้อยซุ้มขี้เ",
+          "amp_th": "เนินมะปราง",
+          "pro_th": "พิษณุโลก"
+        },
+        {
+          "tam_code": "660104",
+          "tam_th": "ท่าฬอ",
+          "amp_th": "เมืองพิจิตร",
+          "pro_th": "พิจิตร"
+        },
+        {
+          "tam_code": "710507",
+          "tam_th": "ท่าเรือ (เทศบาลเมื",
+          "amp_th": "ท่ามะกา",
+          "pro_th": "กาญจนบุรี"
+        },
+        {
+          "tam_code": "730120",
+          "tam_th": "สระกระเทียม",
+          "amp_th": "เมืองนครปฐม",
+          "pro_th": "นครปฐม"
+        },
+        {
+          "tam_code": "730312",
+          "tam_th": "ศีรษะทอง",
+          "amp_th": "นครชัยศรี",
+          "pro_th": "นครปฐม"
+        },
+        {
+          "tam_code": "760102",
+          "tam_th": "คลองกระแซง",
+          "amp_th": "เมืองเพชรบุรี",
+          "pro_th": "เพชรบุรี"
+        },
+        {
+          "tam_code": "770101",
+          "tam_th": "ประจวบคีรีขันธ์",
+          "amp_th": "เมืองประจวบคีรีข",
+          "pro_th": "ประจวบคีรีขันธ์"
+        },
+        {
+          "tam_code": "770102",
+          "tam_th": "เกาะหลัก",
+          "amp_th": "เมืองประจวบคีรีข",
+          "pro_th": "ประจวบคีรีขันธ์"
+        },
+        {
+          "tam_code": "770103",
+          "tam_th": "คลองวาฬ",
+          "amp_th": "เมืองประจวบคีรีข",
+          "pro_th": "ประจวบคีรีขันธ์"
+        },
+        {
+          "tam_code": "770104",
+          "tam_th": "ห้วยทราย",
+          "amp_th": "เมืองประจวบคีรีข",
+          "pro_th": "ประจวบคีรีขันธ์"
+        },
+        {
+          "tam_code": "770105",
+          "tam_th": "อ่าวน้อย",
+          "amp_th": "เมืองประจวบคีรีข",
+          "pro_th": "ประจวบคีรีขันธ์"
+        },
+        {
+          "tam_code": "770106",
+          "tam_th": "บ่อนอก",
+          "amp_th": "เมืองประจวบคีรีข",
+          "pro_th": "ประจวบคีรีขันธ์"
+        },
+        {
+          "tam_code": "800101",
+          "tam_th": "ในเมือง",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800102",
+          "tam_th": "ท่าวัง",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800103",
+          "tam_th": "คลัง",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800106",
+          "tam_th": "ท่าไร่",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800107",
+          "tam_th": "ปากนคร",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800108",
+          "tam_th": "นาทราย",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800112",
+          "tam_th": "กำแพงเซา",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800113",
+          "tam_th": "ไชยมนตรี",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800114",
+          "tam_th": "มะม่วงสองต้น",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800115",
+          "tam_th": "นาเคียน",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800116",
+          "tam_th": "ท่างิ้ว",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800118",
+          "tam_th": "โพธิ์เสด็จ",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800119",
+          "tam_th": "บางจาก",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800120",
+          "tam_th": "ปากพูน",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800121",
+          "tam_th": "ท่าซัก",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800122",
+          "tam_th": "ท่าเรือ",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "800901",
+          "tam_th": "เทศบาลเมืองทุ่งส",
+          "amp_th": "ทุ่งสง",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "801210",
+          "tam_th": "ปากพนังฝั่งตะวัน",
+          "amp_th": "ปากพนัง",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "801214",
+          "tam_th": "ปากพนังฝั่งตะวัน",
+          "amp_th": "ปากพนัง",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "801216",
+          "tam_th": "ท่าพญา",
+          "amp_th": "ปากพนัง",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "801406",
+          "tam_th": "สีขีด",
+          "amp_th": "สิชล",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "801906",
+          "tam_th": "สาม",
+          "amp_th": "จุฬาภรณ์",
+          "pro_th": "นครศรีธรรมราช"
+        },
+        {
+          "tam_code": "830105",
+          "tam_th": "รัษฎา",
+          "amp_th": "เมืองภูเก็ต",
+          "pro_th": "ภูเก็ต"
+        },
+        {
+          "tam_code": "840101",
+          "tam_th": "ตลาด",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840102",
+          "tam_th": "มะขามเตี้ย",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840103",
+          "tam_th": "วัดประดู่",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840104",
+          "tam_th": "ขุนทะเล",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840105",
+          "tam_th": "บางใบไม้",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840106",
+          "tam_th": "บางชนะ",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840107",
+          "tam_th": "คลองน้อย",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840108",
+          "tam_th": "บางไทร",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840109",
+          "tam_th": "บางโพธิ์",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840110",
+          "tam_th": "บางกุ้ง",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "840111",
+          "tam_th": "คลองฉนาก",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "tam_code": "900703",
+          "tam_th": "ตาเครียะ",
+          "amp_th": "ระโนด",
+          "pro_th": "สงขลา"
+        },
+        {
+          "tam_code": "910303",
+          "tam_th": "อุไดเจริญ",
+          "amp_th": "ควนกาหลง",
+          "pro_th": "สตูล"
+        },
+        {
+          "tam_code": "920221",
+          "tam_th": "เกาะลูกไม้",
+          "amp_th": "กันตัง",
+          "pro_th": "ตรัง"
+        },
+        {
+          "tam_code": "920222",
+          "tam_th": "เกาะนก",
+          "amp_th": "กันตัง",
+          "pro_th": "ตรัง"
+        },
+        {
+          "tam_code": "920305",
+          "tam_th": "โพรงจรเข้",
+          "amp_th": "ย่านตาขาว",
+          "pro_th": "ตรัง"
+        },
+        {
+          "tam_code": "920414",
+          "tam_th": "เกาะค้างคาว",
+          "amp_th": "ปะเหลียน",
+          "pro_th": "ตรัง"
+        },
+        {
+          "tam_code": "920903",
+          "tam_th": "ต.หนองบัว",
+          "amp_th": "รัษฎา",
+          "pro_th": "ตรัง"
+        },
+        {
+          "tam_code": "931001",
+          "tam_th": "ป่าพะยอม",
+          "amp_th": "ป่าพยอม",
+          "pro_th": "พัทลุง"
+        },
+        {
+          "tam_code": "931002",
+          "tam_th": "ลานข่อย",
+          "amp_th": "ป่าพยอม",
+          "pro_th": "พัทลุง"
+        },
+        {
+          "tam_code": "931003",
+          "tam_th": "เกาะเต่า",
+          "amp_th": "ป่าพยอม",
+          "pro_th": "พัทลุง"
+        },
+        {
+          "tam_code": "931004",
+          "tam_th": "บ้านพร้าว",
+          "amp_th": "ป่าพยอม",
+          "pro_th": "พัทลุง"
+        },
+        {
+          "tam_code": "940701",
+          "tam_th": "ตะลุปัน",
+          "amp_th": "สายบุรี",
+          "pro_th": "ปัตตานี"
+        },
+        {
+          "tam_code": "940804",
+          "tam_th": "คอนทราย",
+          "amp_th": "ไม้แก่น",
+          "pro_th": "ปัตตานี"
+        },
+        {
+          "tam_code": "950801",
+          "tam_th": "กรงปินัง",
+          "amp_th": "กรงปีนัง",
+          "pro_th": "ยะลา"
+        },
+        {
+          "tam_code": "950802",
+          "tam_th": "สะเอะ",
+          "amp_th": "กรงปีนัง",
+          "pro_th": "ยะลา"
+        },
+        {
+          "tam_code": "950803",
+          "tam_th": "ห้วยกระทิง",
+          "amp_th": "กรงปีนัง",
+          "pro_th": "ยะลา"
+        },
+        {
+          "tam_code": "950804",
+          "tam_th": "ปุโรง",
+          "amp_th": "กรงปีนัง",
+          "pro_th": "ยะลา"
+        },
+        {
+          "tam_code": "960507",
+          "tam_th": "กาลิชา",
+          "amp_th": "ระแงะ",
+          "pro_th": "นราธิวาส"
+        },
+        {
+          "tam_code": "961002",
+          "tam_th": "ป่าเสมัส",
+          "amp_th": "สุไหงโก-ลก",
+          "pro_th": "นราธิวาส"
+        }
+      ]
+    },
+    "districts": {
+      "features": 928,
+      "with_postcode": 917,
+      "empty_postcode": 11,
+      "empty_features": [
+        {
+          "amp_code": "3801",
+          "amp_th": "เมืองบึงกาฬ",
+          "pro_th": "บึงกาฬ"
+        },
+        {
+          "amp_code": "4026",
+          "amp_th": "เวียงเก่า",
+          "pro_th": "ขอนแก่น"
+        },
+        {
+          "amp_code": "9508",
+          "amp_th": "กรงปีนัง",
+          "pro_th": "ยะลา"
+        },
+        {
+          "amp_code": "1047",
+          "amp_th": "บางนา",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "amp_code": "1050",
+          "amp_th": "บางบอน",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "amp_code": "8401",
+          "amp_th": "เมืองสุราษฎร์ธาน",
+          "pro_th": "สุราษฎร์ธานี"
+        },
+        {
+          "amp_code": "1008",
+          "amp_th": "ป้อมปราบศัตรูพ่าย",
+          "pro_th": "กรุงเทพมหานคร"
+        },
+        {
+          "amp_code": "9310",
+          "amp_th": "ป่าพยอม",
+          "pro_th": "พัทลุง"
+        },
+        {
+          "amp_code": "7701",
+          "amp_th": "เมืองประจวบคีรีข",
+          "pro_th": "ประจวบคีรีขันธ์"
+        },
+        {
+          "amp_code": "4906",
+          "amp_th": "ว่านใหญ่",
+          "pro_th": "มุกดาหาร"
+        },
+        {
+          "amp_code": "8001",
+          "amp_th": "เมืองนครศรีธรรมร",
+          "pro_th": "นครศรีธรรมราช"
+        }
+      ]
+    },
+    "provinces": {
+      "features": 77,
+      "with_postcode": 77,
+      "empty_postcode": 0,
+      "empty_features": []
+    },
+    "reg_royin": {
+      "features": 6,
+      "with_postcode": 6,
+      "empty_postcode": 0,
+      "empty_features": []
+    },
+    "reg_nesdb": {
+      "features": 7,
+      "with_postcode": 7,
+      "empty_postcode": 0,
+      "empty_features": []
+    }
+  },
+  "exceptions": [
+    {
+      "feature_index": 38,
+      "area": {
+        "tam_code": "100801",
+        "tam_th": "ป้อมปราบ",
+        "amp_code": "1008",
+        "amp_th": "ป้อมปราบศัตรูพ่า",
+        "pro_code": "10",
+        "pro_th": "กรุงเทพมหานคร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กรุงเทพมหานคร",
+          "districtNameTh": "ป้อมปราบศัตรูพ่าย",
+          "subdistrictNameTh": "ป้อมปราบ",
+          "postalCode": 10100
+        }
+      ]
+    },
+    {
+      "feature_index": 39,
+      "area": {
+        "tam_code": "100802",
+        "tam_th": "วัดเทพศิรินทร์",
+        "amp_code": "1008",
+        "amp_th": "ป้อมปราบศัตรูพ่า",
+        "pro_code": "10",
+        "pro_th": "กรุงเทพมหานคร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กรุงเทพมหานคร",
+          "districtNameTh": "ป้อมปราบศัตรูพ่าย",
+          "subdistrictNameTh": "วัดเทพศิรินทร์",
+          "postalCode": 10100
+        }
+      ]
+    },
+    {
+      "feature_index": 40,
+      "area": {
+        "tam_code": "100803",
+        "tam_th": "คลองมหานาค",
+        "amp_code": "1008",
+        "amp_th": "ป้อมปราบศัตรูพ่า",
+        "pro_code": "10",
+        "pro_th": "กรุงเทพมหานคร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กรุงเทพมหานคร",
+          "districtNameTh": "ป้อมปราบศัตรูพ่าย",
+          "subdistrictNameTh": "คลองมหานาค",
+          "postalCode": 10100
+        }
+      ]
+    },
+    {
+      "feature_index": 41,
+      "area": {
+        "tam_code": "100804",
+        "tam_th": "บ้านบาตร",
+        "amp_code": "1008",
+        "amp_th": "ป้อมปราบศัตรูพ่า",
+        "pro_code": "10",
+        "pro_th": "กรุงเทพมหานคร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กรุงเทพมหานคร",
+          "districtNameTh": "ป้อมปราบศัตรูพ่าย",
+          "subdistrictNameTh": "บ้านบาตร",
+          "postalCode": 10100
+        }
+      ]
+    },
+    {
+      "feature_index": 42,
+      "area": {
+        "tam_code": "100805",
+        "tam_th": "วัดโสมนัส",
+        "amp_code": "1008",
+        "amp_th": "ป้อมปราบศัตรูพ่า",
+        "pro_code": "10",
+        "pro_th": "กรุงเทพมหานคร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กรุงเทพมหานคร",
+          "districtNameTh": "ป้อมปราบศัตรูพ่าย",
+          "subdistrictNameTh": "วัดโสมนัส",
+          "postalCode": 10100
+        }
+      ]
+    },
+    {
+      "feature_index": 148,
+      "area": {
+        "tam_code": "104701",
+        "tam_th": "บางนา",
+        "amp_code": "1047",
+        "amp_th": "บางนา",
+        "pro_code": "10",
+        "pro_th": "กรุงเทพมหานคร"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 153,
+      "area": {
+        "tam_code": "105001",
+        "tam_th": "บางบอน",
+        "amp_code": "1050",
+        "amp_th": "บางบอน",
+        "pro_code": "10",
+        "pro_th": "กรุงเทพมหานคร"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 154,
+      "area": {
+        "tam_code": "110101",
+        "tam_th": "เทศบาลนครสมุทรปร",
+        "amp_code": "1101",
+        "amp_th": "เมืองสมุทรปราการ",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "เมืองสมุทรปราการ",
+          "subdistrictNameTh": "ปากน้ำ",
+          "postalCode": 10270
+        }
+      ]
+    },
+    {
+      "feature_index": 158,
+      "area": {
+        "tam_code": "110105",
+        "tam_th": "ท้ายบ้านใหม่",
+        "amp_code": "1101",
+        "amp_th": "เมืองสมุทรปราการ",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "unique_names_and_parent_codes",
+      "postcode": [
+        "10280"
+      ],
+      "source_subdistrict_code": "110116",
+      "code_candidates": []
+    },
+    {
+      "feature_index": 162,
+      "area": {
+        "tam_code": "110112",
+        "tam_th": "เทศบาลบางปู",
+        "amp_code": "1101",
+        "amp_th": "เมืองสมุทรปราการ",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "เมืองสมุทรปราการ",
+          "subdistrictNameTh": "บางปู",
+          "postalCode": 10270
+        }
+      ]
+    },
+    {
+      "feature_index": 164,
+      "area": {
+        "tam_code": "110114",
+        "tam_th": "เทศบาลบางเมือง",
+        "amp_code": "1101",
+        "amp_th": "เมืองสมุทรปราการ",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "เมืองสมุทรปราการ",
+          "subdistrictNameTh": "บางเมืองใหม่",
+          "postalCode": 10270
+        }
+      ]
+    },
+    {
+      "feature_index": 181,
+      "area": {
+        "tam_code": "110401",
+        "tam_th": "เทศบาลเมืองพระปร",
+        "amp_code": "1104",
+        "amp_th": "พระประแดง",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "พระประแดง",
+          "subdistrictNameTh": "ตลาด",
+          "postalCode": 10130
+        }
+      ]
+    },
+    {
+      "feature_index": 182,
+      "area": {
+        "tam_code": "110402",
+        "tam_th": "ตลาด",
+        "amp_code": "1104",
+        "amp_th": "พระประแดง",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "พระประแดง",
+          "subdistrictNameTh": "บางพึ่ง",
+          "postalCode": 10130
+        }
+      ]
+    },
+    {
+      "feature_index": 187,
+      "area": {
+        "tam_code": "110407",
+        "tam_th": "เทศบาลสำโรงใต้",
+        "amp_code": "1104",
+        "amp_th": "พระประแดง",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "พระประแดง",
+          "subdistrictNameTh": "สำโรงใต้",
+          "postalCode": 10130
+        }
+      ]
+    },
+    {
+      "feature_index": 202,
+      "area": {
+        "tam_code": "110602",
+        "tam_th": "ศรีษะจรเข้น้อย",
+        "amp_code": "1106",
+        "amp_th": "บางเสาธง",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "บางเสาธง",
+          "subdistrictNameTh": "ศีรษะจรเข้น้อย",
+          "postalCode": 10570
+        }
+      ]
+    },
+    {
+      "feature_index": 203,
+      "area": {
+        "tam_code": "110603",
+        "tam_th": "ศรีษะจรเข้ใหญ่",
+        "amp_code": "1106",
+        "amp_th": "บางเสาธง",
+        "pro_code": "11",
+        "pro_th": "สมุทรปราการ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สมุทรปราการ",
+          "districtNameTh": "บางเสาธง",
+          "subdistrictNameTh": "ศีรษะจรเข้ใหญ่",
+          "postalCode": 10570
+        }
+      ]
+    },
+    {
+      "feature_index": 336,
+      "area": {
+        "tam_code": "140121",
+        "tam_th": "บ้านรุม",
+        "amp_code": "1401",
+        "amp_th": "พระนครศรีอยุธยา",
+        "pro_code": "14",
+        "pro_th": "พระนครศรีอยุธยา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พระนครศรีอยุธยา",
+          "districtNameTh": "พระนครศรีอยุธยา",
+          "subdistrictNameTh": "บ้านรุน",
+          "postalCode": 13000
+        }
+      ]
+    },
+    {
+      "feature_index": 369,
+      "area": {
+        "tam_code": "140411",
+        "tam_th": "บ้างกลึง",
+        "amp_code": "1404",
+        "amp_th": "บางไทร",
+        "pro_code": "14",
+        "pro_th": "พระนครศรีอยุธยา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พระนครศรีอยุธยา",
+          "districtNameTh": "บางไทร",
+          "subdistrictNameTh": "บ้านกลึง",
+          "postalCode": 13190
+        }
+      ]
+    },
+    {
+      "feature_index": 470,
+      "area": {
+        "tam_code": "141109",
+        "tam_th": "วังจุฬา",
+        "amp_code": "1411",
+        "amp_th": "วังน้อย",
+        "pro_code": "14",
+        "pro_th": "พระนครศรีอยุธยา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พระนครศรีอยุธยา",
+          "districtNameTh": "วังน้อย",
+          "subdistrictNameTh": "ข้าวงาม",
+          "postalCode": 13170
+        }
+      ]
+    },
+    {
+      "feature_index": 471,
+      "area": {
+        "tam_code": "141108",
+        "tam_th": "ข้าวงาม",
+        "amp_code": "1411",
+        "amp_th": "วังน้อย",
+        "pro_code": "14",
+        "pro_th": "พระนครศรีอยุธยา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พระนครศรีอยุธยา",
+          "districtNameTh": "วังน้อย",
+          "subdistrictNameTh": "วังจุฬา",
+          "postalCode": 13170
+        }
+      ]
+    },
+    {
+      "feature_index": 564,
+      "area": {
+        "tam_code": "150410",
+        "tam_th": "ยางซ้าย",
+        "amp_code": "1504",
+        "amp_th": "โพธิ์ทอง",
+        "pro_code": "15",
+        "pro_th": "อ่างทอง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "อ่างทอง",
+          "districtNameTh": "โพธิ์ทอง",
+          "subdistrictNameTh": "ยางช้าย",
+          "postalCode": 14120
+        }
+      ]
+    },
+    {
+      "feature_index": 577,
+      "area": {
+        "tam_code": "150601",
+        "tam_th": "ไผ่จำศีล",
+        "amp_code": "1506",
+        "amp_th": "วิเศษชัยชาญ",
+        "pro_code": "15",
+        "pro_th": "อ่างทอง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "อ่างทอง",
+          "districtNameTh": "วิเศษชัยชาญ",
+          "subdistrictNameTh": "ไผ่จำศิล",
+          "postalCode": 14110
+        }
+      ]
+    },
+    {
+      "feature_index": 603,
+      "area": {
+        "tam_code": "160107",
+        "tam_th": "โคกกระเทียม",
+        "amp_code": "1601",
+        "amp_th": "เมืองลพบุรี",
+        "pro_code": "16",
+        "pro_th": "ลพบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ลพบุรี",
+          "districtNameTh": "เมืองลพบุรี",
+          "subdistrictNameTh": "โคกกะเทียม",
+          "postalCode": 15000
+        }
+      ]
+    },
+    {
+      "feature_index": 668,
+      "area": {
+        "tam_code": "160509",
+        "tam_th": "ลาดสาลี",
+        "amp_code": "1605",
+        "amp_th": "ท่าวุ้ง",
+        "pro_code": "16",
+        "pro_th": "ลพบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ลพบุรี",
+          "districtNameTh": "ท่าวุ้ง",
+          "subdistrictNameTh": "ลาดสาลี่",
+          "postalCode": 15150
+        }
+      ]
+    },
+    {
+      "feature_index": 873,
+      "area": {
+        "tam_code": "190603",
+        "tam_th": "สร้างโศก",
+        "amp_code": "1906",
+        "amp_th": "บ้านหมอ",
+        "pro_code": "19",
+        "pro_th": "สระบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สระบุรี",
+          "districtNameTh": "บ้านหมอ",
+          "subdistrictNameTh": "สร่างโศก",
+          "postalCode": 18130
+        }
+      ]
+    },
+    {
+      "feature_index": 931,
+      "area": {
+        "tam_code": "200109",
+        "tam_th": "ดอนหัวฬอ",
+        "amp_code": "2001",
+        "amp_th": "เมืองชลบุรี",
+        "pro_code": "20",
+        "pro_th": "ชลบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ชลบุรี",
+          "districtNameTh": "เมืองชลบุรี",
+          "subdistrictNameTh": "ดอนหัวฬ่อ",
+          "postalCode": 20000
+        }
+      ]
+    },
+    {
+      "feature_index": 962,
+      "area": {
+        "tam_code": "200409",
+        "tam_th": "เขตการปกคองพิเศษ",
+        "amp_code": "2004",
+        "amp_th": "บางละมุง",
+        "pro_code": "20",
+        "pro_th": "ชลบุรี"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 977,
+      "area": {
+        "tam_code": "200604",
+        "tam_th": "บ้านเชิด",
+        "amp_code": "2006",
+        "amp_th": "พนัสนิคม",
+        "pro_code": "20",
+        "pro_th": "ชลบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ชลบุรี",
+          "districtNameTh": "พนัสนิคม",
+          "subdistrictNameTh": "บ้านเซิด",
+          "postalCode": 20140
+        }
+      ]
+    },
+    {
+      "feature_index": 1023,
+      "area": {
+        "tam_code": "210110",
+        "tam_th": "กระเฉด",
+        "amp_code": "2101",
+        "amp_th": "เมืองระยอง",
+        "pro_code": "21",
+        "pro_th": "ระยอง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ระยอง",
+          "districtNameTh": "เมืองระยอง",
+          "subdistrictNameTh": "กะเฉด",
+          "postalCode": 21100
+        }
+      ]
+    },
+    {
+      "feature_index": 1142,
+      "area": {
+        "tam_code": "221001",
+        "tam_th": "ซากไทย",
+        "amp_code": "2210",
+        "amp_th": "เขาคิชฌกูฏ",
+        "pro_code": "22",
+        "pro_th": "จันทบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "จันทบุรี",
+          "districtNameTh": "เขาคิชฌกูฏ",
+          "subdistrictNameTh": "ชากไทย",
+          "postalCode": 22210
+        }
+      ]
+    },
+    {
+      "feature_index": 1197,
+      "area": {
+        "tam_code": "240114",
+        "tam_th": "บางกระไห",
+        "amp_code": "2401",
+        "amp_th": "เมืองฉะเชิงเทรา",
+        "pro_code": "24",
+        "pro_th": "ฉะเชิงเทรา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ฉะเชิงเทรา",
+          "districtNameTh": "เมืองฉะเชิงเทรา",
+          "subdistrictNameTh": "บางกะไห",
+          "postalCode": 24000
+        }
+      ]
+    },
+    {
+      "feature_index": 1373,
+      "area": {
+        "tam_code": "260403",
+        "tam_th": "ศรีษะกระบือ",
+        "amp_code": "2604",
+        "amp_th": "องครักษ์",
+        "pro_code": "26",
+        "pro_th": "นครนายก"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครนายก",
+          "districtNameTh": "องครักษ์",
+          "subdistrictNameTh": "ศีรษะกระบือ",
+          "postalCode": 26120
+        }
+      ]
+    },
+    {
+      "feature_index": 1731,
+      "area": {
+        "tam_code": "310106",
+        "tam_th": "สวายจึก",
+        "amp_code": "3101",
+        "amp_th": "เมืองบุรีรัมย์",
+        "pro_code": "31",
+        "pro_th": "บุรีรัมย์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บุรีรัมย์",
+          "districtNameTh": "เมืองบุรีรัมย์",
+          "subdistrictNameTh": "สวายจีก",
+          "postalCode": 31000
+        }
+      ]
+    },
+    {
+      "feature_index": 1792,
+      "area": {
+        "tam_code": "310610",
+        "tam_th": "หนองตระครอง",
+        "amp_code": "3106",
+        "amp_th": "ละหานทราย",
+        "pro_code": "31",
+        "pro_th": "บุรีรัมย์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บุรีรัมย์",
+          "districtNameTh": "ละหานทราย",
+          "subdistrictNameTh": "หนองตะครอง",
+          "postalCode": 31170
+        }
+      ]
+    },
+    {
+      "feature_index": 1831,
+      "area": {
+        "tam_code": "311006",
+        "tam_th": "หนองกระทิง",
+        "amp_code": "3110",
+        "amp_th": "ลำปลายมาศ",
+        "pro_code": "31",
+        "pro_th": "บุรีรัมย์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บุรีรัมย์",
+          "districtNameTh": "ลำปลายมาศ",
+          "subdistrictNameTh": "หนองกะทิง",
+          "postalCode": 31130
+        }
+      ]
+    },
+    {
+      "feature_index": 1979,
+      "area": {
+        "tam_code": "320516",
+        "tam_th": "กันตรวจระมวล",
+        "amp_code": "3205",
+        "amp_th": "ปราสาท",
+        "pro_code": "32",
+        "pro_th": "สุรินทร์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุรินทร์",
+          "districtNameTh": "ปราสาท",
+          "subdistrictNameTh": "กันตวจระมวล",
+          "postalCode": 32140
+        }
+      ]
+    },
+    {
+      "feature_index": 2232,
+      "area": {
+        "tam_code": "331405",
+        "tam_th": "เสืองข้าว",
+        "amp_code": "3314",
+        "amp_th": "ศรีรัตนะ",
+        "pro_code": "33",
+        "pro_th": "ศรีสะเกษ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ศรีสะเกษ",
+          "districtNameTh": "ศรีรัตนะ",
+          "subdistrictNameTh": "เสื่องข้าว",
+          "postalCode": 33240
+        }
+      ]
+    },
+    {
+      "feature_index": 2470,
+      "area": {
+        "tam_code": "342504",
+        "tam_th": "นิคมลำโดมน้อย",
+        "amp_code": "3425",
+        "amp_th": "สิรินธร",
+        "pro_code": "34",
+        "pro_th": "อุบลราชธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "อุบลราชธานี",
+          "districtNameTh": "สิรินธร",
+          "subdistrictNameTh": "นิคมสร้างตนเองลำโดมน้อย",
+          "postalCode": 34350
+        }
+      ]
+    },
+    {
+      "feature_index": 2756,
+      "area": {
+        "tam_code": "380101",
+        "tam_th": "บึงกาฬ",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "บึงกาฬ",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2757,
+      "area": {
+        "tam_code": "380102",
+        "tam_th": "โนนสมบูรณ์",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "โนนสมบูรณ์",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2758,
+      "area": {
+        "tam_code": "380103",
+        "tam_th": "หนองเข็ง",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "โนนสว่าง",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2759,
+      "area": {
+        "tam_code": "380104",
+        "tam_th": "หอคำ",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "หอคำ",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2760,
+      "area": {
+        "tam_code": "380105",
+        "tam_th": "หนองเลิง",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "หนองเลิง",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2761,
+      "area": {
+        "tam_code": "380106",
+        "tam_th": "โคกก่อง",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "โคกก่อง",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2762,
+      "area": {
+        "tam_code": "380107",
+        "tam_th": "นาสวรรค์",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "นาสวรรค์",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2763,
+      "area": {
+        "tam_code": "380108",
+        "tam_th": "ไคสี",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "ไคสี",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2764,
+      "area": {
+        "tam_code": "380109",
+        "tam_th": "ชัยพร",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "ชัยพร",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2765,
+      "area": {
+        "tam_code": "380110",
+        "tam_th": "วิศิษฐ์",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "วิศิษฐ์",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2766,
+      "area": {
+        "tam_code": "380111",
+        "tam_th": "คำนาดี",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "คำนาดี",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 2767,
+      "area": {
+        "tam_code": "380112",
+        "tam_th": "โป่งเปือย",
+        "amp_code": "3801",
+        "amp_th": "บึงกาฬ",
+        "pro_code": "38",
+        "pro_th": "บึงกาฬ"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "บึงกาฬ",
+          "districtNameTh": "เมืองบึงกาฬ",
+          "subdistrictNameTh": "โป่งเปือย",
+          "postalCode": 38000
+        }
+      ]
+    },
+    {
+      "feature_index": 3064,
+      "area": {
+        "tam_code": "402602",
+        "tam_th": "ในเมือง",
+        "amp_code": "4026",
+        "amp_th": "เวียงเก่า",
+        "pro_code": "40",
+        "pro_th": "ขอนแก่น"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 3065,
+      "area": {
+        "tam_code": "402608",
+        "tam_th": "เขาน้อย",
+        "amp_code": "4026",
+        "amp_th": "เวียงเก่า",
+        "pro_code": "40",
+        "pro_th": "ขอนแก่น"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 3066,
+      "area": {
+        "tam_code": "402615",
+        "tam_th": "เมืองเก่าพัฒนา",
+        "amp_code": "4026",
+        "amp_th": "เวียงเก่า",
+        "pro_code": "40",
+        "pro_th": "ขอนแก่น"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 3077,
+      "area": {
+        "tam_code": "410111",
+        "tam_th": "นาข่า",
+        "amp_code": "4101",
+        "amp_th": "เมืองอุดรธานี",
+        "pro_code": "41",
+        "pro_th": "อุดรธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "อุดรธานี",
+          "districtNameTh": "เมืองอุดรธานี",
+          "subdistrictNameTh": "นาดี",
+          "postalCode": 41000
+        }
+      ]
+    },
+    {
+      "feature_index": 3322,
+      "area": {
+        "tam_code": "430111",
+        "tam_th": "สองห้อง",
+        "amp_code": "4301",
+        "amp_th": "เมืองหนองคาย",
+        "pro_code": "43",
+        "pro_th": "หนองคาย"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "หนองคาย",
+          "districtNameTh": "เมืองหนองคาย",
+          "subdistrictNameTh": "โพนสว่าง",
+          "postalCode": 43100
+        }
+      ]
+    },
+    {
+      "feature_index": 3466,
+      "area": {
+        "tam_code": "440828",
+        "tam_th": "หนองบัว",
+        "amp_code": "4408",
+        "amp_th": "พยัคฆภูมิพิสัย",
+        "pro_code": "44",
+        "pro_th": "มหาสารคาม"
+      },
+      "method": "unique_names_and_parent_codes",
+      "postcode": [
+        "44110"
+      ],
+      "source_subdistrict_code": "440817",
+      "code_candidates": []
+    },
+    {
+      "feature_index": 3496,
+      "area": {
+        "tam_code": "441106",
+        "tam_th": "ขามเรียน",
+        "amp_code": "4411",
+        "amp_th": "ยางสีสุราช",
+        "pro_code": "44",
+        "pro_th": "มหาสารคาม"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "มหาสารคาม",
+          "districtNameTh": "ยางสีสุราช",
+          "subdistrictNameTh": "สร้างแซ่ง",
+          "postalCode": 44210
+        }
+      ]
+    },
+    {
+      "feature_index": 3565,
+      "area": {
+        "tam_code": "451504",
+        "tam_th": "บ้านดู่",
+        "amp_code": "4515",
+        "amp_th": "อาจสามารถ",
+        "pro_code": "45",
+        "pro_th": "ร้อยเอ็ด"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ร้อยเอ็ด",
+          "districtNameTh": "เมยวดี",
+          "subdistrictNameTh": "ชมสะอาด",
+          "postalCode": 45250
+        }
+      ]
+    },
+    {
+      "feature_index": 3625,
+      "area": {
+        "tam_code": "451014",
+        "tam_th": "ศรีวิสัย",
+        "amp_code": "4510",
+        "amp_th": "เสลภูมิ",
+        "pro_code": "45",
+        "pro_th": "ร้อยเอ็ด"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ร้อยเอ็ด",
+          "districtNameTh": "เสลภูมิ",
+          "subdistrictNameTh": "ศรีวิลัย",
+          "postalCode": 45120
+        }
+      ]
+    },
+    {
+      "feature_index": 3757,
+      "area": {
+        "tam_code": "460708",
+        "tam_th": "หนองอีเฒ่า",
+        "amp_code": "4607",
+        "amp_th": "ยางตลาด",
+        "pro_code": "46",
+        "pro_th": "กาฬสินธุ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กาฬสินธุ์",
+          "districtNameTh": "ยางตลาด",
+          "subdistrictNameTh": "หนองอิเฒ่า",
+          "postalCode": 46120
+        }
+      ]
+    },
+    {
+      "feature_index": 3825,
+      "area": {
+        "tam_code": "461703",
+        "tam_th": "พยุง",
+        "amp_code": "4617",
+        "amp_th": "ดอนจาน",
+        "pro_code": "46",
+        "pro_th": "กาฬสินธุ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กาฬสินธุ์",
+          "districtNameTh": "ดอนจาน",
+          "subdistrictNameTh": "ดงพยุง",
+          "postalCode": 46000
+        }
+      ]
+    },
+    {
+      "feature_index": 4086,
+      "area": {
+        "tam_code": "490501",
+        "tam_th": "บ้านช่ง",
+        "amp_code": "4905",
+        "amp_th": "คำชะอี",
+        "pro_code": "49",
+        "pro_th": "มุกดาหาร"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 4095,
+      "area": {
+        "tam_code": "490601",
+        "tam_th": "หว้านใหญ่",
+        "amp_code": "4906",
+        "amp_th": "ว่านใหญ่",
+        "pro_code": "49",
+        "pro_th": "มุกดาหาร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "มุกดาหาร",
+          "districtNameTh": "หว้านใหญ่",
+          "subdistrictNameTh": "หว้านใหญ่",
+          "postalCode": 49150
+        }
+      ]
+    },
+    {
+      "feature_index": 4096,
+      "area": {
+        "tam_code": "490602",
+        "tam_th": "ป่งขาม",
+        "amp_code": "4906",
+        "amp_th": "ว่านใหญ่",
+        "pro_code": "49",
+        "pro_th": "มุกดาหาร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "มุกดาหาร",
+          "districtNameTh": "หว้านใหญ่",
+          "subdistrictNameTh": "ป่งขาม",
+          "postalCode": 49150
+        }
+      ]
+    },
+    {
+      "feature_index": 4097,
+      "area": {
+        "tam_code": "490603",
+        "tam_th": "บางทรายน้อย",
+        "amp_code": "4906",
+        "amp_th": "ว่านใหญ่",
+        "pro_code": "49",
+        "pro_th": "มุกดาหาร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "มุกดาหาร",
+          "districtNameTh": "หว้านใหญ่",
+          "subdistrictNameTh": "บางทรายน้อย",
+          "postalCode": 49150
+        }
+      ]
+    },
+    {
+      "feature_index": 4098,
+      "area": {
+        "tam_code": "490604",
+        "tam_th": "ชะโนด",
+        "amp_code": "4906",
+        "amp_th": "ว่านใหญ่",
+        "pro_code": "49",
+        "pro_th": "มุกดาหาร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "มุกดาหาร",
+          "districtNameTh": "หว้านใหญ่",
+          "subdistrictNameTh": "ชะโนด",
+          "postalCode": 49150
+        }
+      ]
+    },
+    {
+      "feature_index": 4099,
+      "area": {
+        "tam_code": "490605",
+        "tam_th": "ดงหมู",
+        "amp_code": "4906",
+        "amp_th": "ว่านใหญ่",
+        "pro_code": "49",
+        "pro_th": "มุกดาหาร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "มุกดาหาร",
+          "districtNameTh": "หว้านใหญ่",
+          "subdistrictNameTh": "ดงหมู",
+          "postalCode": 49150
+        }
+      ]
+    },
+    {
+      "feature_index": 4113,
+      "area": {
+        "tam_code": "500109",
+        "tam_th": "สุเทพ",
+        "amp_code": "5001",
+        "amp_th": "เมืองเชียงใหม่",
+        "pro_code": "50",
+        "pro_th": "เชียงใหม่"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "เชียงใหม่",
+          "districtNameTh": "เมืองเชียงใหม่",
+          "subdistrictNameTh": "แม่เหียะ",
+          "postalCode": 50100
+        }
+      ]
+    },
+    {
+      "feature_index": 4266,
+      "area": {
+        "tam_code": "501805",
+        "tam_th": "สบโขง",
+        "amp_code": "5018",
+        "amp_th": "อมก๋อย",
+        "pro_code": "50",
+        "pro_th": "เชียงใหม่"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "เชียงใหม่",
+          "districtNameTh": "อมก๋อย",
+          "subdistrictNameTh": "แม่หลอง",
+          "postalCode": 50310
+        }
+      ]
+    },
+    {
+      "feature_index": 4288,
+      "area": {
+        "tam_code": "502202",
+        "tam_th": "ทุ่งปี้",
+        "amp_code": "5022",
+        "amp_th": "แม่วาง",
+        "pro_code": "50",
+        "pro_th": "เชียงใหม่"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "เชียงใหม่",
+          "districtNameTh": "แม่วาง",
+          "subdistrictNameTh": "ทุ่งปี๊",
+          "postalCode": 50360
+        }
+      ]
+    },
+    {
+      "feature_index": 4376,
+      "area": {
+        "tam_code": "520205",
+        "tam_th": "สบป้าน",
+        "amp_code": "5202",
+        "amp_th": "แม่เมาะ",
+        "pro_code": "52",
+        "pro_th": "ลำปาง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ลำปาง",
+          "districtNameTh": "แม่เมาะ",
+          "subdistrictNameTh": "สบป้าด",
+          "postalCode": 52220
+        }
+      ]
+    },
+    {
+      "feature_index": 4480,
+      "area": {
+        "tam_code": "530306",
+        "tam_th": "ท่าแฝก",
+        "amp_code": "5303",
+        "amp_th": "ท่าปลา",
+        "pro_code": "53",
+        "pro_th": "อุตรดิตถ์"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 4487,
+      "area": {
+        "tam_code": "530405",
+        "tam_th": "น้ำไฝ",
+        "amp_code": "5304",
+        "amp_th": "น้ำปาด",
+        "pro_code": "53",
+        "pro_th": "อุตรดิตถ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "อุตรดิตถ์",
+          "districtNameTh": "น้ำปาด",
+          "subdistrictNameTh": "น้ำไผ่",
+          "postalCode": 53110
+        }
+      ]
+    },
+    {
+      "feature_index": 4522,
+      "area": {
+        "tam_code": "540103",
+        "tam_th": "นาชำ",
+        "amp_code": "5401",
+        "amp_th": "เมืองแพร่",
+        "pro_code": "54",
+        "pro_th": "แพร่"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "แพร่",
+          "districtNameTh": "เมืองแพร่",
+          "subdistrictNameTh": "น้ำชำ",
+          "postalCode": 54000
+        }
+      ]
+    },
+    {
+      "feature_index": 4532,
+      "area": {
+        "tam_code": "540113",
+        "tam_th": "วังหงษ์",
+        "amp_code": "5401",
+        "amp_th": "เมืองแพร่",
+        "pro_code": "54",
+        "pro_th": "แพร่"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "แพร่",
+          "districtNameTh": "เมืองแพร่",
+          "subdistrictNameTh": "วังหงส์",
+          "postalCode": 54000
+        }
+      ]
+    },
+    {
+      "feature_index": 4604,
+      "area": {
+        "tam_code": "550107",
+        "tam_th": "นาชาว",
+        "amp_code": "5501",
+        "amp_th": "เมืองน่าน",
+        "pro_code": "55",
+        "pro_th": "น่าน"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "น่าน",
+          "districtNameTh": "เมืองน่าน",
+          "subdistrictNameTh": "นาซาว",
+          "postalCode": 55000
+        }
+      ]
+    },
+    {
+      "feature_index": 4607,
+      "area": {
+        "tam_code": "550116",
+        "tam_th": "สวก",
+        "amp_code": "5501",
+        "amp_th": "เมืองน่าน",
+        "pro_code": "55",
+        "pro_th": "น่าน"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "น่าน",
+          "districtNameTh": "เมืองน่าน",
+          "subdistrictNameTh": "บ่อสวก",
+          "postalCode": 55000
+        }
+      ]
+    },
+    {
+      "feature_index": 4676,
+      "area": {
+        "tam_code": "551003",
+        "tam_th": "เมืองลี่",
+        "amp_code": "5510",
+        "amp_th": "นาหมื่น",
+        "pro_code": "55",
+        "pro_th": "น่าน"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "น่าน",
+          "districtNameTh": "นาหมื่น",
+          "subdistrictNameTh": "เมืองลี",
+          "postalCode": 55180
+        }
+      ]
+    },
+    {
+      "feature_index": 4703,
+      "area": {
+        "tam_code": "560108",
+        "tam_th": "แม่ปีม",
+        "amp_code": "5601",
+        "amp_th": "เมืองพะเยา",
+        "pro_code": "56",
+        "pro_th": "พะเยา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พะเยา",
+          "districtNameTh": "เมืองพะเยา",
+          "subdistrictNameTh": "แม่ปืม",
+          "postalCode": 56000
+        }
+      ]
+    },
+    {
+      "feature_index": 5056,
+      "area": {
+        "tam_code": "601303",
+        "tam_th": "แม่เลย์",
+        "amp_code": "6013",
+        "amp_th": "แม่วงก์",
+        "pro_code": "60",
+        "pro_th": "นครสวรรค์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครสวรรค์",
+          "districtNameTh": "แม่วงก์",
+          "subdistrictNameTh": "แม่เล่ย์",
+          "postalCode": 60150
+        }
+      ]
+    },
+    {
+      "feature_index": 5119,
+      "area": {
+        "tam_code": "610612",
+        "tam_th": "บ้านใหม่คลองเคีย",
+        "amp_code": "6106",
+        "amp_th": "บ้านไร่",
+        "pro_code": "61",
+        "pro_th": "อุทัยธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "อุทัยธานี",
+          "districtNameTh": "บ้านไร่",
+          "subdistrictNameTh": "บ้านใหม่คลองเคียน",
+          "postalCode": 61180
+        }
+      ]
+    },
+    {
+      "feature_index": 5140,
+      "area": {
+        "tam_code": "620112",
+        "tam_th": "นิคมทุ่งโพธิ์ทะเ",
+        "amp_code": "6201",
+        "amp_th": "เมืองกำแพงเพชร",
+        "pro_code": "62",
+        "pro_th": "กำแพงเพชร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กำแพงเพชร",
+          "districtNameTh": "เมืองกำแพงเพชร",
+          "subdistrictNameTh": "นิคมทุ่งโพธิ์ทะเล",
+          "postalCode": 62000
+        }
+      ]
+    },
+    {
+      "feature_index": 5225,
+      "area": {
+        "tam_code": "630206",
+        "tam_th": "ทุ่งกระเซาะ",
+        "amp_code": "6302",
+        "amp_th": "บ้านตาก",
+        "pro_code": "63",
+        "pro_th": "ตาก"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ตาก",
+          "districtNameTh": "บ้านตาก",
+          "subdistrictNameTh": "ทุ่งกระเชาะ",
+          "postalCode": 63120
+        }
+      ]
+    },
+    {
+      "feature_index": 5354,
+      "area": {
+        "tam_code": "640905",
+        "tam_th": "เขาแก้วศรีสมบูรณ",
+        "amp_code": "6409",
+        "amp_th": "ทุ่งเสลี่ยม",
+        "pro_code": "64",
+        "pro_th": "สุโขทัย"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุโขทัย",
+          "districtNameTh": "ทุ่งเสลี่ยม",
+          "subdistrictNameTh": "เขาแก้วศรีสมบูรณ์",
+          "postalCode": 64230
+        }
+      ]
+    },
+    {
+      "feature_index": 5445,
+      "area": {
+        "tam_code": "650905",
+        "tam_th": "บ้านน้อยซุ้มขี้เ",
+        "amp_code": "6509",
+        "amp_th": "เนินมะปราง",
+        "pro_code": "65",
+        "pro_th": "พิษณุโลก"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พิษณุโลก",
+          "districtNameTh": "เนินมะปราง",
+          "subdistrictNameTh": "บ้านน้อยซุ้มขี้เหล็ก",
+          "postalCode": 65190
+        }
+      ]
+    },
+    {
+      "feature_index": 5451,
+      "area": {
+        "tam_code": "660104",
+        "tam_th": "ท่าฬอ",
+        "amp_code": "6601",
+        "amp_th": "เมืองพิจิตร",
+        "pro_code": "66",
+        "pro_th": "พิจิตร"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พิจิตร",
+          "districtNameTh": "เมืองพิจิตร",
+          "subdistrictNameTh": "ท่าฬ่อ",
+          "postalCode": 66000
+        }
+      ]
+    },
+    {
+      "feature_index": 5791,
+      "area": {
+        "tam_code": "710507",
+        "tam_th": "ท่าเรือ (เทศบาลเมื",
+        "amp_code": "7105",
+        "amp_th": "ท่ามะกา",
+        "pro_code": "71",
+        "pro_th": "กาญจนบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "กาญจนบุรี",
+          "districtNameTh": "ท่ามะกา",
+          "subdistrictNameTh": "ท่าเรือ",
+          "postalCode": 71130
+        }
+      ]
+    },
+    {
+      "feature_index": 5979,
+      "area": {
+        "tam_code": "730120",
+        "tam_th": "สระกระเทียม",
+        "amp_code": "7301",
+        "amp_th": "เมืองนครปฐม",
+        "pro_code": "73",
+        "pro_th": "นครปฐม"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครปฐม",
+          "districtNameTh": "เมืองนครปฐม",
+          "subdistrictNameTh": "สระกะเทียม",
+          "postalCode": 73000
+        }
+      ]
+    },
+    {
+      "feature_index": 6011,
+      "area": {
+        "tam_code": "730312",
+        "tam_th": "ศีรษะทอง",
+        "amp_code": "7303",
+        "amp_th": "นครชัยศรี",
+        "pro_code": "73",
+        "pro_th": "นครปฐม"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครปฐม",
+          "districtNameTh": "นครชัยศรี",
+          "subdistrictNameTh": "ศรีษะทอง",
+          "postalCode": 73120
+        }
+      ]
+    },
+    {
+      "feature_index": 6143,
+      "area": {
+        "tam_code": "760102",
+        "tam_th": "คลองกระแซง",
+        "amp_code": "7601",
+        "amp_th": "เมืองเพชรบุรี",
+        "pro_code": "76",
+        "pro_th": "เพชรบุรี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "เพชรบุรี",
+          "districtNameTh": "เมืองเพชรบุรี",
+          "subdistrictNameTh": "คลองกระแชง",
+          "postalCode": 76000
+        }
+      ]
+    },
+    {
+      "feature_index": 6234,
+      "area": {
+        "tam_code": "770101",
+        "tam_th": "ประจวบคีรีขันธ์",
+        "amp_code": "7701",
+        "amp_th": "เมืองประจวบคีรีข",
+        "pro_code": "77",
+        "pro_th": "ประจวบคีรีขันธ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ประจวบคีรีขันธ์",
+          "districtNameTh": "เมืองประจวบคีรีขันธ์",
+          "subdistrictNameTh": "ประจวบคีรีขันธ์",
+          "postalCode": 77000
+        }
+      ]
+    },
+    {
+      "feature_index": 6235,
+      "area": {
+        "tam_code": "770102",
+        "tam_th": "เกาะหลัก",
+        "amp_code": "7701",
+        "amp_th": "เมืองประจวบคีรีข",
+        "pro_code": "77",
+        "pro_th": "ประจวบคีรีขันธ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ประจวบคีรีขันธ์",
+          "districtNameTh": "เมืองประจวบคีรีขันธ์",
+          "subdistrictNameTh": "เกาะหลัก",
+          "postalCode": 77000
+        }
+      ]
+    },
+    {
+      "feature_index": 6236,
+      "area": {
+        "tam_code": "770103",
+        "tam_th": "คลองวาฬ",
+        "amp_code": "7701",
+        "amp_th": "เมืองประจวบคีรีข",
+        "pro_code": "77",
+        "pro_th": "ประจวบคีรีขันธ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ประจวบคีรีขันธ์",
+          "districtNameTh": "เมืองประจวบคีรีขันธ์",
+          "subdistrictNameTh": "คลองวาฬ",
+          "postalCode": 77000
+        }
+      ]
+    },
+    {
+      "feature_index": 6237,
+      "area": {
+        "tam_code": "770104",
+        "tam_th": "ห้วยทราย",
+        "amp_code": "7701",
+        "amp_th": "เมืองประจวบคีรีข",
+        "pro_code": "77",
+        "pro_th": "ประจวบคีรีขันธ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ประจวบคีรีขันธ์",
+          "districtNameTh": "เมืองประจวบคีรีขันธ์",
+          "subdistrictNameTh": "ห้วยทราย",
+          "postalCode": 77000
+        }
+      ]
+    },
+    {
+      "feature_index": 6238,
+      "area": {
+        "tam_code": "770105",
+        "tam_th": "อ่าวน้อย",
+        "amp_code": "7701",
+        "amp_th": "เมืองประจวบคีรีข",
+        "pro_code": "77",
+        "pro_th": "ประจวบคีรีขันธ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ประจวบคีรีขันธ์",
+          "districtNameTh": "เมืองประจวบคีรีขันธ์",
+          "subdistrictNameTh": "อ่าวน้อย",
+          "postalCode": 77000
+        }
+      ]
+    },
+    {
+      "feature_index": 6239,
+      "area": {
+        "tam_code": "770106",
+        "tam_th": "บ่อนอก",
+        "amp_code": "7701",
+        "amp_th": "เมืองประจวบคีรีข",
+        "pro_code": "77",
+        "pro_th": "ประจวบคีรีขันธ์"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ประจวบคีรีขันธ์",
+          "districtNameTh": "เมืองประจวบคีรีขันธ์",
+          "subdistrictNameTh": "บ่อนอก",
+          "postalCode": 77210
+        }
+      ]
+    },
+    {
+      "feature_index": 6282,
+      "area": {
+        "tam_code": "800101",
+        "tam_th": "ในเมือง",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ในเมือง",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6283,
+      "area": {
+        "tam_code": "800102",
+        "tam_th": "ท่าวัง",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ท่าวัง",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6284,
+      "area": {
+        "tam_code": "800103",
+        "tam_th": "คลัง",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "คลัง",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6285,
+      "area": {
+        "tam_code": "800106",
+        "tam_th": "ท่าไร่",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ท่าไร่",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6286,
+      "area": {
+        "tam_code": "800107",
+        "tam_th": "ปากนคร",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ปากนคร",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6287,
+      "area": {
+        "tam_code": "800108",
+        "tam_th": "นาทราย",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "นาทราย",
+          "postalCode": 80280
+        }
+      ]
+    },
+    {
+      "feature_index": 6288,
+      "area": {
+        "tam_code": "800112",
+        "tam_th": "กำแพงเซา",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "กำแพงเซา",
+          "postalCode": 80280
+        }
+      ]
+    },
+    {
+      "feature_index": 6289,
+      "area": {
+        "tam_code": "800113",
+        "tam_th": "ไชยมนตรี",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ไชยมนตรี",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6290,
+      "area": {
+        "tam_code": "800114",
+        "tam_th": "มะม่วงสองต้น",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "มะม่วงสองต้น",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6291,
+      "area": {
+        "tam_code": "800115",
+        "tam_th": "นาเคียน",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "นาเคียน",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6292,
+      "area": {
+        "tam_code": "800116",
+        "tam_th": "ท่างิ้ว",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ท่างิ้ว",
+          "postalCode": 80280
+        }
+      ]
+    },
+    {
+      "feature_index": 6293,
+      "area": {
+        "tam_code": "800118",
+        "tam_th": "โพธิ์เสด็จ",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "โพธิ์เสด็จ",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6294,
+      "area": {
+        "tam_code": "800119",
+        "tam_th": "บางจาก",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "บางจาก",
+          "postalCode": 80330
+        }
+      ]
+    },
+    {
+      "feature_index": 6295,
+      "area": {
+        "tam_code": "800120",
+        "tam_th": "ปากพูน",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ปากพูน",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6296,
+      "area": {
+        "tam_code": "800121",
+        "tam_th": "ท่าซัก",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ท่าซัก",
+          "postalCode": 80000
+        }
+      ]
+    },
+    {
+      "feature_index": 6297,
+      "area": {
+        "tam_code": "800122",
+        "tam_th": "ท่าเรือ",
+        "amp_code": "8001",
+        "amp_th": "เมืองนครศรีธรรมร",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "เมืองนครศรีธรรมราช",
+          "subdistrictNameTh": "ท่าเรือ",
+          "postalCode": 80290
+        }
+      ]
+    },
+    {
+      "feature_index": 6354,
+      "area": {
+        "tam_code": "800901",
+        "tam_th": "เทศบาลเมืองทุ่งส",
+        "amp_code": "8009",
+        "amp_th": "ทุ่งสง",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "ทุ่งสง",
+          "subdistrictNameTh": "ปากแพรก",
+          "postalCode": 80110
+        }
+      ]
+    },
+    {
+      "feature_index": 6385,
+      "area": {
+        "tam_code": "801210",
+        "tam_th": "ปากพนังฝั่งตะวัน",
+        "amp_code": "8012",
+        "amp_th": "ปากพนัง",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "ปากพนัง",
+          "subdistrictNameTh": "ปากพนังฝั่งตะวันตก",
+          "postalCode": 80140
+        }
+      ]
+    },
+    {
+      "feature_index": 6389,
+      "area": {
+        "tam_code": "801214",
+        "tam_th": "ปากพนังฝั่งตะวัน",
+        "amp_code": "8012",
+        "amp_th": "ปากพนัง",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "ปากพนัง",
+          "subdistrictNameTh": "ปากพนังฝั่งตะวันออก",
+          "postalCode": 80140
+        }
+      ]
+    },
+    {
+      "feature_index": 6391,
+      "area": {
+        "tam_code": "801216",
+        "tam_th": "ท่าพญา",
+        "amp_code": "8012",
+        "amp_th": "ปากพนัง",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "ปากพนัง",
+          "subdistrictNameTh": "ท่าพยา",
+          "postalCode": 80140
+        }
+      ]
+    },
+    {
+      "feature_index": 6405,
+      "area": {
+        "tam_code": "801406",
+        "tam_th": "สีขีด",
+        "amp_code": "8014",
+        "amp_th": "สิชล",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "สิชล",
+          "subdistrictNameTh": "สี่ขีด",
+          "postalCode": 80120
+        }
+      ]
+    },
+    {
+      "feature_index": 6435,
+      "area": {
+        "tam_code": "801906",
+        "tam_th": "สาม",
+        "amp_code": "8019",
+        "amp_th": "จุฬาภรณ์",
+        "pro_code": "80",
+        "pro_th": "นครศรีธรรมราช"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นครศรีธรรมราช",
+          "districtNameTh": "จุฬาภรณ์",
+          "subdistrictNameTh": "สามตำบล",
+          "postalCode": 80130
+        }
+      ]
+    },
+    {
+      "feature_index": 6554,
+      "area": {
+        "tam_code": "830105",
+        "tam_th": "รัษฎา",
+        "amp_code": "8301",
+        "amp_th": "เมืองภูเก็ต",
+        "pro_code": "83",
+        "pro_th": "ภูเก็ต"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ภูเก็ต",
+          "districtNameTh": "เมืองภูเก็ต",
+          "subdistrictNameTh": "วิชิต",
+          "postalCode": 83000
+        }
+      ]
+    },
+    {
+      "feature_index": 6567,
+      "area": {
+        "tam_code": "840101",
+        "tam_th": "ตลาด",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "ตลาด",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6568,
+      "area": {
+        "tam_code": "840102",
+        "tam_th": "มะขามเตี้ย",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "มะขามเตี้ย",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6569,
+      "area": {
+        "tam_code": "840103",
+        "tam_th": "วัดประดู่",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "วัดประดู่",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6570,
+      "area": {
+        "tam_code": "840104",
+        "tam_th": "ขุนทะเล",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "ขุนทะเล",
+          "postalCode": 84100
+        }
+      ]
+    },
+    {
+      "feature_index": 6571,
+      "area": {
+        "tam_code": "840105",
+        "tam_th": "บางใบไม้",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "บางใบไม้",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6572,
+      "area": {
+        "tam_code": "840106",
+        "tam_th": "บางชนะ",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "บางชนะ",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6573,
+      "area": {
+        "tam_code": "840107",
+        "tam_th": "คลองน้อย",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "คลองน้อย",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6574,
+      "area": {
+        "tam_code": "840108",
+        "tam_th": "บางไทร",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "บางไทร",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6575,
+      "area": {
+        "tam_code": "840109",
+        "tam_th": "บางโพธิ์",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "บางโพธิ์",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6576,
+      "area": {
+        "tam_code": "840110",
+        "tam_th": "บางกุ้ง",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "บางกุ้ง",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6577,
+      "area": {
+        "tam_code": "840111",
+        "tam_th": "คลองฉนาก",
+        "amp_code": "8401",
+        "amp_th": "เมืองสุราษฎร์ธาน",
+        "pro_code": "84",
+        "pro_th": "สุราษฎร์ธานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สุราษฎร์ธานี",
+          "districtNameTh": "เมืองสุราษฎร์ธานี",
+          "subdistrictNameTh": "คลองฉนาก",
+          "postalCode": 84000
+        }
+      ]
+    },
+    {
+      "feature_index": 6856,
+      "area": {
+        "tam_code": "900703",
+        "tam_th": "ตาเครียะ",
+        "amp_code": "9007",
+        "amp_th": "ระโนด",
+        "pro_code": "90",
+        "pro_th": "สงขลา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สงขลา",
+          "districtNameTh": "ระโนด",
+          "subdistrictNameTh": "ตะเครียะ",
+          "postalCode": 90140
+        }
+      ]
+    },
+    {
+      "feature_index": 6941,
+      "area": {
+        "tam_code": "910303",
+        "tam_th": "อุไดเจริญ",
+        "amp_code": "9103",
+        "amp_th": "ควนกาหลง",
+        "pro_code": "91",
+        "pro_th": "สตูล"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "สตูล",
+          "districtNameTh": "ควนกาหลง",
+          "subdistrictNameTh": "อุใดเจริญ",
+          "postalCode": 91130
+        }
+      ]
+    },
+    {
+      "feature_index": 6988,
+      "area": {
+        "tam_code": "920221",
+        "tam_th": "เกาะลูกไม้",
+        "amp_code": "9202",
+        "amp_th": "กันตัง",
+        "pro_code": "92",
+        "pro_th": "ตรัง"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 6989,
+      "area": {
+        "tam_code": "920222",
+        "tam_th": "เกาะนก",
+        "amp_code": "9202",
+        "amp_th": "กันตัง",
+        "pro_code": "92",
+        "pro_th": "ตรัง"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 6994,
+      "area": {
+        "tam_code": "920305",
+        "tam_th": "โพรงจรเข้",
+        "amp_code": "9203",
+        "amp_th": "ย่านตาขาว",
+        "pro_code": "92",
+        "pro_th": "ตรัง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ตรัง",
+          "districtNameTh": "ย่านตาขาว",
+          "subdistrictNameTh": "โพรงจระเข้",
+          "postalCode": 92140
+        }
+      ]
+    },
+    {
+      "feature_index": 7008,
+      "area": {
+        "tam_code": "920414",
+        "tam_th": "เกาะค้างคาว",
+        "amp_code": "9204",
+        "amp_th": "ปะเหลียน",
+        "pro_code": "92",
+        "pro_th": "ตรัง"
+      },
+      "method": "no_unique_match",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": []
+    },
+    {
+      "feature_index": 7043,
+      "area": {
+        "tam_code": "920903",
+        "tam_th": "ต.หนองบัว",
+        "amp_code": "9209",
+        "amp_th": "รัษฎา",
+        "pro_code": "92",
+        "pro_th": "ตรัง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ตรัง",
+          "districtNameTh": "รัษฎา",
+          "subdistrictNameTh": "หนองบัว",
+          "postalCode": 92160
+        }
+      ]
+    },
+    {
+      "feature_index": 7106,
+      "area": {
+        "tam_code": "931001",
+        "tam_th": "ป่าพะยอม",
+        "amp_code": "9310",
+        "amp_th": "ป่าพยอม",
+        "pro_code": "93",
+        "pro_th": "พัทลุง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พัทลุง",
+          "districtNameTh": "ป่าพะยอม",
+          "subdistrictNameTh": "ป่าพะยอม",
+          "postalCode": 93110
+        }
+      ]
+    },
+    {
+      "feature_index": 7107,
+      "area": {
+        "tam_code": "931002",
+        "tam_th": "ลานข่อย",
+        "amp_code": "9310",
+        "amp_th": "ป่าพยอม",
+        "pro_code": "93",
+        "pro_th": "พัทลุง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พัทลุง",
+          "districtNameTh": "ป่าพะยอม",
+          "subdistrictNameTh": "ลานข่อย",
+          "postalCode": 93110
+        }
+      ]
+    },
+    {
+      "feature_index": 7108,
+      "area": {
+        "tam_code": "931003",
+        "tam_th": "เกาะเต่า",
+        "amp_code": "9310",
+        "amp_th": "ป่าพยอม",
+        "pro_code": "93",
+        "pro_th": "พัทลุง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พัทลุง",
+          "districtNameTh": "ป่าพะยอม",
+          "subdistrictNameTh": "เกาะเต่า",
+          "postalCode": 93110
+        }
+      ]
+    },
+    {
+      "feature_index": 7109,
+      "area": {
+        "tam_code": "931004",
+        "tam_th": "บ้านพร้าว",
+        "amp_code": "9310",
+        "amp_th": "ป่าพยอม",
+        "pro_code": "93",
+        "pro_th": "พัทลุง"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "พัทลุง",
+          "districtNameTh": "ป่าพะยอม",
+          "subdistrictNameTh": "บ้านพร้าว",
+          "postalCode": 93110
+        }
+      ]
+    },
+    {
+      "feature_index": 7178,
+      "area": {
+        "tam_code": "940701",
+        "tam_th": "ตะลุปัน",
+        "amp_code": "9407",
+        "amp_th": "สายบุรี",
+        "pro_code": "94",
+        "pro_th": "ปัตตานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ปัตตานี",
+          "districtNameTh": "สายบุรี",
+          "subdistrictNameTh": "ตะลุบัน",
+          "postalCode": 94110
+        }
+      ]
+    },
+    {
+      "feature_index": 7192,
+      "area": {
+        "tam_code": "940804",
+        "tam_th": "คอนทราย",
+        "amp_code": "9408",
+        "amp_th": "ไม้แก่น",
+        "pro_code": "94",
+        "pro_th": "ปัตตานี"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ปัตตานี",
+          "districtNameTh": "ไม้แก่น",
+          "subdistrictNameTh": "ดอนทราย",
+          "postalCode": 94220
+        }
+      ]
+    },
+    {
+      "feature_index": 7283,
+      "area": {
+        "tam_code": "950801",
+        "tam_th": "กรงปินัง",
+        "amp_code": "9508",
+        "amp_th": "กรงปีนัง",
+        "pro_code": "95",
+        "pro_th": "ยะลา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ยะลา",
+          "districtNameTh": "กรงปินัง",
+          "subdistrictNameTh": "กรงปินัง",
+          "postalCode": 95000
+        }
+      ]
+    },
+    {
+      "feature_index": 7284,
+      "area": {
+        "tam_code": "950802",
+        "tam_th": "สะเอะ",
+        "amp_code": "9508",
+        "amp_th": "กรงปีนัง",
+        "pro_code": "95",
+        "pro_th": "ยะลา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ยะลา",
+          "districtNameTh": "กรงปินัง",
+          "subdistrictNameTh": "สะเอะ",
+          "postalCode": 95000
+        }
+      ]
+    },
+    {
+      "feature_index": 7285,
+      "area": {
+        "tam_code": "950803",
+        "tam_th": "ห้วยกระทิง",
+        "amp_code": "9508",
+        "amp_th": "กรงปีนัง",
+        "pro_code": "95",
+        "pro_th": "ยะลา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ยะลา",
+          "districtNameTh": "กรงปินัง",
+          "subdistrictNameTh": "ห้วยกระทิง",
+          "postalCode": 95000
+        }
+      ]
+    },
+    {
+      "feature_index": 7286,
+      "area": {
+        "tam_code": "950804",
+        "tam_th": "ปุโรง",
+        "amp_code": "9508",
+        "amp_th": "กรงปีนัง",
+        "pro_code": "95",
+        "pro_th": "ยะลา"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "ยะลา",
+          "districtNameTh": "กรงปินัง",
+          "subdistrictNameTh": "ปุโรง",
+          "postalCode": 95000
+        }
+      ]
+    },
+    {
+      "feature_index": 7317,
+      "area": {
+        "tam_code": "960507",
+        "tam_th": "กาลิชา",
+        "amp_code": "9605",
+        "amp_th": "ระแงะ",
+        "pro_code": "96",
+        "pro_th": "นราธิวาส"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นราธิวาส",
+          "districtNameTh": "ระแงะ",
+          "subdistrictNameTh": "กาลิซา",
+          "postalCode": 96130
+        }
+      ]
+    },
+    {
+      "feature_index": 7348,
+      "area": {
+        "tam_code": "961002",
+        "tam_th": "ป่าเสมัส",
+        "amp_code": "9610",
+        "amp_th": "สุไหงโก-ลก",
+        "pro_code": "96",
+        "pro_th": "นราธิวาส"
+      },
+      "method": "code_name_conflict",
+      "postcode": [],
+      "source_subdistrict_code": null,
+      "code_candidates": [
+        {
+          "provinceNameTh": "นราธิวาส",
+          "districtNameTh": "สุไหงโก-ลก",
+          "subdistrictNameTh": "ปาเสมัส",
+          "postalCode": 96120
+        }
+      ]
+    }
+  ]
+}

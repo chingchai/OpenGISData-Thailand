@@ -12,8 +12,8 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 - **`provinces.geojson`** — ชั้นข้อมูลขอบเขตจังหวัด (77 จังหวัด)
 - **`districts.geojson`** — ชั้นข้อมูลขอบเขตอำเภอ/เขต (928 อำเภอ)
 - **`subdistricts.geojson`** — ชั้นข้อมูลขอบเขตตำบล/แขวง (7,367 ตำบล)
-- **`reg_royin.geojson`** — ชั้นข้อมูลขอบเขตภูมิภาค 7 ภูมิภาค (ตามเกณฑ์ราชบัณฑิตยสภา)
-- **`reg_nesdb.geojson`** — ชั้นข้อมูลขอบเขตภูมิภาค 6 ภูมิภาค (ตามเกณฑ์สภาพัฒน์ - NESDC)
+- **`reg_royin.geojson`** — ชั้นข้อมูลขอบเขตภูมิภาค 6 ภูมิภาค (ตามเกณฑ์ราชบัณฑิตยสภา)
+- **`reg_nesdb.geojson`** — ชั้นข้อมูลขอบเขตภูมิภาค 7 ภูมิภาค (ตามเกณฑ์สภาพัฒน์ - NESDC)
 
 ### 2. TPMAP Dashboard (`tpmap_act/`)
 ระบบ Dashboard แสดงข้อมูลครัวเรือนและตัวชี้วัดความยากจน/ตัวชี้วัดทางสังคม
@@ -32,6 +32,7 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `tam_code` | String(6) | PK | รหัสตำบล |
+| `postcode` | Array<String(5)> | | รายการรหัสไปรษณีย์ที่จับคู่ได้; `[]` เมื่อจับคู่ไม่ได้ |
 | `tam_th` | String(254) | | ชื่อตำบลภาษาไทย |
 | `tam_en` | String(254) | | ชื่อตำบลภาษาอังกฤษ |
 | `amp_code` | String(4) | | รหัสอำเภอ |
@@ -52,6 +53,7 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `amp_code` | String(4) | PK | รหัสอำเภอ |
+| `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในอำเภอ |
 | `amp_th` | String(254) | | ชื่ออำเภอภาษาไทย |
 | `amp_en` | String(254) | | ชื่ออำเภอภาษาอังกฤษ |
 | `pro_code` | String(2) | | รหัสจังหวัด |
@@ -69,6 +71,7 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `pro_code` | String(2) | PK | รหัสจังหวัด |
+| `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในจังหวัด |
 | `pro_th` | String(254) | | ชื่อจังหวัดภาษาไทย |
 | `pro_en` | String(254) | | ชื่อจังหวัดภาษาอังกฤษ |
 | `reg_nesdb` | String(254) | | เขตภูมิภาค (สภาพัฒน์) |
@@ -83,6 +86,7 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `reg_royin` | String(254) | PK | เขตภูมิภาค (ราชบัณฑิตยสภา) |
+| `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในภูมิภาค |
 | `perimeter` | Real(18,11) | | เส้นรอบรูป (กิโลเมตร) |
 | `area_sqkm` | Real(18,11) | | เนื้อที่ (ตารางกิโลเมตร) |
 
@@ -93,8 +97,43 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 | Field | Type | Key | Description |
 |---|---|---|---|
 | `reg_nesdb` | String(254) | PK | เขตภูมิภาค (สภาพัฒน์) |
+| `postcode` | Array<String(5)> | | รหัสไปรษณีย์รวมจากตำบลที่จับคู่ได้ในภูมิภาค |
 | `perimeter` | Real(18,11) | | เส้นรอบรูป (กิโลเมตร) |
 | `area_sqkm` | Real(18,11) | | เนื้อที่ (ตารางกิโลเมตร) |
+
+---
+
+### รหัสไปรษณีย์ (`postcode`)
+
+แต่ละ Feature มี `properties.postcode` เป็นรายการข้อความตัวเลข 5 หลัก เช่น `["10200"]` หรือ `["10100", "10200"]` โดยเรียงลำดับและตัดค่าซ้ำ ใช้ `[]` เมื่อยังจับคู่ไม่ได้ ซึ่งไม่ได้หมายความว่าพื้นที่นั้นไม่มีรหัสไปรษณีย์
+
+ข้อมูลมาจาก [Thailand Geography JSON โดย Joe Takara](https://github.com/thailand-geography-data/thailand-geography-json) ไฟล์ [`src/geography.json` เวอร์ชัน `b8b3fb9`](https://github.com/thailand-geography-data/thailand-geography-json/blob/b8b3fb91c7df1129ff5b43cb46f7fcffadd2156b/src/geography.json) ดึงข้อมูลวันที่ 18 ตุลาคม 2569 (2026-10-18) ภายใต้ [MIT License](https://github.com/thailand-geography-data/thailand-geography-json/blob/b8b3fb91c7df1129ff5b43cb46f7fcffadd2156b/LICENSE) สำเนาใบอนุญาตอยู่ที่ [THIRD_PARTY_LICENSES/thailand-geography-json.txt](THIRD_PARTY_LICENSES/thailand-geography-json.txt)
+
+**วิธีจับคู่และข้อจำกัด**
+
+- ตรวจรหัสตำบล อำเภอ จังหวัด พร้อมชื่อภาษาไทยทั้ง 3 ระดับ โดยปรับเฉพาะช่องว่าง หากไม่พบรหัสตำบลในต้นทาง จะใช้ชื่อทั้ง 3 ระดับที่ตรงกันเพียงรายการเดียวและรหัสอำเภอ/จังหวัดที่ตรงกันแทน
+- หากพบรหัสแต่ชื่อขัดแย้ง หรือไม่สามารถจับคู่ได้ชัดเจน จะเว้นเป็น `[]` โดยเก็บรายละเอียดใน [รายงานการจับคู่](docs/data/postcode-report.json) และคงชื่อ รหัส และ geometry เดิมไว้
+- ระดับอำเภอ จังหวัด และภูมิภาค รวมรหัสจากตำบลที่จับคู่ได้ตามรหัสพื้นที่และชื่อภูมิภาคในข้อมูลเดิม จึงอาจไม่ครบทุกรหัสในพื้นที่ แม้รายการนั้นไม่เป็น `[]`
+- ต้นทางให้รหัสไปรษณีย์หนึ่งค่าต่อรายการตำบล จึงไม่รับประกันว่าครอบคลุมทุกรหัสในตำบลที่มีหลายเขตนำจ่าย วันที่ดึงข้อมูลไม่ได้หมายถึงวันที่ตรวจสอบรหัสกับไปรษณีย์ไทย
+
+| ชุดข้อมูล | จำนวน Feature | มีรหัสที่จับคู่ได้ | เป็น `[]` |
+|---|---:|---:|---:|
+| Subdistricts | 7,367 | 7,220 | 147 |
+| Districts | 928 | 917 | 11 |
+| Provinces | 77 | 77 | 0 |
+| Region Royin | 6 | 6 | 0 |
+| Region NESDB | 7 | 7 | 0 |
+
+**สร้างและตรวจสอบข้อมูลซ้ำ** (Python 3 โดยไม่ต้องติดตั้งแพ็กเกจเพิ่ม)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/thailand-geography-data/thailand-geography-json/b8b3fb91c7df1129ff5b43cb46f7fcffadd2156b/src/geography.json -o /tmp/thailand-geography.json
+python3 scripts/add_postcodes.py /tmp/thailand-geography.json
+python3 scripts/add_postcodes.py /tmp/thailand-geography.json --check
+python3 -m unittest discover -s tests -v
+```
+
+สคริปต์ตรวจ SHA-256 ของไฟล์ต้นทางก่อนประมวลผล และตรวจว่าการเปลี่ยน GeoJSON จำกัดอยู่ที่ `postcode` เท่านั้น โหมด `--check` ตรวจข้อมูลและรายงานที่สร้างไว้โดยไม่เขียนไฟล์
 
 ---
 
@@ -124,9 +163,12 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 ## 📚 แหล่งอ้างอิงข้อมูล
 - ข้อมูลขอบเขตการปกครอง: กรมการปกครอง กระทรวงมหาดไทย (DOPA)
 - ข้อมูลการแบ่งภูมิภาค: สำนักงานสภาพัฒนาการเศรษฐกิจและสังคมแห่งชาติ (สศช. / NESDC) และ ราชบัณฑิตยสภา (ORST)
+- ข้อมูลรหัสไปรษณีย์: [Thailand Geography JSON — Joe Takara](https://github.com/thailand-geography-data/thailand-geography-json) (MIT License; ดูเวอร์ชัน วิธีจับคู่ และข้อจำกัดในหัวข้อ `postcode` ด้านบน)
 - ข้อมูลตัวชี้วัดทางสังคม: ระบบบริหารจัดการข้อมูลพัฒนาคนแบบชี้เป้า (TPMAP)
 
 ---
 
 ## 📄 ใบอนุญาตใช้งาน (License)
 ชุดข้อมูลนี้เผยแพร่ภายใต้ใบอนุญาต **[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)** สามารถนำไปใช้ ดัดแปลง และเผยแพร่ต่อได้โดยอ้างอิงแหล่งที่มาอย่างถูกต้อง
+
+ข้อมูลรหัสไปรษณีย์จาก Thailand Geography JSON มีประกาศลิขสิทธิ์และเงื่อนไข MIT เพิ่มเติมตาม [สำเนาใบอนุญาตต้นทาง](THIRD_PARTY_LICENSES/thailand-geography-json.txt) เมื่อเผยแพร่ข้อมูลส่วนนี้ต่อ ให้แนบประกาศและเงื่อนไขดังกล่าวด้วย
