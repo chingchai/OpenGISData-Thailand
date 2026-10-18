@@ -2,7 +2,7 @@
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
 
-Open GIS Data Sources in Thailand — รวบรวมข้อมูลภูมิสารสนเทศเปิด (Open GIS Data) ขอบเขตการปกครองของประเทศไทยในรูปแบบ GeoJSON พร้อมระบบแสดงผลข้อมูล
+Open GIS Data Sources in Thailand — รวบรวมข้อมูลภูมิสารสนเทศเปิด (Open GIS Data) ขอบเขตการปกครองของประเทศไทยในรูปแบบ GeoJSON โดยมีแอปที่เกี่ยวข้องแยกไว้ใน `apps/`
 
 ---
 
@@ -15,13 +15,34 @@ Open GIS Data Sources in Thailand — รวบรวมข้อมูลภู
 - **`reg_royin.geojson`** — ชั้นข้อมูลขอบเขตภูมิภาค 6 ภูมิภาค (ตามเกณฑ์ราชบัณฑิตยสภา)
 - **`reg_nesdb.geojson`** — ชั้นข้อมูลขอบเขตภูมิภาค 7 ภูมิภาค (ตามเกณฑ์สภาพัฒน์ - NESDC)
 
-### 2. TPMAP Dashboard (`tpmap_act/`)
+### 2. แอปที่เกี่ยวข้อง (`apps/`)
+
+**[TPMAP Dashboard](apps/tpmap-dashboard/README.md)**
 ระบบ Dashboard แสดงข้อมูลครัวเรือนและตัวชี้วัดความยากจน/ตัวชี้วัดทางสังคม
 - **`household-dashboard.html`** — Dashboard หลักแสดงข้อมูลครัวเรือน
 - **`indicators-selector.html`** — เครื่องมือเลือกตัวชี้วัด
 - **`indicators-38-snippet.html`** — ตัวอย่างตัวชี้วัด 38 ตัว
 
-📖 ดูรายละเอียดการติดตั้งและการใช้งานได้ที่ [tpmap_act/QUICK-START-SUBDIRECTORY.md](tpmap_act/QUICK-START-SUBDIRECTORY.md)
+📖 ดูรายละเอียดการติดตั้งและการใช้งานได้ที่ [TPMAP Quick Start](apps/tpmap-dashboard/QUICK-START-SUBDIRECTORY.md)
+
+**[ระบบจัดซื้อจัดจ้าง](apps/procurement-system/README.md)** ติดตามโครงการ ขั้นตอนการจัดซื้อจัดจ้าง และรายงานผู้บริหาร
+
+### โครงสร้างและคู่มือ
+
+| ตำแหน่ง | หน้าที่ |
+| --- | --- |
+| `*.geojson` ที่ราก | ข้อมูล GIS ทั้ง 5 ชุด คงตำแหน่งดาวน์โหลดเดิม |
+| [apps/](apps/README.md) | แอป TPMAP และระบบจัดซื้อจัดจ้าง พร้อมคู่มือเฉพาะแอป |
+| `scripts/` และ `tests/` | เครื่องมือเพิ่ม postcode/centroid และการตรวจสอบข้อมูล |
+| [docs/data/](docs/data/) | รายงานผล postcode และ centroid |
+| [docs/deployment/](docs/deployment/README.md) | สารบัญคู่มือ deployment ทุกกรณี |
+| [deploy/](deploy/) | สคริปต์อัปเดต GIS และแม่แบบ Nginx ส่วนกลาง |
+| [docs/history/](docs/history/) | เอกสารประวัติการเพิ่มระบบ |
+| [THIRD_PARTY_LICENSES/](THIRD_PARTY_LICENSES/) | ใบอนุญาตข้อมูลจากภายนอก |
+
+เครื่องที่ติดตั้งแอปจากตำแหน่งเดิม ให้อ่าน [คู่มือย้าย path](docs/deployment/MIGRATION.md) ก่อน `git pull` เพื่อสำรองข้อมูล runtime และปรับ Nginx/PM2
+
+ตรวจโครงสร้างและลิงก์ภายในหลังแก้ไขด้วย `python3 scripts/check_repo_layout.py`
 
 ---
 
@@ -176,10 +197,12 @@ PYTHONDONTWRITEBYTECODE=1 .venv-centroids/bin/python -m unittest discover -s tes
 ## 🚀 การติดตั้งและการใช้งาน
 
 ### สำหรับ GeoJSON Data
-ดูคู่มือการตั้งค่าและการปรับใช้งานบน Nginx Web Server ได้ที่: [DEPLOY.md](DEPLOY.md)
+ดูคู่มือการตั้งค่าและการปรับใช้งานบน Nginx Web Server ได้ที่: [คู่มือเผยแพร่ GeoJSON](docs/deployment/DEPLOY.md)
 
-### สำหรับ TPMAP Dashboard
-ดูคู่มือ Quick Start สำหรับ TPMAP ได้ที่: [tpmap_act/QUICK-START-SUBDIRECTORY.md](tpmap_act/QUICK-START-SUBDIRECTORY.md)
+### สำหรับแอปที่เกี่ยวข้อง
+ดู [TPMAP Quick Start](apps/tpmap-dashboard/QUICK-START-SUBDIRECTORY.md) และ [คู่มือระบบจัดซื้อจัดจ้าง](apps/procurement-system/README.md)
+
+เลือกวิธีติดตั้งจาก [สารบัญ deployment](docs/deployment/README.md) คู่มือเดิมเก็บแยกตามกรณีใช้งาน และไม่ได้รัน deployment ให้เซิร์ฟเวอร์โดยอัตโนมัติ
 
 ---
 
@@ -192,7 +215,7 @@ PYTHONDONTWRITEBYTECODE=1 .venv-centroids/bin/python -m unittest discover -s tes
   * **อ้างอิงข้อมูลเปิด:** [DOI: 10.5281/zenodo.23260465](https://doi.org/10.5281/zenodo.23260465) (CC BY 4.0)
 
 > 💡 **นำชุดข้อมูลนี้ไปใช้งานในโครงการของคุณ?**  
-> หากคุณนำข้อมูลใน Repository นี้ไปใช้ สามารถแจ้งให้เราทราบเพื่อเพิ่มลงใน Showcase ได้โดยการเปิด [Pull Request](../../pulls) หรือสร้าง [Issue](../../issues) ใหม่ครับ
+> หากคุณนำข้อมูลใน Repository นี้ไปใช้ สามารถแจ้งให้เราทราบเพื่อเพิ่มลงใน Showcase ได้โดยการเปิด [Pull Request](https://github.com/chingchai/OpenGISData-Thailand/pulls) หรือสร้าง [Issue](https://github.com/chingchai/OpenGISData-Thailand/issues) ใหม่ครับ
 
 ---
 
